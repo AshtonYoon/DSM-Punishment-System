@@ -652,8 +652,10 @@
                                         </GridViewColumn.Header>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ItemCheckBox" VerticalAlignment="Center"
-                                                          BorderBrush="#777777" />
+                                                <CheckBox x:Name="ItemCheckBox" 
+                                                          VerticalAlignment="Center"
+                                                          BorderBrush="#777777"
+                                                          IsChecked="{Binding IsChecked}"/>
                                                 <!--<DataTemplate>
                                                    <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
                                                </DataTemplate>-->

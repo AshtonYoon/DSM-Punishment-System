@@ -20,8 +20,8 @@ namespace DormitoryGUI
             public const string SET_PERMSSION_URL = SERVER_URL + "permission/set";
             public const string GET_STUDENT_DATA = SERVER_URL + "student/get";
             public const string GET_DETAIL_DATA = SERVER_URL + "info/detail";
-            public const string GET_SCORE_DATA = SERVER_URL + "scoreinfo/get";
-            public const string ADD_SCORE_INFO = SERVER_URL + "scoreinfo/add";
+            public const string GET_RULE_DATA = SERVER_URL + "rule/get";
+            public const string ADD_RULE_DATA = SERVER_URL + "rule/add";
             public const string GIVE_SCORE = SERVER_URL + "score/add";
             public const string GET_EXCEL_DATA = SERVER_URL + "excel/get";
             public const string SET_STUDENT_DATA = SERVER_URL + "student/add";

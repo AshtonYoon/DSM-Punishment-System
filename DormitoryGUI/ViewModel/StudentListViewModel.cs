@@ -19,20 +19,23 @@ namespace DormitoryGUI.ViewModel
         private string classNumber;
         private int goodPoint;
         private int badPoint;
+        private bool isChecked;
 
         public string ClassNumber { get => classNumber; set => classNumber = value; }
         public string Name { get => name; set => name = value; }
         public string RoomNumber { get => roomNumber; set => roomNumber = value; }
         public int GoodPoint { get => goodPoint; set => goodPoint = value; }
         public int BadPoint { get => badPoint; set => badPoint = value; }
+        public bool IsChecked { get => isChecked; set => isChecked = value; }
 
-        public StudentListViewModel(bool IsChecked, string roomNumber, string name, string classNumber, int goodPoint, int badPoint)
+        public StudentListViewModel(bool isChecked, string roomNumber, string name, string classNumber, int goodPoint, int badPoint)
         {
             this.roomNumber = roomNumber;
             this.name = name;
             this.classNumber = classNumber;
             this.goodPoint = goodPoint;
             this.badPoint = badPoint;
+            this.isChecked = isChecked;
         }
     }
 }

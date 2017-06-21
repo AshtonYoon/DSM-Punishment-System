@@ -23,14 +23,36 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class PunishmentListPage : Page
     {
+        private JArray ruleList;
+
         public PunishmentListPage()
         {
             InitializeComponent();
 
             DataContext = this;
-            var a = Resources["PunishmentListKey"] as ViewModel.PunishmentList;
-            a.Add(new PunishmentListViewModel("1", 1, 0));
 
+            var punishmentGoodList = Resources["PunishmentGoodListKey"] as ViewModel.PunishmentList;
+            var punishmentBadList = Resources["PunishmentBadListKey"] as ViewModel.PunishmentList;
+
+            ruleList = Info.multiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+
+            foreach(var element in ruleList)
+            {
+                if (int.Parse(element["POINT_TYPE"].ToString()) == 1)
+                {
+                    punishmentGoodList.Add(new PunishmentListViewModel(
+                        punishmentName: element["POINT_MEMO"].ToString(),
+                        minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
+                        maximumPoint: int.Parse(element["POINT_MAX"].ToString())));
+                }
+                else if(int.Parse(element["POINT_TYPE"].ToString()) == 2)
+                {
+                    punishmentBadList.Add(new PunishmentListViewModel(
+                        punishmentName: element["POINT_MEMO"].ToString(),
+                        minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
+                        maximumPoint: int.Parse(element["POINT_MAX"].ToString())));
+                }
+            }
             BackButton.Click += (s, e) => {
                 this.NavigationService.GoBack();
             };
@@ -43,20 +65,37 @@ namespace DormitoryGUI.View
 
             JObject obj = new JObject();
 
+            JObject rule = new JObject();
+            /*
+             "DEST":123 //추가하는 사람의 TEACHER_UUID
+            "RULE":{
+                "POINT_TYPE":1 //1이면 벌점, 0이면 상점
+                "POINT_MEMO":"넌 ~~~해서 상/벌점이야1",
+                "POINT_MIN":4, //줄수있는 최소 점수
+                "POINT_MAX":23 //줄수있는 최대 점수
+            }*/
+
+            
             //상벌점 종류
             if ((bool)GoodPoint.IsChecked)
-                obj.Add("type", 1);
+                rule.Add("POINT_TYPE", 1);
             else
-                obj.Add("type", 2);
+                rule.Add("POINT_TYPE", 2);
 
             //항목 이름
-            obj.Add("memo", PunishmentName.Text);
+            rule.Add("POINT_MEMO", PunishmentName.Text);
 
             //최소, 최대 점수
-            obj.Add("min", MinimunPoint.SliderValue);
-            obj.Add("max", MaximumPoint.SliderValue);
+            rule.Add("POINT_MIN", MinimunPoint.SliderValue);
+            rule.Add("POINT_MAX", MaximumPoint.SliderValue);
 
-            Info.multiJson(Info.Server.ADD_SCORE_INFO, obj);
+            //TEACHER_UUID
+            obj.Add("DEST", "1");
+            obj.Add("RULE", rule);
+
+            Info.multiJson(Info.Server.ADD_RULE_DATA, obj);
+
+            MessageBox.Show("항목 추가가 완료되었습니다.");
         }
 
         private bool CheckSliderValue()
@@ -82,6 +121,32 @@ namespace DormitoryGUI.View
             else
             {
                 return true;
+            }
+        }
+
+        private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var listView = sender as ListView;
+            var gridView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - 18;
+
+            double[] columnRatio =
+            {
+                0.1,
+                0.6,
+                0.15,
+                0.15
+            };
+
+            foreach (var element in gridView.Columns)
+                element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
+        }
+
+        private void SearchList_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
             }
         }
     }

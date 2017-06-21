@@ -10,7 +10,8 @@
       d:DesignWidth="1000"
       Title="PunishmentListPage">
     <Page.Resources>
-        <viewmodel:PunishmentList x:Key="PunishmentListKey" />
+        <viewmodel:PunishmentList x:Key="PunishmentGoodListKey" />
+        <viewmodel:PunishmentList x:Key="PunishmentBadListKey" />
         <!--Control colors.-->
         <Color x:Key="WindowColor">#FFE8EDF9</Color>
         <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
@@ -394,7 +395,12 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TabControl Grid.Column="0"
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <TabControl Grid.Row="0"
                         Margin="10"
                         BorderBrush="Transparent"
                         BorderThickness="0"
@@ -436,7 +442,9 @@
                               Background="#555555"
                               Margin="10"
                               BorderThickness="0"
-                              ItemsSource="{Binding Source={StaticResource PunishmentListKey}}">
+                              SizeChanged="SearchList_SizeChanged"
+                              ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}"
+                                  KeyUp="SearchList_KeyUp">
                         <ListView.View>
                             <GridView AllowsColumnReorder="True">
                                 <GridViewColumn>
@@ -457,16 +465,84 @@
                                 </GridViewColumn>
                                 <GridViewColumn Header="항목"
                                                 DisplayMemberBinding="{Binding Path=PunishmentName}" />
-                                <GridViewColumn Header="최대"
-                                                DisplayMemberBinding="{Binding Path=MaximumPoint}" />
                                 <GridViewColumn Header="최소"
                                                 DisplayMemberBinding="{Binding Path=MinimumPoint}" />
+                                <GridViewColumn Header="최대"
+                                                DisplayMemberBinding="{Binding Path=MaximumPoint}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </TabItem>
-                <TabItem Header="상점"></TabItem>
+                <TabItem Header="상점">
+                    <ListView x:Name="BadList"
+                              Grid.Row="1"
+                              Background="#555555"
+                              Margin="10"
+                              BorderThickness="0"
+                              SizeChanged="SearchList_SizeChanged"
+                              ItemsSource="{Binding Source={StaticResource PunishmentGoodListKey}}">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True">
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <CheckBox VerticalAlignment="Center"
+                                                  BorderThickness="1.2" />
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox x:Name="ItemCheckBox"
+                                                      VerticalAlignment="Center"
+                                                      BorderBrush="#777777" />
+                                            <!--<DataTemplate>
+                                                   <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
+                                               </DataTemplate>-->
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="항목"
+                                                DisplayMemberBinding="{Binding Path=PunishmentName}" />
+                                <GridViewColumn Header="최소"
+                                                DisplayMemberBinding="{Binding Path=MinimumPoint}" />
+                                <GridViewColumn Header="최대"
+                                                DisplayMemberBinding="{Binding Path=MaximumPoint}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
             </TabControl>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"
+                            Margin="10"
+                            Content="수정"
+                            Background="White"
+                            BorderBrush="Transparent"
+                            BorderThickness="0">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius"
+                                        Value="8" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Grid.Column="1"
+                            Margin="10"
+                            Content="삭제"
+                            Background="White"
+                            BorderBrush="Transparent"
+                            BorderThickness="0">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius"
+                                        Value="8" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Grid>
             <Grid Grid.Column="1"
                   Margin="10"
                   Background="#eeeeee">
@@ -523,5 +599,13 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <StackPanel Grid.Column="1"
+                    Grid.Row="2"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <Label Content="Del : 선택한 항목 삭제&#x09;" />
+            <Label Content="Shift + 마우스 드래그 : 다중 선택" />
+        </StackPanel>
     </Grid>
 </Page>

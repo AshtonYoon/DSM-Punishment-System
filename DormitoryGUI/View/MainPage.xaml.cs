@@ -1,5 +1,6 @@
 ﻿using DormitoryGUI.Model;
 using DormitoryGUI.View;
+using DormitoryGUI.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -31,11 +32,35 @@ namespace DormitoryGUI
         private JArray studentList;
         private readonly MainWindow mainWindow;
 
+        private RoutedEventHandler UnCheckedEventHandler;
+        private RoutedEventHandler CheckedEventHandler;
+
         public MainPage(MainWindow mainWindow)
         {
             InitializeComponent();
 
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
+
+            UnCheckedEventHandler += new RoutedEventHandler((s, e)=> {
+                foreach (var element in SearchList.Items)
+                {
+                    ((StudentListViewModel)element).IsChecked = false;
+                }
+                SearchList.SelectedItems.Clear();
+
+                SearchList.Items.Refresh();
+            });
+
+            CheckedEventHandler += new RoutedEventHandler((s, e) =>
+            {
+                foreach (var element in SearchList.Items)
+                {
+                    ((StudentListViewModel)element).IsChecked = true;
+                    SearchList.SelectedItems.Add(element);
+                }
+
+                SearchList.Items.Refresh();
+            });
 
             UploadExcel.Click += (s, e) =>
             {
@@ -43,11 +68,12 @@ namespace DormitoryGUI
                 MessageBox.Show("데이터 설정이 완료되었습니다.");
             };
 
-            this.mainWindow = mainWindow;
             PunishmentList.Click += (s, e) =>
             {
                 mainWindow.NavigatePage(new PunishmentListPage());
             };
+
+            this.mainWindow = mainWindow;
 
             update();
         }
@@ -63,15 +89,10 @@ namespace DormitoryGUI
                     roomNumber: 0.ToString(),
                     classNumber: json["USER_SCHOOL_NUMBER"].ToString(),
                     name: json["USER_NAME"].ToString(),
-                    IsChecked: false,
+                    isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString())));
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
@@ -174,17 +195,21 @@ namespace DormitoryGUI
             foreach(JObject student in studentList)
             {
                 if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command)||
-                    student["USER_NAME"].ToString().Contains(command))
+                    student["USER_NAME"].ToString().Contains(command)||
+                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command)||
+                    student["TOTAL_BAD_SCORE"].ToString().Contains(command))
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                     roomNumber: student["user_school_room_number"] != null ? student["user_school_room_number"].ToString() : "NULL",
                     classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
                     name: student["USER_NAME"].ToString(),
-                    IsChecked: false,
-                    goodPoint: 0,
-                    badPoint: 0));
+                    isChecked: false,
+                    goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
+                    badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString())));
                 }
             }
+           
+            UnCheckedEventHandler?.Invoke(sender, e);
         }
 
         private void SearchCommand_KeyUp(object sender, KeyEventArgs e)
@@ -234,13 +259,12 @@ namespace DormitoryGUI
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var element in SearchList.Items)
-                SearchList.SelectedItems.Add(element);
+            CheckedEventHandler?.Invoke(sender, e);
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            SearchList.SelectedItems.Clear();
+            UnCheckedEventHandler?.Invoke(sender, e);
         }
     }
 }
