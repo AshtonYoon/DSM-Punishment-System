@@ -27,7 +27,7 @@ namespace DormitoryGUI
 
         public void NavigateMainPage()
         {
-            MainContainer.NavigationService.Navigate(new MainPage());
+            MainContainer.NavigationService.Navigate(new MainPage(this));
         }
 
         public void NavigatePage(Page page)

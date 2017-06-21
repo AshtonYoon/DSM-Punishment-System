@@ -27,3 +27,5 @@ C:\Users\thakd\onedrive\documents\visual studio 2017\Projects\DormitoryGUI\Dormi
 C:\Users\thakd\onedrive\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 C:\Users\thakd\onedrive\documents\visual studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
 C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
+C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\PunishmentListPage.g.cs
+C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\PunishmentListPage.baml

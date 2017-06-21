@@ -13,7 +13,8 @@
                Width="30"
                Height="30"
                VerticalAlignment="Center"
-               HorizontalAlignment="Center"/>
+               HorizontalAlignment="Center"
+               RenderOptions.BitmapScalingMode="HighQuality"/>
     </UserControl.Resources>
     <Button x:Name="button"
             Width="50"
@@ -24,6 +25,10 @@
             Content="{StaticResource image}"
             Cursor="Hand"
             Click="button_Click">
+        <!--<Button.ToolTip>
+            <ToolTip x:Name="buttonToolTip"
+                     BorderThickness="0" />
+        </Button.ToolTip>-->
         <Button.Resources>
             <Style TargetType="{x:Type Border}">
                 <Setter Property="CornerRadius"

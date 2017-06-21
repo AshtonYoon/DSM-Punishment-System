@@ -329,8 +329,14 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Slider Ticks="10"
-                Maximum="10"
+        <Slider x:Name="slider"
+                Ticks="1,2,3,4,5"
+                IsSnapToTickEnabled="True"
+                TickPlacement="BottomRight"
+                AutoToolTipPlacement="BottomRight"
+                AutoToolTipPrecision="2"
+                Minimum="1"
+                Maximum="5"
                 Value="1"/>
     </Grid>
 </UserControl>

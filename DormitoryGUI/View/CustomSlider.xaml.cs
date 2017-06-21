@@ -20,6 +20,18 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class CustomSlider : UserControl
     {
+        public int SliderValue
+        {
+            get
+            {
+                return (int)slider.Value;
+            }
+            set
+            {
+                slider.Value = value;
+            }
+        }
+
         public CustomSlider()
         {
             InitializeComponent();

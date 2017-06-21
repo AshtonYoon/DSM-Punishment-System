@@ -60,11 +60,53 @@
                    Foreground="#555555" />
             <Button x:Name="LoginButton"
                     Content="로그인"
-                    Padding="0, 10"
                     Click="LoginButton_Click"
                     Foreground="White"
                     Background="Transparent"
-                    BorderBrush="{x:Static SystemColors.ControlLightBrush}" />
+                    Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="OverridesDefaultStyle"
+                                Value="True" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Name="border"
+                                            BorderThickness="1"
+                                            Padding="5"
+                                            BorderBrush="{x:Static SystemColors.ControlLightBrush}"
+                                            Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation From="Transparent"
+                                                To="#66FFFFFF"
+                                                Duration="0:0:0.15"
+                                                Storyboard.TargetProperty="Background.Color" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Button.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation From="#66FFFFFF"
+                                                To="Transparent"
+                                                Duration="0:0:0.15"
+                                                Storyboard.TargetProperty="Background.Color" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

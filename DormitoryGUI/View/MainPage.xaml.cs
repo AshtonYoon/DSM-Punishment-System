@@ -1,4 +1,5 @@
 ﻿using DormitoryGUI.Model;
+using DormitoryGUI.View;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,9 @@ namespace DormitoryGUI
     {
         ViewModel.StudentList listviewCollection;
         private JArray studentList;
+        private readonly MainWindow mainWindow;
 
-        public MainPage()
+        public MainPage(MainWindow mainWindow)
         {
             InitializeComponent();
 
@@ -39,6 +41,12 @@ namespace DormitoryGUI
             {
                 setStudentData();
                 MessageBox.Show("데이터 설정이 완료되었습니다.");
+            };
+
+            this.mainWindow = mainWindow;
+            PunishmentList.Click += (s, e) =>
+            {
+                mainWindow.NavigatePage(new PunishmentListPage());
             };
 
             update();
@@ -66,13 +74,9 @@ namespace DormitoryGUI
 
         }
 
-        private async void ApplyPointButton_Click(object sender, RoutedEventArgs e)
+        private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            FirstProcedure(PointProcedure.Children[PointProcedure.Children.Count - 1] as Panel);
-
-            await Task.Delay(5000);
-
-            SecondProcedure(PointProcedure.Children[PointProcedure.Children.Count - 1] as Panel);
+            HideAnimation(PointProcedure.Children[PointProcedure.Children.Count - 1] as Panel);
         }
 
         private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -80,7 +84,7 @@ namespace DormitoryGUI
             var listView = sender as ListView;
             var gridView = listView.View as GridView;
 
-            var workingWidth = listView.ActualWidth - 20;
+            var workingWidth = listView.ActualWidth - 18;
 
             double[] columnRatio =
             {
@@ -136,34 +140,6 @@ namespace DormitoryGUI
             HideStoryBoard.Children.Add(FadeOutAnimation);
             HideStoryBoard.Children.Add(ShiftLeftAnimation);
             HideStoryBoard.Begin();
-        }
-
-        /// <summary>
-        /// 상벌점주는 과정에서 다음 버튼을 눌렀을 때 처리 
-        /// </summary>
-        private void FirstProcedure(Panel target)
-        {
-            foreach(var element in target.Children)
-            {
-                if((bool)(element as RadioButton).IsChecked)
-                {
-                    HideAnimation(target);
-                    PointProcedure.Children.Remove(target);
-
-                    Grid ItemContainer = new Grid
-                    {
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        Margin = new Thickness(100, 0, 40, 5),
-                        Opacity = 0,
-                        Children =
-                        {
-                            new View.CustomComboBox()
-                        }
-                    };
-                    PointProcedure.Children.Add(ItemContainer);
-                    ShowAnimation(ItemContainer);
-                }
-            }
         }
 
         private void SecondProcedure(Panel target)
@@ -254,6 +230,17 @@ namespace DormitoryGUI
             }
 
             Info.multiJson(Info.Server.SET_STUDENT_DATA, list);
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var element in SearchList.Items)
+                SearchList.SelectedItems.Add(element);
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SearchList.SelectedItems.Clear();
         }
     }
 }

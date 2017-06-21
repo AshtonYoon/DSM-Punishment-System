@@ -62,11 +62,15 @@
     </ApplicationDefinition>
     <Compile Include="Model\ExcelProcessing.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="ViewModel\PunishmentListViewModel.cs" />
     <Compile Include="View\CustomComboBox.xaml.cs">
       <DependentUpon>CustomComboBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomSlider.xaml.cs">
       <DependentUpon>CustomSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PunishmentListPage.xaml.cs">
+      <DependentUpon>PunishmentListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
@@ -107,6 +111,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\PunishmentListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SideMenuButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,6 +155,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\download.png" />
+    <Resource Include="Image\upload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\analytics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\left-arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

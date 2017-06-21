@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/excel.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/left-arrow.png")]
 
 
