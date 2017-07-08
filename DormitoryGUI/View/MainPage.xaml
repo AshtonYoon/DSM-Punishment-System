@@ -450,21 +450,24 @@
                             Orientation="Horizontal"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left">
-                    <RadioButton Content="상점"
-                                 Foreground="White"
-                                 VerticalAlignment="Center"
-                                 BorderBrush="White" />
-                    <RadioButton Content="벌점"
-                                 Foreground="White"
-                                 Margin="20,0,0,0"
-                                 VerticalAlignment="Center"
-                                 BorderBrush="White" />
-                </StackPanel>
+                        <RadioButton x:Name="Good"
+                                     Content="상점"
+                                     Foreground="White"
+                                     VerticalAlignment="Center"
+                                     BorderBrush="White" />
+                        <RadioButton x:Name="Bad"
+                                     Content="벌점"
+                                     Foreground="White"
+                                     Margin="20,0,0,0"
+                                     VerticalAlignment="Center"
+                                     BorderBrush="White" />
+                    </StackPanel>
                 </Grid>
                 <Grid x:Name="SecondGrid"
                       Opacity="0"
                       Margin="40, 0, 0, 0"
-                      Panel.ZIndex="-1">
+                      Panel.ZIndex="-1"
+                      Visibility="Hidden">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
@@ -473,12 +476,14 @@
                            Foreground="White"
                            VerticalAlignment="Top"
                            Margin="0, 0, 0, -2"/>
-                    <view:CustomComboBox Grid.Row="1"/>
+                    <view:CustomComboBox x:Name="PunishmentComboBox"
+                                         Grid.Row="1"/>
                 </Grid>
                 <Grid x:Name="ThirdGrid"
                       Opacity="0"
                       Margin="40, 0, 0, 0"
-                      Panel.ZIndex="-2">
+                      Panel.ZIndex="-2"
+                      Visibility="Hidden">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
@@ -487,7 +492,8 @@
                            Foreground="White"
                            VerticalAlignment="Top"
                            Margin="0, 0, 0, -2" />
-                    <view:CustomSlider Grid.Row="1"/>
+                    <view:CustomSlider x:Name="PunishmentSlider"
+                                       Grid.Row="1"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Button x:Name="ApplyPointButton"

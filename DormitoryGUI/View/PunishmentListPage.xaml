@@ -437,7 +437,7 @@
                     </Style>
                 </TabControl.Resources>
                 <TabItem Header="벌점">
-                    <ListView x:Name="SearchList"
+                    <ListView x:Name="GoodList"
                               Grid.Row="1"
                               Background="#555555"
                               Margin="10"

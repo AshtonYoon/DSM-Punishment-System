@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DormitoryGUI.ViewModel;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,50 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class CustomComboBox : UserControl
     {
+        private JArray ruleList;
+
         public CustomComboBox()
         {
             InitializeComponent();
+
+            DataContext = this;
+
+            InitializePunishmentList();
+        }
+
+        public object SelectedItem
+        {
+            get => comboBox.SelectedItem;
+        }
+
+        private int punishmentType = 0;
+        public int PunishmentType
+        {
+            get => punishmentType;
+            set
+            {
+                punishmentType = value;
+                InitializePunishmentList();
+            }
+        }
+
+        private void InitializePunishmentList()
+        {
+            var punishmentList = Resources["PunishmentListKey"] as ViewModel.PunishmentList;
+
+            ruleList = Info.multiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+
+            punishmentList.Clear();
+            foreach (var element in ruleList)
+            {
+                if (int.Parse(element["POINT_TYPE"].ToString()) == PunishmentType)
+                {
+                    punishmentList.Add(new PunishmentListViewModel(
+                        punishmentName: element["POINT_MEMO"].ToString(),
+                        minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
+                        maximumPoint: int.Parse(element["POINT_MAX"].ToString())));
+                }
+            }
         }
     }
 }

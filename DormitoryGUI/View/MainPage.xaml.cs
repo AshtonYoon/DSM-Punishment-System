@@ -113,15 +113,42 @@ namespace DormitoryGUI
             }
         }
 
-        private async void ApplyPointButton_Click(object sender, RoutedEventArgs e)
+        private Step CurrentStep = Step.First;
+        private enum Step { First, Second, Third };
+
+        private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            HideAnimation(FirstGrid);
-            ShowAnimation(SecondGrid);
+            if (((bool)Good.IsChecked || (bool)Bad.IsChecked) && CurrentStep == Step.First)
+            {
+                HideAnimation(FirstGrid);
+                ShowAnimation(SecondGrid);
 
-            await Task.Delay(2000);
+                if(((bool)Good.IsChecked))
+                    PunishmentComboBox.PunishmentType = 1;
 
-            HideAnimation(SecondGrid);
-            ShowAnimation(ThirdGrid);
+                else if (((bool)Bad.IsChecked))
+                    PunishmentComboBox.PunishmentType = 0;
+
+                CurrentStep = Step.Second;
+            }
+
+            if(PunishmentComboBox.SelectedItem != null && CurrentStep == Step.Second)
+            {
+                //Do something
+                HideAnimation(SecondGrid);
+                ShowAnimation(ThirdGrid);
+
+                PunishmentSlider.SliderValue = (PunishmentComboBox.SelectedItem as PunishmentListViewModel).MinimumPoint;
+
+                CurrentStep = Step.Third;
+            }
+
+            if(CurrentStep == Step.Third)
+            {
+                //Do something
+
+                //CurrentStep = Step.First;
+            }
         }
 
         private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -165,6 +192,8 @@ namespace DormitoryGUI
 
             HideStoryBoard.Children.Add(FadeOutAnimation);
             HideStoryBoard.Children.Add(ShiftLeftAnimation);
+
+            target.Visibility = Visibility.Hidden;
             HideStoryBoard.Begin();
         }
 
@@ -187,31 +216,9 @@ namespace DormitoryGUI
 
             HideStoryBoard.Children.Add(FadeInAnimation);
             HideStoryBoard.Children.Add(ShiftLeftAnimation);
+
+            target.Visibility = Visibility.Visible;
             HideStoryBoard.Begin();
-        }
-
-        private void SecondProcedure(Panel target)
-        {
-            foreach(var element in target.Children)
-            {
-                
-            }
-            HideAnimation(target);
-            PointProcedure.Children.Remove(target);
-
-            Grid PointContainer = new Grid
-            {
-                VerticalAlignment = VerticalAlignment.Bottom,
-                Margin = new Thickness(100, 0, 40, 5),
-                Opacity = 0,
-                Children =
-                {
-                    new View.CustomSlider()
-                }
-            };
-
-            PointProcedure.Children.Add(PointContainer);
-            ShowAnimation(PointContainer);
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
