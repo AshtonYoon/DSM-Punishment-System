@@ -4,6 +4,7 @@ using DormitoryGUI.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -28,7 +29,9 @@ namespace DormitoryGUI
     /// </summary>
     public partial class MainPage : Page
     {
-        ViewModel.StudentList listviewCollection;
+        private StudentList listviewCollection;
+        private StudentList resultListCollection;
+
         private JArray studentList;
         private readonly MainWindow mainWindow;
 
@@ -39,27 +42,32 @@ namespace DormitoryGUI
         {
             InitializeComponent();
 
+            var f = Info.multiJson(Info.Server.GET_RULE_DATA, "");
+
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
+            resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
 
             UnCheckedEventHandler += new RoutedEventHandler((s, e)=> {
-                foreach (var element in SearchList.Items)
+                var target = GetAncestorOfType<ListView>(s as CheckBox);
+                foreach (var element in target.Items)
                 {
                     ((StudentListViewModel)element).IsChecked = false;
                 }
-                SearchList.SelectedItems.Clear();
+                target.SelectedItems.Clear();
 
-                SearchList.Items.Refresh();
+                target.Items.Refresh();
             });
 
             CheckedEventHandler += new RoutedEventHandler((s, e) =>
             {
-                foreach (var element in SearchList.Items)
+                var target = GetAncestorOfType<ListView>(s as CheckBox);
+                foreach (var element in target.Items)
                 {
                     ((StudentListViewModel)element).IsChecked = true;
-                    SearchList.SelectedItems.Add(element);
+                    target.SelectedItems.Add(element);
                 }
 
-                SearchList.Items.Refresh();
+                target.Items.Refresh();
             });
 
             UploadExcel.Click += (s, e) =>
@@ -73,10 +81,20 @@ namespace DormitoryGUI
                 mainWindow.NavigatePage(new PunishmentListPage());
             };
 
+            //((INotifyCollectionChanged)SearchList.Items).CollectionChanged += ListView_CollectionChanged;
+
             this.mainWindow = mainWindow;
 
             update();
         }
+
+        //private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    if(e.Action == NotifyCollectionChangedAction.Add)
+        //    {
+
+        //    }
+        //}
 
         public void update()
         {
@@ -95,9 +113,15 @@ namespace DormitoryGUI
             }
         }
 
-        private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
+        private async void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            HideAnimation(PointProcedure.Children[PointProcedure.Children.Count - 1] as Panel);
+            HideAnimation(FirstGrid);
+            ShowAnimation(SecondGrid);
+
+            await Task.Delay(2000);
+
+            HideAnimation(SecondGrid);
+            ShowAnimation(ThirdGrid);
         }
 
         private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -123,15 +147,17 @@ namespace DormitoryGUI
 
         private void HideAnimation(Panel target)
         {
+            var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
+
             Storyboard HideStoryBoard = new Storyboard();
 
-            DoubleAnimation FadeOutAnimation = new DoubleAnimation(0, new Duration(new TimeSpan(0, 0, 0, 0, 300)));
+            DoubleAnimation FadeOutAnimation = new DoubleAnimation(0, Duration);
             FadeOutAnimation.EasingFunction = new QuadraticEase();
             Storyboard.SetTargetProperty(FadeOutAnimation, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(FadeOutAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 200, 5), new Duration(new TimeSpan(0, 0, 0, 0, 300)));
+            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration);
             ShiftLeftAnimation.EasingFunction = new QuadraticEase();
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
@@ -144,21 +170,22 @@ namespace DormitoryGUI
 
         private void ShowAnimation(Panel target)
         {
+            var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
             Storyboard HideStoryBoard = new Storyboard();
 
-            DoubleAnimation FadeOutAnimation = new DoubleAnimation(1, new Duration(new TimeSpan(0, 0, 0, 0, 300)));
-            FadeOutAnimation.EasingFunction = new QuadraticEase();
-            Storyboard.SetTargetProperty(FadeOutAnimation, new PropertyPath(OpacityProperty));
+            DoubleAnimation FadeInAnimation = new DoubleAnimation(1, Duration);
+            FadeInAnimation.EasingFunction = new QuadraticEase();
+            Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
 
-            Storyboard.SetTarget(FadeOutAnimation, target);
+            Storyboard.SetTarget(FadeInAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(10, 0, 40, 5), new Duration(new TimeSpan(0, 0, 0, 0, 300)));
+            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration);
             ShiftLeftAnimation.EasingFunction = new QuadraticEase();
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
 
-            HideStoryBoard.Children.Add(FadeOutAnimation);
+            HideStoryBoard.Children.Add(FadeInAnimation);
             HideStoryBoard.Children.Add(ShiftLeftAnimation);
             HideStoryBoard.Begin();
         }
@@ -209,7 +236,7 @@ namespace DormitoryGUI
                 }
             }
            
-            UnCheckedEventHandler?.Invoke(sender, e);
+            //UnCheckedEventHandler?.Invoke(sender, e);
         }
 
         private void SearchCommand_KeyUp(object sender, KeyEventArgs e)
@@ -265,6 +292,140 @@ namespace DormitoryGUI
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             UnCheckedEventHandler?.Invoke(sender, e);
+        }
+
+        private void ResultList_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var listView = sender as ListView;
+            var gridView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - 18;
+
+            double[] columnRatio =
+            {
+                0.15,
+                0.425,
+                0.425
+            };
+
+            foreach (var element in gridView.Columns)
+                element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(StudentListViewModel element in SearchList.Items)
+            {
+                if (element.IsChecked)
+                {
+                    resultListCollection.Add(new StudentListViewModel(
+                        isChecked: element.IsChecked,
+                        roomNumber: element.RoomNumber,
+                        name: element.Name,
+                        classNumber: element.ClassNumber,
+                        goodPoint: element.GoodPoint,
+                        badPoint: element.BadPoint));
+                }
+            }
+
+            ResultList.ItemsSource = Deduplication(resultListCollection as IEnumerable<StudentListViewModel>);
+            ResultList.Items.Refresh();
+        }
+
+        private T GetAncestorOfType<T>(FrameworkElement child)  where T : FrameworkElement
+        {
+            var parent = VisualTreeHelper.GetParent(child);
+            if (parent != null && !(parent is T))
+                return GetAncestorOfType<T>((FrameworkElement)parent);
+
+            return (T)parent;
+        }
+
+        private void ResultList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddSelectionByClick(ResultList, e);
+        }
+
+        private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddSelectionByClick(SearchList, e);
+        }
+
+        private void AddSelectionByClick(ListView listview, SelectionChangedEventArgs e)
+        {
+            var targets = e.AddedItems;
+            foreach (var element in targets)
+            {
+                ((StudentListViewModel)element).IsChecked = true;
+            }
+            listview.Items.Refresh();
+        }
+
+        private IEnumerable<StudentListViewModel> Deduplication(IEnumerable<StudentListViewModel> source)
+        {
+            return source.GroupBy(x => x.ClassNumber)
+                                 .Select(y => y.First());
+        }
+
+        private void ResultList_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ContextMenu menu = FindResource("ListviewItemControlMenu") as ContextMenu;
+
+            menu.PlacementTarget = sender as ListView;
+            menu.IsOpen = true;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ResultList.ItemsSource = resultListCollection.Where(x => !x.IsChecked);
+            ResultList.Items.Refresh();
+        }
+
+        private void ResultList_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Delete)
+            {
+                foreach(StudentListViewModel element in ResultList.Items)
+                {
+                    if (element.IsChecked)
+                        resultListCollection.Remove(element);
+                }
+
+                ResultList.ItemsSource = resultListCollection;
+                ResultList.Items.Refresh();
+            }
+        }
+
+        private void SelectAllCommand_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(StudentListViewModel element in ResultList.Items)
+            {
+                element.IsChecked = true;
+                ResultList.SelectedItems.Add(element);
+            }
+        }
+
+        private void ItemCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var target = GetAncestorOfType<ListView>(sender as CheckBox);
+            var targetItem = GetAncestorOfType<ListViewItem>(sender as CheckBox);
+
+            target.SelectedItems.Add(targetItem);
+            target.Items.Refresh();
+        }
+
+        private void ItemCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeselectAllCommand_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (StudentListViewModel element in ResultList.Items)
+            {
+                element.IsChecked = false;
+                ResultList.SelectedItems.Clear();
+            }
         }
     }
 }

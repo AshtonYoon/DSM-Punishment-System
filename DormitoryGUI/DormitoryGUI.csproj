@@ -60,9 +60,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DistinctStudentComparer.cs" />
     <Compile Include="Model\ExcelProcessing.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\PunishmentListViewModel.cs" />
+    <Compile Include="ViewModel\RuleViewModel.cs" />
     <Compile Include="View\CustomComboBox.xaml.cs">
       <DependentUpon>CustomComboBox.xaml</DependentUpon>
     </Compile>

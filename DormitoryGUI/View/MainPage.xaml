@@ -12,7 +12,20 @@
       d:DesignWidth="1000"
       Title="MainPage">
     <Page.Resources>
+        <ContextMenu x:Key="ListviewItemControlMenu">
+            <MenuItem Header="삭제" 
+                      Click="MenuItem_Click"/>
+            <MenuItem x:Name="SelectAllCommand"
+                      Header="전체 선택" 
+                      Click="SelectAllCommand_Click"/>
+            <MenuItem x:Name="DeselectAllCommand"
+                      Header="전체 해제" 
+                      Click="DeselectAllCommand_Click"/>
+            <Separator />
+            <MenuItem Header="선택 영역 반전" />
+        </ContextMenu>
         <viewmodel:StudentList x:Key="StudentListKey" />
+        <viewmodel:StudentList x:Key="ResultListKey" />
         <!--Control colors.-->
         <Color x:Key="WindowColor">#FFE8EDF9</Color>
         <Color x:Key="ContentAreaColorLight">#FFC5CBF9</Color>
@@ -376,77 +389,67 @@
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" />
+            <Grid Grid.Row="0">
+                <ListView x:Name="ResultList"
+                          Grid.Row="1"
+                          Background="#555555"
+                          Margin="10"
+                          BorderThickness="0"
+                          SizeChanged="ResultList_SizeChanged"
+                          ItemsSource="{Binding Source={StaticResource ResultListKey}}"
+                          SelectionChanged="ResultList_SelectionChanged"
+                          MouseRightButtonUp="ResultList_MouseRightButtonUp"
+                          KeyUp="ResultList_KeyUp">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="True">
+                            <GridViewColumn>
+                                <GridViewColumn.Header>
+                                    <CheckBox VerticalAlignment="Center"
+                                              BorderThickness="1.2"
+                                              Checked="CheckBox_Checked"
+                                              Unchecked="CheckBox_Unchecked"/>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox x:Name="ItemCheckBox"
+                                                  VerticalAlignment="Center"
+                                                  BorderBrush="#777777"
+                                                  Checked="ItemCheckBox_Checked"
+                                                  Unchecked="ItemCheckBox_Unchecked"
+                                                  IsChecked="{Binding IsChecked}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="학번"
+                                            DisplayMemberBinding="{Binding Path=ClassNumber}"/>
+                            <GridViewColumn Header="이름"
+                                            DisplayMemberBinding="{Binding Path=Name}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
             <Grid x:Name="PointProcedure"
                   Grid.Row="1"
-                  Background="#333333">
-                <Button x:Name="ApplyPointButton"
-                        Width="25"
-                        Height="25"
-                        Background="Transparent"
-                        BorderThickness="1"
-                        BorderBrush="White"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Right"
-                        Margin="0,0,5,5"
-                        Click="ApplyPointButton_Click">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius"
-                                    Value="12.5" />
-                        </Style>
-                    </Button.Resources>
-                </Button>
-                <!--Arrow-->
-                <Grid RenderTransformOrigin="0.5,0.5"
-                      VerticalAlignment="Bottom"
-                      HorizontalAlignment="Right"
-                      Margin="0,0,10,10"
-                      Width="15"
-                      Height="15">
-                    <Rectangle Fill="#FFF4F4F5"
-                               Height="1.364"
-                               Width="12"
-                               VerticalAlignment="Center"
-                               RenderTransformOrigin="0.5,0.5" />
-                    <Rectangle Fill="#FFF4F4F5"
-                               Height="1.364"
-                               Width="8.5"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Right"
-                               RenderTransformOrigin="0.5 0.5"
-                               Margin="0,4.249,0,0">
-                        <Rectangle.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform />
-                                <SkewTransform />
-                                <RotateTransform Angle="45" />
-                                <TranslateTransform />
-                            </TransformGroup>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                    <Rectangle Fill="#FFF4F4F5"
-                               Height="1.364"
-                               Width="8.5"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               RenderTransformOrigin="0.5 0.5"
-                               Margin="0,0,0,4.249">
-                        <Rectangle.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform />
-                                <SkewTransform />
-                                <RotateTransform Angle="-45" />
-                                <TranslateTransform />
-                            </TransformGroup>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                </Grid>
-                <StackPanel x:Name="ScoreCategory"
+                  Background="#333333"
+                  Margin="10, 0, 10, 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="35" />
+                </Grid.ColumnDefinitions>
+                <Grid x:Name="FirstGrid"
+                      Margin="10,0,0,0.4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Content="유형을 선택해주세요"
+                           Foreground="White"
+                           Margin="-5, 0, 0, -2"/>
+                    <StackPanel x:Name="ScoreCategory"
+                            Grid.Row="1"
                             Orientation="Horizontal"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left"
-                            Margin="10,0,0,5">
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
                     <RadioButton Content="상점"
                                  Foreground="White"
                                  VerticalAlignment="Center"
@@ -457,6 +460,98 @@
                                  VerticalAlignment="Center"
                                  BorderBrush="White" />
                 </StackPanel>
+                </Grid>
+                <Grid x:Name="SecondGrid"
+                      Opacity="0"
+                      Margin="40, 0, 0, 0"
+                      Panel.ZIndex="-1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Content="항목을 선택해주세요" 
+                           Foreground="White"
+                           VerticalAlignment="Top"
+                           Margin="0, 0, 0, -2"/>
+                    <view:CustomComboBox Grid.Row="1"/>
+                </Grid>
+                <Grid x:Name="ThirdGrid"
+                      Opacity="0"
+                      Margin="40, 0, 0, 0"
+                      Panel.ZIndex="-2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Content="점수를 선택해주세요"
+                           Foreground="White"
+                           VerticalAlignment="Top"
+                           Margin="0, 0, 0, -2" />
+                    <view:CustomSlider Grid.Row="1"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Button x:Name="ApplyPointButton"
+                            Width="25"
+                            Height="25"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            BorderBrush="White"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center"
+                            Click="ApplyPointButton_Click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius"
+                                        Value="12.5" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <!--Arrow-->
+                    <Grid RenderTransformOrigin="0.5,0.5"
+                          VerticalAlignment="Bottom"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,5"
+                          Width="15"
+                          Height="15">
+                        <Rectangle Fill="#FFF4F4F5"
+                                   Height="1.364"
+                                   Width="12"
+                                   VerticalAlignment="Center"
+                                   RenderTransformOrigin="0.5,0.5" />
+                        <Rectangle Fill="#FFF4F4F5"
+                                   Height="1.364"
+                                   Width="8.5"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Right"
+                                   RenderTransformOrigin="0.5 0.5"
+                                   Margin="0,4.249,0,0">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform Angle="45" />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Fill="#FFF4F4F5"
+                                   Height="1.364"
+                                   Width="8.5"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Right"
+                                   RenderTransformOrigin="0.5 0.5"
+                                   Margin="0,0,0,4.249">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform Angle="-45" />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Column="0">
@@ -638,8 +733,10 @@
                                   Grid.Row="1"
                                   Background="#555555"
                                   Margin="10"
+                                  Opacity="0.7"
                                   BorderThickness="0"
                                   SizeChanged="SearchList_SizeChanged"
+                                  SelectionChanged="SearchList_SelectionChanged"
                                   ItemsSource="{Binding Source={StaticResource StudentListKey}}">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="True">
@@ -692,6 +789,23 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                        <Button x:Name="AddButton"
+                                Grid.Row="2"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Margin="10 2"
+                                Cursor="Hand"
+                                Content="추가"
+                                Background="#90dfaa"
+                                Foreground="White"
+                                Click="AddButton_Click">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius"
+                                            Value="9" />
+                                </Style>
+                            </Button.Resources>
+                        </Button>
                     </Grid>
                     <Grid Grid.Column="1" />
                 </Grid>

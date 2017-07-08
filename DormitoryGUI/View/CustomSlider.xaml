@@ -331,6 +331,7 @@
     <Grid>
         <Slider x:Name="slider"
                 Ticks="1,2,3,4,5"
+                Foreground="White"
                 IsSnapToTickEnabled="True"
                 TickPlacement="BottomRight"
                 AutoToolTipPlacement="BottomRight"
