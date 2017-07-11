@@ -41,9 +41,7 @@ namespace DormitoryGUI
         public MainPage(MainWindow mainWindow)
         {
             InitializeComponent();
-
-            var f = Info.multiJson(Info.Server.GET_RULE_DATA, "");
-
+            
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
             resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
 
@@ -114,6 +112,7 @@ namespace DormitoryGUI
         }
 
         private Step CurrentStep = Step.First;
+
         private enum Step { First, Second, Third };
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
@@ -384,23 +383,19 @@ namespace DormitoryGUI
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ResultList.ItemsSource = resultListCollection.Where(x => !x.IsChecked);
-            ResultList.Items.Refresh();
+            DeleteSelectedItem();
         }
 
         private void ResultList_KeyUp(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Delete)
-            {
-                foreach(StudentListViewModel element in ResultList.Items)
-                {
-                    if (element.IsChecked)
-                        resultListCollection.Remove(element);
-                }
+                DeleteSelectedItem();
+        }
 
-                ResultList.ItemsSource = resultListCollection;
-                ResultList.Items.Refresh();
-            }
+        private void DeleteSelectedItem()
+        {
+            ResultList.ItemsSource = resultListCollection.Where(x => !x.IsChecked);
+            ResultList.Items.Refresh();
         }
 
         private void SelectAllCommand_Click(object sender, RoutedEventArgs e)
