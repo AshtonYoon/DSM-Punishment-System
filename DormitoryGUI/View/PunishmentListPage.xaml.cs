@@ -27,6 +27,8 @@ namespace DormitoryGUI.View
 
         private PunishmentList punishmentGoodList;
         private PunishmentList punishmentBadList;
+        private RoutedEventHandler UnCheckedEventHandler;
+        private RoutedEventHandler CheckedEventHandler;
 
         public PunishmentListPage()
         {
@@ -44,6 +46,29 @@ namespace DormitoryGUI.View
             BackButton.Click += (s, e) => {
                 this.NavigationService.GoBack();
             };
+
+            UnCheckedEventHandler += new RoutedEventHandler((s, e) => {
+                var target = GetAncestorOfType<ListView>(s as CheckBox);
+                foreach (var element in target.Items)
+                {
+                    ((StudentListViewModel)element).IsChecked = false;
+                }
+                target.SelectedItems.Clear();
+
+                target.Items.Refresh();
+            });
+
+            CheckedEventHandler += new RoutedEventHandler((s, e) =>
+            {
+                var target = GetAncestorOfType<ListView>(s as CheckBox);
+                foreach (var element in target.Items)
+                {
+                    ((StudentListViewModel)element).IsChecked = true;
+                    target.SelectedItems.Add(element);
+                }
+
+                target.Items.Refresh();
+            });
         }
 
         private void AddPushimentListButton_Click(object sender, RoutedEventArgs e)
@@ -57,9 +82,9 @@ namespace DormitoryGUI.View
             
             //상벌점 종류
             if ((bool)GoodPoint.IsChecked)
-                rule.Add("POINT_TYPE", 1);
+                rule.Add("POINT_TYPE", (int)Info.POINT_TYPE.GOOD);
             else
-                rule.Add("POINT_TYPE", 0);
+                rule.Add("POINT_TYPE", (int)Info.POINT_TYPE.BAD);
 
             //항목 이름
             rule.Add("POINT_MEMO", PunishmentName.Text);
@@ -90,6 +115,16 @@ namespace DormitoryGUI.View
                 MessageBox.Show("최소 벌점은 최대 벌점값을 넘을 수 없습니다.");
                 return false;
             }
+        }
+
+        //나중에 중복 제거
+        private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
+        {
+            var parent = VisualTreeHelper.GetParent(child);
+            if (parent != null && !(parent is T))
+                return GetAncestorOfType<T>((FrameworkElement)parent);
+
+            return (T)parent;
         }
 
         private bool CheckNameValue()
@@ -131,6 +166,7 @@ namespace DormitoryGUI.View
             {
                 if (target.Name.Contains("Good"))
                     DeleteSelectedItem(target, punishmentGoodList);
+
                 else if(target.Name.Contains("Bad"))
                     DeleteSelectedItem(target, punishmentBadList);
             }
@@ -149,7 +185,7 @@ namespace DormitoryGUI.View
 
             foreach (var element in ruleList)
             {
-                if (int.Parse(element["POINT_TYPE"].ToString()) == 1)
+                if (int.Parse(element["POINT_TYPE"].ToString()) == (int)Info.POINT_TYPE.GOOD)
                 {
                     punishmentGoodList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
@@ -158,7 +194,7 @@ namespace DormitoryGUI.View
                         pointUUID: int.Parse(element["POINT_UUID"].ToString()),
                         isChecked: false));
                 }
-                else if (int.Parse(element["POINT_TYPE"].ToString()) == 0)
+                else if (int.Parse(element["POINT_TYPE"].ToString()) == (int)Info.POINT_TYPE.BAD)
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
@@ -171,6 +207,16 @@ namespace DormitoryGUI.View
 
             GoodList.Items.Refresh();
             BadList.Items.Refresh();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckedEventHandler?.Invoke(sender, e);
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UnCheckedEventHandler?.Invoke(sender, e);
         }
     }
 }

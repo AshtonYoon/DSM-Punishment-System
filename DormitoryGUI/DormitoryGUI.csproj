@@ -70,6 +70,9 @@
     <Compile Include="View\CustomSlider.xaml.cs">
       <DependentUpon>CustomSlider.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PermissionManagementPage.xaml.cs">
+      <DependentUpon>PermissionManagementPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PunishmentListPage.xaml.cs">
       <DependentUpon>PunishmentListPage.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\PermissionManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PunishmentListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,6 +179,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\left-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\line-illustration.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

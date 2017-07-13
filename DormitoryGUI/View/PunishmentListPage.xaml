@@ -437,7 +437,7 @@
                     </Style>
                 </TabControl.Resources>
                 <TabItem Header="벌점">
-                    <ListView x:Name="GoodList"
+                    <ListView x:Name="BadList"
                               Grid.Row="1"
                               Background="#555555"
                               Margin="10"
@@ -450,13 +450,16 @@
                                 <GridViewColumn>
                                     <GridViewColumn.Header>
                                         <CheckBox VerticalAlignment="Center"
-                                                  BorderThickness="1.2"/>
+                                                  BorderThickness="1.2"
+                                                  Checked="CheckBox_Checked"
+                                                  Unchecked="CheckBox_Unchecked"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <CheckBox x:Name="ItemCheckBox"
                                                       VerticalAlignment="Center"
-                                                      BorderBrush="#777777" />
+                                                      BorderBrush="#777777"
+                                                      IsChecked="{Binding IsChecked}" />
                                             <!--<DataTemplate>
                                                    <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
                                                </DataTemplate>-->
@@ -474,7 +477,7 @@
                     </ListView>
                 </TabItem>
                 <TabItem Header="상점">
-                    <ListView x:Name="BadList"
+                    <ListView x:Name="GoodList"
                               Grid.Row="1"
                               Background="#555555"
                               Margin="10"
@@ -486,13 +489,16 @@
                                 <GridViewColumn>
                                     <GridViewColumn.Header>
                                         <CheckBox VerticalAlignment="Center"
-                                                  BorderThickness="1.2" />
+                                                  BorderThickness="1.2"
+                                                  Checked="CheckBox_Checked"
+                                                  Unchecked="CheckBox_Unchecked"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <CheckBox x:Name="ItemCheckBox"
                                                       VerticalAlignment="Center"
-                                                      BorderBrush="#777777" />
+                                                      BorderBrush="#777777"
+                                                      IsChecked="{Binding IsChecked}" />
                                             <!--<DataTemplate>
                                                    <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
                                                </DataTemplate>-->

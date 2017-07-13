@@ -457,5 +457,10 @@ namespace DormitoryGUI
                 ResultList.SelectedItems.Clear();
             }
         }
+
+        private void Permission_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.NavigatePage(new PermissionManagementPage());
+        }
     }
 }

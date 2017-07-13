@@ -566,13 +566,23 @@
                 <RowDefinition Height="9*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.504,2"
+                                         StartPoint="0.504,0.03">
+                        <GradientStop Color="#FFBCBCBC"
+                                      Offset="0" />
+                        <GradientStop Color="#FFFFFFFF"
+                                      Offset="0.367" />
+                    </LinearGradientBrush>
+                </Grid.Background>
                 <TextBox x:Name="CurrentDate"
                          HorizontalAlignment="Right"
                          Foreground="Black"
                          Background="Transparent"
                          BorderBrush="Transparent"
-                         Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay,  StringFormat='yy-MM-dd'}"
-                         IsEnabled="False" />
+                         Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay,  StringFormat='yyyy. MM. dd'}"
+                         IsEnabled="False"
+                         Margin="0, 0, 5, 0"/>
                 <TextBox x:Name="TeachereName"
                          Foreground="Black"
                          Background="Transparent"
@@ -616,12 +626,13 @@
                         <view:SideMenuButton x:Name="Permission"
                                              Margin="0, 15"
                                              ButtonBackground="#eeeeee"
-                                             imageSource="/image/key.png">
+                                             imageSource="/image/key.png"
+                                             Click="Permission_Click">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
                                         <TextBlock FontWeight="Bold">권한관리</TextBlock>
-                                        <TextBlock>ㅁㄴㅇㄹ</TextBlock>
+                                        <TextBlock>관리자, 사감, 교사의 권한을 설정합니다</TextBlock>
                                     </StackPanel>
                                 </ToolTip>
                             </view:SideMenuButton.ToolTip>

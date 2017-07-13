@@ -29,6 +29,8 @@ namespace DormitoryGUI
             public const string GET_EXCEL_DATA = SERVER_URL + "excel/get";
             public const string SET_STUDENT_DATA = SERVER_URL + "student/add";
         }
+
+        public enum POINT_TYPE { BAD = 0, GOOD = 1};
         public static object multiJson(string url, object json)
         { 
             try
