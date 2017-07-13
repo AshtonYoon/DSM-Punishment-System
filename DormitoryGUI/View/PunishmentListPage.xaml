@@ -444,7 +444,7 @@
                               BorderThickness="0"
                               SizeChanged="SearchList_SizeChanged"
                               ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}"
-                                  KeyUp="SearchList_KeyUp">
+                              KeyUp="SearchList_KeyUp">
                         <ListView.View>
                             <GridView AllowsColumnReorder="True">
                                 <GridViewColumn>

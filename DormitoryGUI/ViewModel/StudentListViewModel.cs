@@ -20,6 +20,7 @@ namespace DormitoryGUI.ViewModel
         private int goodPoint;
         private int badPoint;
         private bool isChecked;
+        private int userUUID;
 
         public string ClassNumber { get => classNumber; set => classNumber = value; }
         public string Name { get => name; set => name = value; }
@@ -27,8 +28,9 @@ namespace DormitoryGUI.ViewModel
         public int GoodPoint { get => goodPoint; set => goodPoint = value; }
         public int BadPoint { get => badPoint; set => badPoint = value; }
         public bool IsChecked { get => isChecked; set => isChecked = value; }
+        public int UserUUID { get => userUUID; set => userUUID = value; }
 
-        public StudentListViewModel(bool isChecked, string roomNumber, string name, string classNumber, int goodPoint, int badPoint)
+        public StudentListViewModel(bool isChecked, string roomNumber, string name, string classNumber, int goodPoint, int badPoint, int userUUID)
         {
             this.roomNumber = roomNumber;
             this.name = name;
@@ -36,6 +38,7 @@ namespace DormitoryGUI.ViewModel
             this.goodPoint = goodPoint;
             this.badPoint = badPoint;
             this.isChecked = isChecked;
+            this.userUUID = userUUID;
         }
     }
 }

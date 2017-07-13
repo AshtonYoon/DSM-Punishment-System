@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using DormitoryGUI.ViewModel;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,8 @@ namespace DormitoryGUI
 {
     class Info
     {
+        public static MainPageViewModel mainPage = new MainPageViewModel();
+
         public class Server
         {
             private const string SERVER_URL = "http://dsm2015.cafe24.com:3141/";
@@ -22,7 +25,7 @@ namespace DormitoryGUI
             public const string GET_DETAIL_DATA = SERVER_URL + "info/detail";
             public const string GET_RULE_DATA = SERVER_URL + "rule/get";
             public const string ADD_RULE_DATA = SERVER_URL + "rule/add";
-            public const string GIVE_SCORE = SERVER_URL + "score/add";
+            public const string GIVE_SCORE = SERVER_URL + "score/give";
             public const string GET_EXCEL_DATA = SERVER_URL + "excel/get";
             public const string SET_STUDENT_DATA = SERVER_URL + "student/add";
         }

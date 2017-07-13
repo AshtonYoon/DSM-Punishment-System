@@ -41,7 +41,7 @@ namespace DormitoryGUI
         public MainPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            
+
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
             resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
 
@@ -107,7 +107,8 @@ namespace DormitoryGUI
                     name: json["USER_NAME"].ToString(),
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
-                    badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString())));
+                    badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
+                    userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
         }
 
@@ -145,7 +146,32 @@ namespace DormitoryGUI
             if(CurrentStep == Step.Third)
             {
                 //Do something
+                /**
+                    json = {
+	                    "DEST_UUID":123
+	                    "TARGET":[12,32,43,STUDENT_UUID]
+	                    "POINT_UUID":123
+	                    "POINT_VALUE":1567
+                    } 
+                */
+                JObject obj = new JObject();
+                obj.Add("DEST_UUID", Info.mainPage.TeacherUUID);
 
+                PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
+                obj.Add("POINT_UUID", item.PointUUID);
+
+                obj.Add("POINT_VALUE", PunishmentSlider.SliderValue);
+
+                var targets = new JArray();
+
+                foreach (StudentListViewModel element in ResultList.Items)
+                    targets.Add(element.UserUUID);
+
+                obj.Add("TARGET", targets);
+
+                Info.multiJson(Info.Server.GIVE_SCORE, obj);
+
+                MessageBox.Show("처리가 완료되었습니다.");
                 //CurrentStep = Step.First;
             }
         }
@@ -238,7 +264,8 @@ namespace DormitoryGUI
                     name: student["USER_NAME"].ToString(),
                     isChecked: false,
                     goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
-                    badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString())));
+                    badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
+                    userUUID: int.Parse(student["USER_UUID"].ToString())));
                 }
             }
            
@@ -330,7 +357,8 @@ namespace DormitoryGUI
                         name: element.Name,
                         classNumber: element.ClassNumber,
                         goodPoint: element.GoodPoint,
-                        badPoint: element.BadPoint));
+                        badPoint: element.BadPoint,
+                        userUUID: element.UserUUID));
                 }
             }
 

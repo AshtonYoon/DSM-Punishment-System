@@ -63,7 +63,9 @@ namespace DormitoryGUI.View
                     punishmentList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
                         minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(element["POINT_MAX"].ToString())));
+                        maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
+                        pointUUID: int.Parse(element["POINT_UUID"].ToString()),
+                        isChecked: false));
                 }
             }
         }

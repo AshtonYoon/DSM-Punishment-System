@@ -126,9 +126,20 @@ namespace DormitoryGUI.View
 
         private void SearchList_KeyUp(object sender, KeyEventArgs e)
         {
+            var target = sender as ListView;
             if (e.Key == Key.Delete)
             {
+                if (target.Name.Contains("Good"))
+                    DeleteSelectedItem(target, punishmentGoodList);
+                else if(target.Name.Contains("Bad"))
+                    DeleteSelectedItem(target, punishmentBadList);
             }
+        }
+
+        private void DeleteSelectedItem(ListView listView, PunishmentList collection)
+        {
+            listView.ItemsSource = collection.Where(x => !x.IsChecked);
+            listView.Items.Refresh();
         }
 
         private void InitializePunishmentList()
@@ -143,14 +154,18 @@ namespace DormitoryGUI.View
                     punishmentGoodList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
                         minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(element["POINT_MAX"].ToString())));
+                        maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
+                        pointUUID: int.Parse(element["POINT_UUID"].ToString()),
+                        isChecked: false));
                 }
                 else if (int.Parse(element["POINT_TYPE"].ToString()) == 0)
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
                         minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(element["POINT_MAX"].ToString())));
+                        maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
+                        pointUUID: int.Parse(element["POINT_UUID"].ToString()),
+                        isChecked: false));
                 }
             }
 

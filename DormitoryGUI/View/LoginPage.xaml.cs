@@ -18,14 +18,12 @@ namespace DormitoryGUI
     /// </summary>
     public partial class LoginPage : Page
     {
-        private MainPageViewModel mainPage;
         private readonly MainWindow mainWindow;
 
         public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
-
-            mainPage = new MainPageViewModel();
+            
             this.mainWindow = mainWindow;
 
             Password.Focus();
@@ -41,13 +39,13 @@ namespace DormitoryGUI
 
             if (response["TEACHER_UUID"] != null)
             {
-                mainPage.Name = response["TEACHER_NAME"].ToString();
+                Info.mainPage.Name = response["TEACHER_NAME"].ToString();
 
-                mainPage.PermissionData = new KeyValuePair<bool, bool>
+                Info.mainPage.PermissionData = new KeyValuePair<bool, bool>
                     (Int32.Parse(response["STUDENT_MANAGE"].ToString()) == 1
                     , Int32.Parse(response["SCORE_MANAGE"].ToString()) == 1);
 
-                mainPage.TeacherUUID = Int32.Parse(response["TEACHER_UUID"].ToString());
+                Info.mainPage.TeacherUUID = Int32.Parse(response["TEACHER_UUID"].ToString());
                 
                 mainWindow.NavigatePage(new MainPage(mainWindow));
             }
