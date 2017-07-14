@@ -51,8 +51,10 @@
                 <Label Content="관리자" />
                 <StackPanel Orientation="Horizontal"
                             Margin="0, 5, 0, 0">
-                    <CheckBox Content="상벌점 관리" />
-                    <CheckBox Content="학생 관리"
+                    <CheckBox x:Name="ManagerPoint"
+                              Content="상벌점 관리" />
+                    <CheckBox x:Name="ManagerStudent"
+                              Content="학생 관리"
                               Margin="20, 0, 0, 0" />
                 </StackPanel>
             </StackPanel>
@@ -61,8 +63,10 @@
                 <Label Content="사감" />
                 <StackPanel Orientation="Horizontal"
                             Margin="0, 5, 0, 0">
-                    <CheckBox Content="상벌점 관리" />
-                    <CheckBox Content="학생 관리"
+                    <CheckBox x:Name="CoachPoint"
+                              Content="상벌점 관리" />
+                    <CheckBox x:Name="CoachStudent"
+                              Content="학생 관리"
                               Margin="20, 0, 0, 0" />
                 </StackPanel>
             </StackPanel>
@@ -71,8 +75,10 @@
                 <Label Content="교사" />
                 <StackPanel Orientation="Horizontal"
                             Margin="0, 5, 0, 0">
-                    <CheckBox Content="상벌점 관리" />
-                    <CheckBox Content="학생 관리"
+                    <CheckBox x:Name="TeacherPoint"
+                              Content="상벌점 관리" />
+                    <CheckBox x:Name="TeacherStudent"
+                              Content="학생 관리"
                               Margin="20, 0, 0, 0" />
                 </StackPanel>
             </StackPanel>
