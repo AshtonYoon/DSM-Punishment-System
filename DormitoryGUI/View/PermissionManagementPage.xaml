@@ -27,7 +27,7 @@
                Opacity=".3"
                Width="500"
                Grid.Column="1"
-               Margin="0,0,-109,-85"
+               Margin="0,0,-77,-85"
                Grid.Row="1" />
         <Grid Grid.Column="0"
               Grid.Row="1">

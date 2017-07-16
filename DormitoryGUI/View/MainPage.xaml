@@ -12,6 +12,7 @@
       d:DesignWidth="1000"
       Title="MainPage">
     <Page.Resources>
+        
         <ContextMenu x:Key="ListviewItemControlMenu">
             <MenuItem Header="삭제" 
                       Click="MenuItem_Click"/>
@@ -613,7 +614,8 @@
                         <view:SideMenuButton x:Name="DownloadExcel"
                                              Margin="0, 15"
                                              ButtonBackground="#1f7244"
-                                             imageSource="/image/download.png">
+                                             imageSource="/image/download.png"
+                                             Click="DownloadExcel_Click">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>

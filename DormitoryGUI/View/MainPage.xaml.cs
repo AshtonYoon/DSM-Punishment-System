@@ -1,6 +1,7 @@
 ﻿using DormitoryGUI.Model;
 using DormitoryGUI.View;
 using DormitoryGUI.ViewModel;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -461,6 +462,17 @@ namespace DormitoryGUI
         private void Permission_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.NavigatePage(new PermissionManagementPage());
+        }
+
+        private void DownloadExcel_Click(object sender, RoutedEventArgs e)
+        {
+            var saveDialog = new SaveFileDialog();
+            string fileName = DateTime.Now.ToLongDateString().Replace(" ", "_");
+
+            if ((bool)saveDialog.ShowDialog())
+            {
+                ExcelProcessing.SaveExcelDB(saveDialog.FileName, new DataSet());
+            }
         }
     }
 }

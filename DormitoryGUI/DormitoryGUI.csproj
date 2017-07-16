@@ -67,6 +67,9 @@
     <Compile Include="View\CustomComboBox.xaml.cs">
       <DependentUpon>CustomComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CustomPopup.xaml.cs">
+      <DependentUpon>CustomPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CustomSlider.xaml.cs">
       <DependentUpon>CustomSlider.xaml</DependentUpon>
     </Compile>
@@ -80,6 +83,10 @@
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
     <Page Include="View\CustomComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

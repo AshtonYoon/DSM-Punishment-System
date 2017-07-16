@@ -31,3 +31,5 @@ C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\Dormi
 C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\PunishmentListPage.baml
 C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\PermissionManagementPage.g.cs
 C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\PermissionManagementPage.baml
+C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\CustomPopup.g.cs
+C:\Users\thakd\OneDrive\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\CustomPopup.baml
