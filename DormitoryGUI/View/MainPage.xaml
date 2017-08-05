@@ -12,7 +12,6 @@
       d:DesignWidth="1000"
       Title="MainPage">
     <Page.Resources>
-        
         <ContextMenu x:Key="ListviewItemControlMenu">
             <MenuItem Header="삭제" 
                       Click="MenuItem_Click"/>
@@ -796,7 +795,8 @@
                                                         Height="16"
                                                         BorderThickness="0"
                                                         VerticalAlignment="Center"
-                                                        Cursor="Hand">
+                                                        Cursor="Hand"
+                                                        Background="#90dfaa">
                                                     <Button.Resources>
                                                         <Style TargetType="Border">
                                                             <Setter Property="CornerRadius"
