@@ -51,7 +51,7 @@ namespace DormitoryGUI.View
                 var target = GetAncestorOfType<ListView>(s as CheckBox);
                 foreach (var element in target.Items)
                 {
-                    ((StudentListViewModel)element).IsChecked = false;
+                    ((PunishmentListViewModel)element).IsChecked = false;
                 }
                 target.SelectedItems.Clear();
 
@@ -63,7 +63,7 @@ namespace DormitoryGUI.View
                 var target = GetAncestorOfType<ListView>(s as CheckBox);
                 foreach (var element in target.Items)
                 {
-                    ((StudentListViewModel)element).IsChecked = true;
+                    ((PunishmentListViewModel)element).IsChecked = true;
                     target.SelectedItems.Add(element);
                 }
 

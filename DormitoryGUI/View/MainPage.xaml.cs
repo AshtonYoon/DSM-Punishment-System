@@ -72,7 +72,6 @@ namespace DormitoryGUI
             UploadExcel.Click += (s, e) =>
             {
                 setStudentData();
-                MessageBox.Show("데이터 설정이 완료되었습니다.");
             };
 
             PunishmentList.Click += (s, e) =>
@@ -115,7 +114,7 @@ namespace DormitoryGUI
 
         private Step CurrentStep = Step.First;
 
-        private enum Step { First, Second, Third };
+        private enum Step { First, Second, Third, Fourth };
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
@@ -140,40 +139,43 @@ namespace DormitoryGUI
                 ShowAnimation(ThirdGrid);
 
                 PunishmentSlider.SliderValue = (PunishmentComboBox.SelectedItem as PunishmentListViewModel).MinimumPoint;
-
+                
                 CurrentStep = Step.Third;
+                return;
             }
-
-            if(CurrentStep == Step.Third)
+            
+            if (CurrentStep == Step.Third)
             {
-                //Do something
-                /**
-                    json = {
-	                    "DEST_UUID":123
-	                    "TARGET":[12,32,43,STUDENT_UUID]
-	                    "POINT_UUID":123
-	                    "POINT_VALUE":1567
-                    } 
-                */
-                JObject obj = new JObject();
-                obj.Add("DEST_UUID", Info.mainPage.TeacherUUID);
+                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    /**
+                        json = {
+	                        "DEST_UUID":123
+	                        "TARGET":[12,32,43,STUDENT_UUID]
+	                        "POINT_UUID":123
+	                        "POINT_VALUE":1567
+                        } 
+                    */
+                    JObject obj = new JObject();
+                    obj.Add("DEST_UUID", Info.mainPage.TeacherUUID);
 
-                PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
-                obj.Add("POINT_UUID", item.PointUUID);
+                    PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
+                    obj.Add("POINT_UUID", item.PointUUID);
 
-                obj.Add("POINT_VALUE", PunishmentSlider.SliderValue);
+                    obj.Add("POINT_VALUE", PunishmentSlider.SliderValue);
 
-                var targets = new JArray();
+                    var targets = new JArray();
 
-                foreach (StudentListViewModel element in ResultList.Items)
-                    targets.Add(element.UserUUID);
+                    foreach (StudentListViewModel element in ResultList.Items)
+                        targets.Add(element.UserUUID);
 
-                obj.Add("TARGET", targets);
+                    obj.Add("TARGET", targets);
 
-                Info.multiJson(Info.Server.GIVE_SCORE, obj);
+                    Info.multiJson(Info.Server.GIVE_SCORE, obj);
 
-                MessageBox.Show("처리가 완료되었습니다.");
-                //CurrentStep = Step.First;
+                    MessageBox.Show("처리가 완료되었습니다.");
+                    CurrentStep = Step.First;
+                }
             }
         }
 
@@ -284,38 +286,46 @@ namespace DormitoryGUI
         /// </summary>
         private void setStudentData()
         {
-            JArray list = new JArray();
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Excel Files (*.xlsx)|*.xls";
 
-            var studentExcel = ExcelProcessing.OpenExcelDB(@"C:\Users\thakd\Downloads\2017 대덕SW마이스터고 우정관 명렬표.xlsx");
-            var studentList = studentExcel.Tables[0];
-
-            foreach(DataRow row in studentList.Rows)
+            Nullable<bool> result = dialog.ShowDialog();
+            if((bool)result)
             {
-                foreach(var item in row.ItemArray)
+                JArray list = new JArray();
+
+                var studentExcel = ExcelProcessing.OpenExcelDB(dialog.FileName);
+                var studentList = studentExcel.Tables[0];
+
+                foreach (DataRow row in studentList.Rows)
                 {
-                    JObject obj = new JObject();
-                    int num;
-                    if(int.TryParse(item.ToString(), out num))
+                    foreach (var item in row.ItemArray)
                     {
-                        obj.Add("USER_SCHOOL_NUMBER", num);
+                        JObject obj = new JObject();
+                        int num;
+                        if (int.TryParse(item.ToString(), out num))
+                        {
+                            obj.Add("USER_SCHOOL_NUMBER", num);
 
-                        var name = row.ItemArray[Array.IndexOf(row.ItemArray, item) + 1].ToString();
-                        if(name != "")
-                            obj.Add("USER_NAME", name);
-                        else
-                            obj.Add("USER_NAME", "이름 없음");
+                            var name = row.ItemArray[Array.IndexOf(row.ItemArray, item) + 1].ToString();
+                            if (name != "")
+                                obj.Add("USER_NAME", name);
+                            else
+                                obj.Add("USER_NAME", "이름 없음");
 
-                        obj.Add("TOTAL_GOOD_SCORE", 0);
+                            obj.Add("TOTAL_GOOD_SCORE", 0);
 
-                        obj.Add("TOTAL_BAD_SCORE", 0);
+                            obj.Add("TOTAL_BAD_SCORE", 0);
 
-                        obj.Add("PUNISH_STATUS", 0);
-                        list.Add(obj);
+                            obj.Add("PUNISH_STATUS", 0);
+                            list.Add(obj);
+                        }
                     }
                 }
-            }
 
-            Info.multiJson(Info.Server.SET_STUDENT_DATA, list);
+                Info.multiJson(Info.Server.SET_STUDENT_DATA, list);
+                MessageBox.Show("데이터 설정이 완료되었습니다.");
+            }
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -467,12 +477,31 @@ namespace DormitoryGUI
         private void DownloadExcel_Click(object sender, RoutedEventArgs e)
         {
             var saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+
             string fileName = DateTime.Now.ToLongDateString().Replace(" ", "_");
+
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("학번");
+            dataTable.Columns.Add("이름");
+            dataTable.Columns.Add("");
+            dataTable.Columns.Add("");
+
+            for(int i  = 0; i < resultListCollection.Count; i++)
+            {
+                var item = resultListCollection.ElementAt(i) as StudentListViewModel;
+                dataTable.Rows.Add( new object[] { item.ClassNumber, item.Name, string.Empty, string.Empty });
+            }
+
+            DataSet dataSet = new DataSet();
+            dataSet.Tables.Add(dataTable);
 
             if ((bool)saveDialog.ShowDialog())
             {
-                ExcelProcessing.SaveExcelDB(saveDialog.FileName, new DataSet());
+                ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet);
             }
+
         }
     }
 }

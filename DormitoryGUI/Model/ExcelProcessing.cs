@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DormitoryGUI.Model
 {
@@ -255,6 +256,8 @@ namespace DormitoryGUI.Model
                     {
                         File.Move(TempFile, FileName);
                     }
+
+                    MessageBox.Show("Complete saving");
                 }
                 catch { }
             }

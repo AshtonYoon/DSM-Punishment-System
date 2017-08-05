@@ -589,7 +589,8 @@
                          Background="Transparent"
                          BorderBrush="Transparent"
                          Text="조건웅"
-                         IsEnabled="False" />
+                         IsEnabled="False" 
+                         Visibility="Hidden"/>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid>
@@ -794,7 +795,8 @@
                                                 <Button Width="16"
                                                         Height="16"
                                                         BorderThickness="0"
-                                                        VerticalAlignment="Center">
+                                                        VerticalAlignment="Center"
+                                                        Cursor="Hand">
                                                     <Button.Resources>
                                                         <Style TargetType="Border">
                                                             <Setter Property="CornerRadius"
