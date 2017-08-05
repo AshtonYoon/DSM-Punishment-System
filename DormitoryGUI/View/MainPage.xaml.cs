@@ -503,5 +503,10 @@ namespace DormitoryGUI
             }
 
         }
+
+        private void Log_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.NavigatePage(new PunishmentLogPage());
+        }
     }
 }

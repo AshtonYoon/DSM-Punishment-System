@@ -791,12 +791,14 @@
                                     <GridViewColumn Header="상벌점 기록조회">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Width="16"
+                                                <Button x:Name="Log"
+                                                        Width="16"
                                                         Height="16"
                                                         BorderThickness="0"
                                                         VerticalAlignment="Center"
                                                         Cursor="Hand"
-                                                        Background="#90dfaa">
+                                                        Background="#90dfaa"
+                                                        Click="Log_Click">
                                                     <Button.Resources>
                                                         <Style TargetType="Border">
                                                             <Setter Property="CornerRadius"
