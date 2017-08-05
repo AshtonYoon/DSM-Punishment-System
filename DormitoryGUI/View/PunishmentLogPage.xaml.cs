@@ -127,7 +127,7 @@ namespace DormitoryGUI.View
             target.SelectedItems.Add(targetItem);
             target.Items.Refresh();
         }
-
+            
         private void ItemCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
 

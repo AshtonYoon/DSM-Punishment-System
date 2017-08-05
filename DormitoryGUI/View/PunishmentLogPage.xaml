@@ -204,7 +204,7 @@
                             <Border x:Name="HeaderBorder"
                                     BorderThickness="0,1,0,1"
                                     Padding="2,0,2,0"
-                                    Background="Transparent">
+                                    Background="#FFDBF5F5">
                                 <ContentPresenter x:Name="HeaderContent"
                                                   Margin="0,0,0,1"
                                                   RecognizesAccessKey="True"
@@ -435,7 +435,7 @@
                        Fill="#FFE6FFF7"
                        RadiusX="40"
                        RadiusY="40"
-                       Margin="-40, 10, 300, 0"></Rectangle>
+                       Margin="-50, 10, 300, 0" />
             <StackPanel Grid.Row="0"
                         VerticalAlignment="Bottom"
                         Margin="10, 0, 0, 0">
@@ -446,11 +446,15 @@
                        FontSize="15"
                        Margin="0, -10, 0, 10"/>
             </StackPanel>
-            <Grid Grid.Row="1">
-                <ListView Margin="0, 20, 10, 10"
-                          Background="Gainsboro"
-                          BorderThickness="0"/>
-            </Grid>
+            <ScrollViewer Grid.Row="1">
+                <StackPanel>
+                <local:TimelineBlock />
+                <local:TimelineBlock />
+                <local:TimelineBlock />
+                <local:TimelineBlock />
+                <local:TimelineBlock />
+            </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>
