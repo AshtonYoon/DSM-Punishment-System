@@ -45,7 +45,8 @@
         </Ellipse>
         <StackPanel Grid.Column="1"
                     VerticalAlignment="Bottom">
-            <Label Content="2017-08-05"
+            <Label x:Name="CreateTime"
+                   Content="2017-08-05"
                    Foreground="#555555"
                    Margin="20,0,0,-5"/>
             <Border x:Name="ContentBorder"
@@ -56,7 +57,27 @@
             <Border.BitmapEffect>
                 <DropShadowBitmapEffect Opacity="0.2"/>
             </Border.BitmapEffect>
-            <Grid Height="70"/>
+                <Grid Height="70">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="PointValue"
+                           Grid.Column="0"
+                           Content="7"
+                           FontWeight="Bold" 
+                           VerticalAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="40"/>
+                    <Label x:Name="PointCause" 
+                           Grid.Column="1"
+                           Content="이것은 내용입니다. 이것은 내용입니다"
+                           VerticalAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontSize="15" />
+                </Grid>
         </Border>
         </StackPanel>
     </Grid>

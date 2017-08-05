@@ -26,7 +26,7 @@ namespace DormitoryGUI.View
         private readonly Color BadTintColor = Color.FromRgb(255, 86, 86);
         private readonly Color BadBackgroundColor = Color.FromRgb(237, 205, 199);
 
-        public TimelineBlock(bool isGood)
+        public TimelineBlock(bool isGood, string createTime, string pointValue, string pointCause)
         {
             InitializeComponent();
 
@@ -40,6 +40,11 @@ namespace DormitoryGUI.View
                 TintCircle.Stroke = new SolidColorBrush(BadTintColor);
                 ContentBorder.Background = new SolidColorBrush(BadBackgroundColor);
             }
+
+            CreateTime.Content = createTime;
+
+            PointValue.Content = pointValue;
+            PointCause.Content = pointCause;
         }
     }
 }

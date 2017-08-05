@@ -77,6 +77,28 @@ namespace DormitoryGUI.View
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
+
+            JObject jobj = new JObject();
+            jobj.Add("USER_UUID", "1501");
+
+            object temp = Info.multiJson(Info.Server.STUDENT_LOG, jobj);
+            if (temp == null)
+                return;
+
+            JArray result = (JArray)temp;
+            for (int i = result.Count - 1; i >= 0; i--)
+            {
+                JObject obj = (JObject)result[i];
+                bool isGood = obj["POINT_TYPE"].ToString().Equals("1");
+
+                Timeline.Children.Add(new TimelineBlock(
+                    isGood: isGood, 
+                    createTime: DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongDateString()
+                    + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
+                    pointValue: obj["POINT_VALUE"].ToString(),
+                    pointCause: obj["POINT_MEMO"].ToString()));
+            }
+
         }
         private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
         {
