@@ -68,3 +68,7 @@ C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\Dormitory
 C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
 C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\PunishmentLogPage.g.cs
+C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\PunishmentLogPage.baml
+C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\TimelineBlock.g.cs
+C:\Users\thakd\OneDrive\Pictures\Documents\Visual Studio 2017\Projects\DormitoryGUI\DormitoryGUI\obj\Debug\View\TimelineBlock.baml

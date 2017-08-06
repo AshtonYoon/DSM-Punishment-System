@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,9 @@ namespace DormitoryGUI.View
 
         private JArray studentList;
 
-        public PunishmentLogPage()
+        private int UUID;
+
+        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, int uuid)
         {
             InitializeComponent();
 
@@ -78,27 +81,20 @@ namespace DormitoryGUI.View
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
 
-            JObject jobj = new JObject();
-            jobj.Add("USER_UUID", "1501");
+            UUID = uuid;
 
-            object temp = Info.multiJson(Info.Server.STUDENT_LOG, jobj);
-            if (temp == null)
-                return;
+            SetLogData();
 
-            JArray result = (JArray)temp;
-            for (int i = result.Count - 1; i >= 0; i--)
+            StudentName.Content = name;
+            ClassNumber.Content = schoolNumber;
+            TotalGoodPoint.Content = totalGoodPoint.ToString();
+            TotalBadPoint.Content = totalBadPoint.ToString();
+
+            foreach(StudentListViewModel item in StudentList.Items)
             {
-                JObject obj = (JObject)result[i];
-                bool isGood = obj["POINT_TYPE"].ToString().Equals("1");
-
-                Timeline.Children.Add(new TimelineBlock(
-                    isGood: isGood, 
-                    createTime: DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongDateString()
-                    + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
-                    pointValue: obj["POINT_VALUE"].ToString(),
-                    pointCause: obj["POINT_MEMO"].ToString()));
+                if (item.UserUUID == uuid)
+                    StudentList.SelectedItems.Add(item);
             }
-
         }
         private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
         {
@@ -110,7 +106,15 @@ namespace DormitoryGUI.View
         }
         private void StudentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var target = (StudentListViewModel)e.AddedItems[e.AddedItems.Count - 1];
+            UUID = target.UserUUID;
 
+            SetLogData();
+
+            StudentName.Content = target.Name;
+            ClassNumber.Content = target.ClassNumber;
+            TotalGoodPoint.Content = target.GoodPoint.ToString();
+            TotalBadPoint.Content = target.BadPoint.ToString();
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -153,6 +157,32 @@ namespace DormitoryGUI.View
         private void ItemCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void SetLogData()
+        {
+            JObject jobj = new JObject();
+            jobj.Add("USER_UUID", UUID);
+
+            object temp = Info.multiJson(Info.Server.STUDENT_LOG, jobj);
+            if (temp == null)
+                return;
+
+            JArray result = (JArray)temp;
+            Timeline.Children.Clear();
+
+            for (int i = result.Count - 1; i >= 0; i--)
+            {
+                JObject obj = (JObject)result[i];
+                bool isGood = obj["POINT_TYPE"].ToString().Equals("1");
+
+                Timeline.Children.Add(new TimelineBlock(
+                    isGood: isGood,
+                    createTime: DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongDateString()
+                    + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
+                    pointValue: obj["POINT_VALUE"].ToString(),
+                    pointCause: obj["POINT_MEMO"].ToString()));
+            }
         }
     }
 }

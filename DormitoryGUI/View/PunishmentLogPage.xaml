@@ -445,10 +445,10 @@
                 <StackPanel Grid.Column="0"
                             VerticalAlignment="Bottom"
                             Margin="10, 0, 0, 0">
-                    <Label Content="윤여환"
+                    <Label x:Name="StudentName"
                            FontWeight="Bold"
                            FontSize="20" />
-                    <Label Content="30212"
+                    <Label x:Name="ClassNumber"
                            FontSize="15"
                            Margin="0, -10, 0, 10" />
                 </StackPanel>
@@ -458,7 +458,7 @@
                     <Label Content="상점"
                            FontWeight="Bold"
                            FontSize="17" />
-                    <Label Content="9999"
+                    <Label x:Name="TotalGoodPoint"
                            FontSize="12"
                            Margin="0, -10, 0, 10" />
                 </StackPanel>
@@ -468,7 +468,7 @@
                     <Label Content="벌점"
                            FontWeight="Bold"
                            FontSize="17" />
-                    <Label Content="9999"
+                    <Label x:Name="TotalBadPoint"
                            FontSize="12"
                            Margin="0, -10, 0, 10" />
                 </StackPanel>

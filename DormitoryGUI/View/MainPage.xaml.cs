@@ -506,7 +506,12 @@ namespace DormitoryGUI
 
         private void Log_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.NavigatePage(new PunishmentLogPage());
+            var target = (StudentListViewModel)GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
+            mainWindow.NavigatePage(new PunishmentLogPage(target.Name,
+                target.ClassNumber,
+                target.GoodPoint,
+                target.BadPoint,
+                target.UserUUID));
         }
     }
 }
