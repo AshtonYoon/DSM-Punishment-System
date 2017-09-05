@@ -71,7 +71,7 @@ namespace DormitoryGUI
 
             UploadExcel.Click += (s, e) =>
             {
-                setStudentData();
+                SetStudentData();
             };
 
             PunishmentList.Click += (s, e) =>
@@ -83,7 +83,7 @@ namespace DormitoryGUI
 
             this.mainWindow = mainWindow;
 
-            update();
+            Update();
         }
 
         //private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -94,7 +94,7 @@ namespace DormitoryGUI
         //    }
         //}
 
-        public void update()
+        public void Update()
         {
             object masterData = Info.multiJson(Info.Server.GET_STUDENT_DATA, "");
             studentList = (JArray)masterData;
@@ -156,9 +156,10 @@ namespace DormitoryGUI
 	                        "POINT_VALUE":1567
                         } 
                     */
-                    JObject obj = new JObject();
-                    obj.Add("DEST_UUID", Info.mainPage.TeacherUUID);
-
+                    JObject obj = new JObject
+                    {
+                        { "DEST_UUID", Info.mainPage.TeacherUUID }
+                    };
                     PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
                     obj.Add("POINT_UUID", item.PointUUID);
 
@@ -170,11 +171,16 @@ namespace DormitoryGUI
                         targets.Add(element.UserUUID);
 
                     obj.Add("TARGET", targets);
-
                     Info.multiJson(Info.Server.GIVE_SCORE, obj);
 
                     MessageBox.Show("처리가 완료되었습니다.");
+
+                    //ResultList.Items.Clear();
+
                     CurrentStep = Step.First;
+
+                    HideAnimation(ThirdGrid);
+                    ShowAnimation(SecondGrid);
                 }
             }
         }
@@ -206,14 +212,18 @@ namespace DormitoryGUI
 
             Storyboard HideStoryBoard = new Storyboard();
 
-            DoubleAnimation FadeOutAnimation = new DoubleAnimation(0, Duration);
-            FadeOutAnimation.EasingFunction = new QuadraticEase();
+            DoubleAnimation FadeOutAnimation = new DoubleAnimation(0, Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
             Storyboard.SetTargetProperty(FadeOutAnimation, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(FadeOutAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration);
-            ShiftLeftAnimation.EasingFunction = new QuadraticEase();
+            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -230,14 +240,18 @@ namespace DormitoryGUI
             var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
             Storyboard HideStoryBoard = new Storyboard();
 
-            DoubleAnimation FadeInAnimation = new DoubleAnimation(1, Duration);
-            FadeInAnimation.EasingFunction = new QuadraticEase();
+            DoubleAnimation FadeInAnimation = new DoubleAnimation(1, Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
             Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(FadeInAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration);
-            ShiftLeftAnimation.EasingFunction = new QuadraticEase();
+            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -284,11 +298,12 @@ namespace DormitoryGUI
         /// <summary>
         /// 명단 넣어줌
         /// </summary>
-        private void setStudentData()
+        private void SetStudentData()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Excel Files (*.xlsx)|*.xls";
-
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Filter = "Excel Files (*.xlsx)|*.xls"
+            };
             Nullable<bool> result = dialog.ShowDialog();
             if((bool)result)
             {
@@ -302,8 +317,7 @@ namespace DormitoryGUI
                     foreach (var item in row.ItemArray)
                     {
                         JObject obj = new JObject();
-                        int num;
-                        if (int.TryParse(item.ToString(), out num))
+                        if (int.TryParse(item.ToString(), out int num))
                         {
                             obj.Add("USER_SCHOOL_NUMBER", num);
 
@@ -476,9 +490,10 @@ namespace DormitoryGUI
 
         private void DownloadExcel_Click(object sender, RoutedEventArgs e)
         {
-            var saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
-
+            var saveDialog = new SaveFileDialog()
+            {
+                Filter = "Excel Files (*.xlsx)|*.xlsx"
+            };
             string fileName = DateTime.Now.ToLongDateString().Replace(" ", "_");
 
             DataTable dataTable = new DataTable();

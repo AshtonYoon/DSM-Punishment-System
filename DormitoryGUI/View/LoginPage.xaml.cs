@@ -31,11 +31,12 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            JObject data = new JObject();
-            data.Add("ID", ID.Text);
-            data.Add("PW", sha1Encrypt(Password.Password));
-
-            JObject response = getStringFromJson(Info.Server.LOGIN_URL, data);
+            JObject data = new JObject
+            {
+                { "ID", ID.Text },
+                { "PW", Sha1Encrypt(Password.Password) }
+            };
+            JObject response = GetStringFromJson(Info.Server.LOGIN_URL, data);
 
             if (response["TEACHER_UUID"] != null)
             {
@@ -55,7 +56,7 @@ namespace DormitoryGUI
             }
         }
 
-        private JObject getStringFromJson(string url, JObject json)
+        private JObject GetStringFromJson(string url, JObject json)
         {
             try
             {
@@ -86,7 +87,7 @@ namespace DormitoryGUI
             }
         }
 
-        private static string sha1Encrypt(string input)
+        private static string Sha1Encrypt(string input)
         {
             var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
             return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());

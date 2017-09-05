@@ -24,7 +24,7 @@
             RenderTransformOrigin="0.5,0.5"
             Content="{StaticResource image}"
             Cursor="Hand"
-            Click="button_Click">
+            Click="Button_Click">
         <!--<Button.ToolTip>
             <ToolTip x:Name="buttonToolTip"
                      BorderThickness="0" />

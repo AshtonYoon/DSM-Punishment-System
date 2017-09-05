@@ -161,9 +161,10 @@ namespace DormitoryGUI.View
 
         private void SetLogData()
         {
-            JObject jobj = new JObject();
-            jobj.Add("USER_UUID", UUID);
-
+            JObject jobj = new JObject
+            {
+                { "USER_UUID", UUID }
+            };
             object temp = Info.multiJson(Info.Server.STUDENT_LOG, jobj);
             if (temp == null)
                 return;

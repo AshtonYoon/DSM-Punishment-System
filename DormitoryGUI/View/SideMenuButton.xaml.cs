@@ -71,12 +71,9 @@ namespace DormitoryGUI.View
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(Click != null)
-            {
-                Click(this, e);
-            }
+            Click?.Invoke(this, e);
         }
     }
 }
