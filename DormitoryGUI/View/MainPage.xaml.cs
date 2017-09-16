@@ -100,7 +100,7 @@ namespace DormitoryGUI
             studentList = (JArray)masterData;
             
             foreach (JObject json in studentList)
-            {
+            { 
                 listviewCollection.Add(new ViewModel.StudentListViewModel(
                     roomNumber: 0.ToString(),
                     classNumber: json["USER_SCHOOL_NUMBER"].ToString(),
@@ -115,6 +115,7 @@ namespace DormitoryGUI
         private Step CurrentStep = Step.First;
 
         private enum Step { First, Second, Third, Fourth };
+        private enum PointType { Good = 0, Bad}
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
@@ -124,10 +125,10 @@ namespace DormitoryGUI
                 ShowAnimation(SecondGrid);
 
                 if(((bool)Good.IsChecked))
-                    PunishmentComboBox.PunishmentType = 1;
+                    PunishmentComboBox.PunishmentType = (int)PointType.Good;
 
                 else if (((bool)Bad.IsChecked))
-                    PunishmentComboBox.PunishmentType = 0;
+                    PunishmentComboBox.PunishmentType = (int)PointType.Bad;
 
                 CurrentStep = Step.Second;
             }
@@ -173,14 +174,14 @@ namespace DormitoryGUI
                     obj.Add("TARGET", targets);
                     Info.multiJson(Info.Server.GIVE_SCORE, obj);
 
+                    listviewCollection.Clear();
+                    Update();
                     MessageBox.Show("처리가 완료되었습니다.");
-
-                    //ResultList.Items.Clear();
 
                     CurrentStep = Step.First;
 
                     HideAnimation(ThirdGrid);
-                    ShowAnimation(SecondGrid);
+                    ShowAnimation(FirstGrid);
                 }
             }
         }

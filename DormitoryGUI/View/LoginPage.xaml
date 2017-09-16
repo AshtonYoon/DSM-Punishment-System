@@ -15,7 +15,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Image Grid.ColumnSpan="3"
-               Source="/image/wallpaper1.jpg"
+               Source="/image/wallpaper.jpg"
                RenderOptions.BitmapScalingMode="HighQuality"
                Stretch="Fill"
                RenderTransformOrigin="0.5,0.5"
