@@ -42,7 +42,7 @@ namespace DormitoryGUI.View
 
         private void InitializePermission()
         {
-            JArray array = (JArray)Info.multiJson(Info.Server.GET_PERMISSION_URL, "");
+            JArray array = (JArray)Info.MultiJson(Info.Server.GET_PERMISSION_URL, "");
             foreach (JObject obj in array)
             {
                 switch (Int32.Parse(obj["PERMISSION_TYPE"].ToString()))
@@ -85,29 +85,34 @@ namespace DormitoryGUI.View
             JObject root = new JObject();
 
             JArray post = new JArray();
-            JArray inner = new JArray();
-
-            inner.Add((bool)ManagerPoint.IsChecked ? 1 : 0);
-            inner.Add((bool)ManagerStudent.IsChecked ? 1 : 0);
-            inner.Add(0);
+            JArray inner = new JArray
+            {
+                (bool)ManagerPoint.IsChecked ? 1 : 0,
+                (bool)ManagerStudent.IsChecked ? 1 : 0,
+                0
+            };
             post.Add(inner);
 
-            inner = new JArray();
-            inner.Add((bool)CoachPoint.IsChecked ? 1 : 0);
-            inner.Add((bool)CoachStudent.IsChecked ? 1 : 0);
-            inner.Add(1);
+            inner = new JArray
+            {
+                (bool)CoachPoint.IsChecked ? 1 : 0,
+                (bool)CoachStudent.IsChecked ? 1 : 0,
+                1
+            };
             post.Add(inner);
 
-            inner = new JArray();
-            inner.Add((bool)TeacherPoint.IsChecked ? 1 : 0);
-            inner.Add((bool)TeacherStudent.IsChecked ? 1 : 0);
-            inner.Add(2);
+            inner = new JArray
+            {
+                (bool)TeacherPoint.IsChecked ? 1 : 0,
+                (bool)TeacherStudent.IsChecked ? 1 : 0,
+                2
+            };
             post.Add(inner);
 
             root.Add("DEST", Info.mainPage.TeacherUUID);
             root.Add("DATA", post);
 
-            Info.multiJson(Info.Server.SET_PERMSSION_URL, root);
+            Info.MultiJson(Info.Server.SET_PERMSSION_URL, root);
         }
     }
 }

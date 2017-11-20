@@ -66,7 +66,7 @@ namespace DormitoryGUI.View
                 target.Items.Refresh();
             });
 
-            object masterData = Info.multiJson(Info.Server.GET_STUDENT_DATA, "");
+            object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
             studentList = (JArray)masterData;
 
             foreach (JObject json in studentList)
@@ -165,7 +165,7 @@ namespace DormitoryGUI.View
             {
                 { "USER_UUID", UUID }
             };
-            object temp = Info.multiJson(Info.Server.STUDENT_LOG, jobj);
+            object temp = Info.MultiJson(Info.Server.STUDENT_LOG, jobj);
             if (temp == null)
                 return;
 

@@ -31,7 +31,7 @@ namespace DormitoryGUI
         }
 
         public enum POINT_TYPE { BAD = 0, GOOD = 1};
-        public static object multiJson(string url, object json)
+        public static object MultiJson(string url, object json)
         { 
             try
             {

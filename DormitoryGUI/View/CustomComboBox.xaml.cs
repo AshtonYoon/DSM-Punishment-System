@@ -53,7 +53,7 @@ namespace DormitoryGUI.View
         {
             var punishmentList = Resources["PunishmentListKey"] as ViewModel.PunishmentList;
 
-            ruleList = Info.multiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
 
             punishmentList.Clear();
             foreach (var element in ruleList)

@@ -39,7 +39,7 @@ namespace DormitoryGUI.View
             punishmentGoodList = Resources["PunishmentGoodListKey"] as PunishmentList;
             punishmentBadList = Resources["PunishmentBadListKey"] as PunishmentList;
 
-            ruleList = Info.multiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
 
             InitializePunishmentList();
 
@@ -97,7 +97,7 @@ namespace DormitoryGUI.View
             obj.Add("DEST", "1");
             obj.Add("RULE", rule);
 
-            Info.multiJson(Info.Server.ADD_RULE_DATA, obj);
+            Info.MultiJson(Info.Server.ADD_RULE_DATA, obj);
 
             MessageBox.Show("항목 추가가 완료되었습니다.");
 

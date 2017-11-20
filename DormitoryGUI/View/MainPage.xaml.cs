@@ -96,7 +96,7 @@ namespace DormitoryGUI
 
         public void Update()
         {
-            object masterData = Info.multiJson(Info.Server.GET_STUDENT_DATA, "");
+            object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
             studentList = (JArray)masterData;
             
             foreach (JObject json in studentList)
@@ -172,7 +172,7 @@ namespace DormitoryGUI
                         targets.Add(element.UserUUID);
 
                     obj.Add("TARGET", targets);
-                    Info.multiJson(Info.Server.GIVE_SCORE, obj);
+                    Info.MultiJson(Info.Server.GIVE_SCORE, obj);
 
                     listviewCollection.Clear();
                     Update();
@@ -338,7 +338,7 @@ namespace DormitoryGUI
                     }
                 }
 
-                Info.multiJson(Info.Server.SET_STUDENT_DATA, list);
+                Info.MultiJson(Info.Server.SET_STUDENT_DATA, list);
                 MessageBox.Show("데이터 설정이 완료되었습니다.");
             }
         }

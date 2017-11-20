@@ -34,7 +34,7 @@ namespace DormitoryGUI.View
             }
         }
 
-        public ImageSource imageSource
+        public ImageSource ImageSource
         {
             get
             {
