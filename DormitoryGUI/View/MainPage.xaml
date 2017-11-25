@@ -601,7 +601,7 @@
                         <view:SideMenuButton x:Name="UploadExcel"
                                              Margin="0, 15"
                                              ButtonBackground="#1f7244"
-                                             imageSource="/image/upload.png">
+                                             ImageSource="../Image/upload.png">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
@@ -614,7 +614,7 @@
                         <view:SideMenuButton x:Name="DownloadExcel"
                                              Margin="0, 15"
                                              ButtonBackground="#1f7244"
-                                             imageSource="/image/download.png"
+                                             ImageSource="../Image/download.png"
                                              Click="DownloadExcel_Click">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
@@ -628,7 +628,7 @@
                         <view:SideMenuButton x:Name="Permission"
                                              Margin="0, 15"
                                              ButtonBackground="#eeeeee"
-                                             imageSource="/image/key.png"
+                                             ImageSource="/Image/key.png"
                                              Click="Permission_Click">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
@@ -642,7 +642,7 @@
                         <view:SideMenuButton x:Name="PunishmentList"
                                              Margin="0, 15"
                                              ButtonBackground="#90dfaa"
-                                             imageSource="/image/analytics.png">
+                                             ImageSource="../Image/analytics.png">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
@@ -655,7 +655,7 @@
                         <view:SideMenuButton x:Name="CheckTarget"
                                              Margin="0, 15"
                                              ButtonBackground="#eeeeee"
-                                             imageSource="/image/tick.png">
+                                             ImageSource="../Image/tick.png">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
@@ -694,7 +694,7 @@
                                   Height="30"
                                   HorizontalAlignment="Right"
                                   Margin="0,0,5,0">
-                                <Image Source="/image/magnifying-glass.png"
+                                <Image Source="/Image/magnifying-glass.png"
                                        RenderOptions.BitmapScalingMode="HighQuality"
                                        Margin="7" />
                                 <Button x:Name="SearchButton"

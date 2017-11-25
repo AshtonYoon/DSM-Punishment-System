@@ -19,7 +19,7 @@
             <RowDefinition Height="6*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image Source="/image/line-illustration.png"
+        <Image Source="/Image/line-illustration.png"
                Grid.RowSpan="2"
                Grid.ColumnSpan="2"
                VerticalAlignment="Bottom"
@@ -33,7 +33,7 @@
               Grid.Row="1">
             <local:SideMenuButton x:Name="BackButton"
                                   ButtonBackground="#90dfaa"
-                                  imageSource="/image/left-arrow.png">
+                                  ImageSource="/Image/left-arrow.png">
                 <local:SideMenuButton.ToolTip>
                     <ToolTip BorderThickness="0">
                         <StackPanel>

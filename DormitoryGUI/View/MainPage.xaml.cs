@@ -498,16 +498,16 @@ namespace DormitoryGUI
             string fileName = DateTime.Now.ToLongDateString().Replace(" ", "_");
 
             DataTable dataTable = new DataTable();
-
+            
             dataTable.Columns.Add("학번");
             dataTable.Columns.Add("이름");
-            dataTable.Columns.Add("");
-            dataTable.Columns.Add("");
+            dataTable.Columns.Add("상점");
+            dataTable.Columns.Add("벌점");
 
-            for(int i  = 0; i < resultListCollection.Count; i++)
+            for(int i  = 0; i < listviewCollection.Count; i++)
             {
-                var item = resultListCollection.ElementAt(i) as StudentListViewModel;
-                dataTable.Rows.Add( new object[] { item.ClassNumber, item.Name, string.Empty, string.Empty });
+                var item = listviewCollection.ElementAt(i) as StudentListViewModel;
+                dataTable.Rows.Add( new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint });
             }
 
             DataSet dataSet = new DataSet();
@@ -517,17 +517,19 @@ namespace DormitoryGUI
             {
                 ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet);
             }
-
         }
 
         private void Log_Click(object sender, RoutedEventArgs e)
         {
             var target = (StudentListViewModel)GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
-            mainWindow.NavigatePage(new PunishmentLogPage(target.Name,
-                target.ClassNumber,
-                target.GoodPoint,
-                target.BadPoint,
-                target.UserUUID));
+                mainWindow.NavigatePage(
+                    new PunishmentLogPage(target.Name,
+                        target.ClassNumber,
+                        target.GoodPoint,
+                        target.BadPoint,
+                        target.UserUUID
+                    )
+                );
         }
     }
 }

@@ -38,13 +38,21 @@ namespace DormitoryGUI.View
         {
             get
             {
-                return (Resources["image"] as  Image).Source;
+                return (Resources["image"] as Image).Source;
             }
             set
             {
                 (Resources["image"] as Image).Source = value;
             }
         }
+
+        public static readonly DependencyProperty ImageSource_Property = 
+            DependencyProperty.Register(
+                "ImageSource", 
+                typeof(ImageSource), 
+                typeof(SideMenuButton),
+                null
+            );
 
         //public Panel toolTip
         //{
