@@ -786,6 +786,8 @@
                                                     DisplayMemberBinding="{Binding Path=GoodPoint}" />
                                     <GridViewColumn Header="벌점"
                                                     DisplayMemberBinding="{Binding Path=BadPoint}" />
+                                    <GridViewColumn Header="단계"
+                                                    DisplayMemberBinding="{Binding Path=CurrentStep}" />
                                     <!--<GridViewColumn Header="호실"
                                         DisplayMemberBinding="{Binding Path=RoomNumber}" />-->
                                     <GridViewColumn Header="상벌점 기록조회">
