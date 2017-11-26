@@ -32,7 +32,7 @@ namespace DormitoryGUI.View
 
         private int UUID;
 
-        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, int uuid)
+        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, int currentStep, int uuid)
         {
             InitializeComponent();
 
@@ -90,6 +90,7 @@ namespace DormitoryGUI.View
             ClassNumber.Content = schoolNumber;
             TotalGoodPoint.Content = totalGoodPoint.ToString();
             TotalBadPoint.Content = totalBadPoint.ToString();
+            TotalPunishStep.Content = currentStep.ToString();
 
             foreach(StudentListViewModel item in StudentList.Items)
             {
@@ -116,6 +117,7 @@ namespace DormitoryGUI.View
             ClassNumber.Content = target.ClassNumber;
             TotalGoodPoint.Content = target.GoodPoint.ToString();
             TotalBadPoint.Content = target.BadPoint.ToString();
+            TotalPunishStep.Content = target.CurrentStep.ToString();
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)

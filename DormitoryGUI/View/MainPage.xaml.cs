@@ -540,6 +540,7 @@ namespace DormitoryGUI
                         target.ClassNumber,
                         target.GoodPoint,
                         target.BadPoint,
+                        target.CurrentStep,
                         target.UserUUID
                     )
                 );
