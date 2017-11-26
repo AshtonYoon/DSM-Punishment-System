@@ -454,7 +454,15 @@ namespace DormitoryGUI
 
         private void DeleteSelectedItem()
         {
-            ResultList.ItemsSource = resultListCollection.Where(x => !x.IsChecked);
+            // resultListCollection 중 IsChecked가 true 인 아이템 제거
+
+            resultListCollection
+                .Where(x => x.IsChecked).ToList()
+                .All(i => resultListCollection.Remove(i));
+
+            // 이후 이를 ResultList의 ItemSource에 대입하고 Refresh
+
+            ResultList.ItemsSource = resultListCollection;
             ResultList.Items.Refresh();
         }
 
