@@ -136,3 +136,4 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\Dormi
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.CoreCompileInputs.cache
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache

@@ -30,7 +30,9 @@ namespace DormitoryGUI
             public const string SET_STUDENT_DATA = SERVER_URL + "student/add";
         }
 
-        public enum POINT_TYPE { BAD = 0, GOOD = 1};
+        
+        // 상벌점 유형 { 0: 상점, 1: 벌점 }
+        public enum POINT_TYPE { GOOD = 0, BAD };
         public static object MultiJson(string url, object json)
         { 
             try

@@ -113,10 +113,9 @@ namespace DormitoryGUI
             }
         }
 
-        private Step CurrentStep = Step.First;
-
         private enum Step { First, Second, Third, Fourth };
-        private enum PointType { Good = 0, Bad}
+
+        private Step CurrentStep = Step.First;
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
@@ -126,10 +125,10 @@ namespace DormitoryGUI
                 ShowAnimation(SecondGrid);
 
                 if(((bool)Good.IsChecked))
-                    PunishmentComboBox.PunishmentType = (int)PointType.Good;
+                    PunishmentComboBox.PunishmentType = (int)Info.POINT_TYPE.GOOD;
 
                 else if (((bool)Bad.IsChecked))
-                    PunishmentComboBox.PunishmentType = (int)PointType.Bad;
+                    PunishmentComboBox.PunishmentType = (int)Info.POINT_TYPE.BAD;
 
                 CurrentStep = Step.Second;
             }
@@ -308,7 +307,7 @@ namespace DormitoryGUI
             {
                 Filter = "Excel Files (*.xlsx)|*.xls"
             };
-            Nullable<bool> result = dialog.ShowDialog();
+            bool? result = dialog.ShowDialog();
             if((bool)result)
             {
                 JArray list = new JArray();
@@ -380,15 +379,18 @@ namespace DormitoryGUI
             {
                 if (element.IsChecked)
                 {
-                    resultListCollection.Add(new StudentListViewModel(
-                        isChecked: element.IsChecked,
-                        roomNumber: element.RoomNumber,
-                        name: element.Name,
-                        classNumber: element.ClassNumber,
-                        goodPoint: element.GoodPoint,
-                        badPoint: element.BadPoint,
-                        currentStep: element.CurrentStep,
-                        userUUID: element.UserUUID));
+                    resultListCollection.Add(
+                        new StudentListViewModel(
+                            isChecked: element.IsChecked,
+                            roomNumber: element.RoomNumber,
+                            name: element.Name,
+                            classNumber: element.ClassNumber,
+                            goodPoint: element.GoodPoint,
+                            badPoint: element.BadPoint,
+                            currentStep: element.CurrentStep,
+                            userUUID: element.UserUUID
+                        )
+                    );
                 }
             }
 

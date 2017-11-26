@@ -178,7 +178,8 @@ namespace DormitoryGUI.View
             for (int i = result.Count - 1; i >= 0; i--)
             {
                 JObject obj = (JObject)result[i];
-                bool isGood = obj["POINT_TYPE"].ToString().Equals("1");
+                
+                bool isGood = obj["POINT_TYPE"].ToString().Equals("0");
 
                 Timeline.Children.Add(new TimelineBlock(
                     isGood: isGood,
