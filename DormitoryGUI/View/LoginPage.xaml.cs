@@ -36,6 +36,7 @@ namespace DormitoryGUI
                 { "ID", ID.Text },
                 { "PW", Sha1Encrypt(Password.Password) }
             };
+
             JObject response = GetStringFromJson(Info.Server.LOGIN_URL, data);
 
             if (response["TEACHER_UUID"] != null)

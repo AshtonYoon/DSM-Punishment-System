@@ -78,6 +78,7 @@ namespace DormitoryGUI.View
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
+                    currentStep: int.Parse(json["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
 

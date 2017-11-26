@@ -108,6 +108,7 @@ namespace DormitoryGUI
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
+                    currentStep: int.Parse(json["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
         }
@@ -283,6 +284,7 @@ namespace DormitoryGUI
                     isChecked: false,
                     goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
+                    currentStep: int.Parse(student["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(student["USER_UUID"].ToString())));
                 }
             }
@@ -384,6 +386,7 @@ namespace DormitoryGUI
                         classNumber: element.ClassNumber,
                         goodPoint: element.GoodPoint,
                         badPoint: element.BadPoint,
+                        currentStep: element.CurrentStep,
                         userUUID: element.UserUUID));
                 }
             }
@@ -503,11 +506,12 @@ namespace DormitoryGUI
             dataTable.Columns.Add("이름");
             dataTable.Columns.Add("상점");
             dataTable.Columns.Add("벌점");
+            dataTable.Columns.Add("단계");
 
             for(int i  = 0; i < listviewCollection.Count; i++)
             {
                 var item = listviewCollection.ElementAt(i) as StudentListViewModel;
-                dataTable.Rows.Add( new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint });
+                dataTable.Rows.Add( new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, item.CurrentStep });
             }
 
             DataSet dataSet = new DataSet();
