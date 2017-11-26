@@ -256,8 +256,6 @@ namespace DormitoryGUI.Model
                     {
                         File.Move(TempFile, FileName);
                     }
-
-                    MessageBox.Show("Complete saving");
                 }
                 catch { }
             }

@@ -46,14 +46,6 @@ namespace DormitoryGUI.View
             }
         }
 
-        public static readonly DependencyProperty ImageSource_Property = 
-            DependencyProperty.Register(
-                "ImageSource", 
-                typeof(ImageSource), 
-                typeof(SideMenuButton),
-                null
-            );
-
         //public Panel toolTip
         //{
         //    get

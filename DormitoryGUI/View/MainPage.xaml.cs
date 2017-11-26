@@ -515,7 +515,15 @@ namespace DormitoryGUI
 
             if ((bool)saveDialog.ShowDialog())
             {
-                ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet);
+                if (ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet))
+                {
+                    MessageBox.Show("Complete saving");
+                }
+
+                else
+                {
+                    MessageBox.Show("Failed saving");
+                }
             }
         }
 

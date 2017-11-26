@@ -601,7 +601,7 @@
                         <view:SideMenuButton x:Name="UploadExcel"
                                              Margin="0, 15"
                                              ButtonBackground="#1f7244"
-                                             ImageSource="../Image/upload.png">
+                                             ImageSource="/Image/upload.png">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
@@ -614,7 +614,7 @@
                         <view:SideMenuButton x:Name="DownloadExcel"
                                              Margin="0, 15"
                                              ButtonBackground="#1f7244"
-                                             ImageSource="../Image/download.png"
+                                             ImageSource="/Image/download.png"
                                              Click="DownloadExcel_Click">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
@@ -642,7 +642,7 @@
                         <view:SideMenuButton x:Name="PunishmentList"
                                              Margin="0, 15"
                                              ButtonBackground="#90dfaa"
-                                             ImageSource="../Image/analytics.png">
+                                             ImageSource="/Image/analytics.png">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
@@ -655,7 +655,7 @@
                         <view:SideMenuButton x:Name="CheckTarget"
                                              Margin="0, 15"
                                              ButtonBackground="#eeeeee"
-                                             ImageSource="../Image/tick.png">
+                                             ImageSource="/Image/tick.png">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
