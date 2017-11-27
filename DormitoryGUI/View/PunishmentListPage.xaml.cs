@@ -101,7 +101,7 @@ namespace DormitoryGUI.View
 
             MessageBox.Show("항목 추가가 완료되었습니다.");
 
-            InitializePunishmentList();
+            UpdatePunishmentList();
         }
 
         private bool CheckSliderValue()
@@ -207,6 +207,13 @@ namespace DormitoryGUI.View
 
             GoodList.Items.Refresh();
             BadList.Items.Refresh();
+        }
+
+        private void UpdatePunishmentList()
+        {
+            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+
+            InitializePunishmentList();
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
