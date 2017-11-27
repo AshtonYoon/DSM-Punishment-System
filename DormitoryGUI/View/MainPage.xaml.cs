@@ -161,27 +161,37 @@ namespace DormitoryGUI
                     {
                         { "DEST_UUID", Info.mainPage.TeacherUUID }
                     };
+
                     PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
                     obj.Add("POINT_UUID", item.PointUUID);
 
-                    obj.Add("POINT_VALUE", PunishmentSlider.SliderValue);
+                    if (PunishmentSlider.SliderValue >=  item.MinimumPoint && PunishmentSlider.SliderValue <= item.MaximumPoint)
+                    {
+                        // 부여하고자 하는 벌점이 최댓값, 최솟값을 넘지 않는지에 대해 검사
 
-                    var targets = new JArray();
+                        obj.Add("POINT_VALUE", PunishmentSlider.SliderValue);
 
-                    foreach (StudentListViewModel element in ResultList.Items)
-                        targets.Add(element.UserUUID);
+                        var targets = new JArray();
 
-                    obj.Add("TARGET", targets);
-                    Info.MultiJson(Info.Server.GIVE_SCORE, obj);
+                        foreach (StudentListViewModel element in ResultList.Items)
+                            targets.Add(element.UserUUID);
 
-                    listviewCollection.Clear();
-                    Update();
-                    MessageBox.Show("처리가 완료되었습니다.");
+                        obj.Add("TARGET", targets);
+                        Info.MultiJson(Info.Server.GIVE_SCORE, obj);
 
-                    CurrentStep = Step.First;
+                        listviewCollection.Clear();
+                        Update();
+                        MessageBox.Show("처리가 완료되었습니다.");
 
-                    HideAnimation(ThirdGrid);
-                    ShowAnimation(FirstGrid);
+                        CurrentStep = Step.First;
+
+                        HideAnimation(ThirdGrid);
+                        ShowAnimation(FirstGrid);
+                    }
+                    else
+                    {
+                        MessageBox.Show("벌점은 최댓값과 최솟값을 넘을 수 없습니다.");
+                    }
                 }
             }
         }
