@@ -519,24 +519,31 @@ namespace DormitoryGUI
             {
                 Filter = "Excel Files (*.xlsx)|*.xlsx"
             };
+
             string fileName = DateTime.Now.ToLongDateString().Replace(" ", "_");
 
-            DataTable dataTable = new DataTable();
-            
-            dataTable.Columns.Add("학번");
-            dataTable.Columns.Add("이름");
-            dataTable.Columns.Add("상점");
-            dataTable.Columns.Add("벌점");
-            dataTable.Columns.Add("단계");
-
-            for(int i  = 0; i < listviewCollection.Count; i++)
-            {
-                var item = listviewCollection.ElementAt(i) as StudentListViewModel;
-                dataTable.Rows.Add( new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, item.CurrentStep });
-            }
-
             DataSet dataSet = new DataSet();
-            dataSet.Tables.Add(dataTable);
+
+            for (int i = 1; i <= 3; i++)
+            {
+                // 1, 2, 3 학년 별 DataTable 분리
+
+                var items = listviewCollection.Where(item => item.ClassNumber.StartsWith(i.ToString()));    // 학년 별 컬렉션 필터링
+                DataTable dataTable = new DataTable($"{i}학년");   // 학년 별 DataTable 생성 (예: 1학년)
+
+                dataTable.Columns.Add("학번");
+                dataTable.Columns.Add("이름");
+                dataTable.Columns.Add("상점");
+                dataTable.Columns.Add("벌점");
+                dataTable.Columns.Add("단계");
+
+                foreach (var item in items)
+                {
+                    dataTable.Rows.Add(new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, item.CurrentStep });
+                }
+
+                dataSet.Tables.Add(dataTable);
+            }
 
             if ((bool)saveDialog.ShowDialog())
             {
