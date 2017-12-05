@@ -535,11 +535,13 @@ namespace DormitoryGUI
                 dataTable.Columns.Add("이름");
                 dataTable.Columns.Add("상점");
                 dataTable.Columns.Add("벌점");
-                dataTable.Columns.Add("단계");
+                dataTable.Columns.Add("상점 내역");
+                dataTable.Columns.Add("벌점 내역");
+                dataTable.Columns.Add("교육 단계");
 
                 foreach (var item in items)
                 {
-                    dataTable.Rows.Add(new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, item.CurrentStep });
+                    dataTable.Rows.Add(new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, string.Empty, string.Empty, item.CurrentStep });
                 }
 
                 dataSet.Tables.Add(dataTable);

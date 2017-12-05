@@ -187,14 +187,19 @@ namespace DormitoryGUI.Model
                     var HR = WS.CreateRow(0);
 
                     var HeaderStyle = WB.CreateCellStyle();
+
                     HeaderStyle.Alignment = HorizontalAlignment.Center;
+                    HeaderStyle.VerticalAlignment = VerticalAlignment.Center;
 
                     var HeaderFont = WB.CreateFont();
+
                     HeaderFont.FontHeightInPoints = 11;
                     HeaderFont.FontName = "맑은 고딕";
                     HeaderFont.Boldweight = (short) FontBoldWeight.Bold;
-
+                    
                     HeaderStyle.SetFont(HeaderFont);
+
+                    var ColumnWidths = new int[]{ 9, 12, 8, 8, 24, 24, 14 };
 
                     // 엑셀의 헤더 부분(DataTable의 Columns 기록) 정의 및 출력
 
@@ -204,12 +209,17 @@ namespace DormitoryGUI.Model
 
                         HC.SetCellValue(DT.Columns[i].ColumnName);
                         HC.CellStyle = HeaderStyle;
+
+                        WS.SetColumnWidth(i, (int)((ColumnWidths[i] + 0.72) * 256));
                     }
 
                     var BodyStyle = WB.CreateCellStyle();
+
                     BodyStyle.Alignment = HorizontalAlignment.Center;
+                    BodyStyle.VerticalAlignment = VerticalAlignment.Center;
 
                     var BodyFont = WB.CreateFont();
+
                     BodyFont.FontHeightInPoints = 11;
                     BodyFont.FontName = "맑은 고딕";
                     BodyFont.Boldweight = (short) FontBoldWeight.None;
@@ -238,6 +248,7 @@ namespace DormitoryGUI.Model
                 using (FileStream FS = new FileStream(TempFile, FileMode.Create, FileAccess.Write))
                 {
                     WB.Write(FS);
+
                 }
             }
             catch (Exception)
