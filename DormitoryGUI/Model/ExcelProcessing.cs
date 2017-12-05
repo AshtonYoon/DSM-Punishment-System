@@ -1,14 +1,9 @@
-﻿using NPOI.XSSF.UserModel;
+﻿using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
 namespace DormitoryGUI.Model
 {
     class ExcelProcessing
@@ -173,8 +168,10 @@ namespace DormitoryGUI.Model
             bool result = true;
 
             if (File.Exists(FileName))
+            {
                 if (ExistDel) File.Delete(FileName);
                 else return result;
+            }
 
             string TempFile = FileName;
             // 파일 확장자가 xls 이나 xlsx 가 아니면 아예 파일을 안만들어서
@@ -187,25 +184,53 @@ namespace DormitoryGUI.Model
                 foreach (DataTable DT in DS.Tables)
                 {
                     var WS = WB.CreateSheet(DT.TableName);
-                    var WR = WS.CreateRow(0);
+                    var HR = WS.CreateRow(0);
+
+                    var HeaderStyle = WB.CreateCellStyle();
+                    HeaderStyle.Alignment = HorizontalAlignment.Center;
+
+                    var HeaderFont = WB.CreateFont();
+                    HeaderFont.FontHeightInPoints = 11;
+                    HeaderFont.FontName = "맑은 고딕";
+                    HeaderFont.Boldweight = (short) FontBoldWeight.Bold;
+
+                    HeaderStyle.SetFont(HeaderFont);
 
                     // 엑셀의 헤더 부분(DataTable의 Columns 기록) 정의 및 출력
+
                     for (int i = 0; i < DT.Columns.Count; i++)
                     {
-                        var WC = WR.CreateCell(i);
-                        WC.SetCellValue(DT.Columns[i].ColumnName);
+                        var HC = HR.CreateCell(i);
+
+                        HC.SetCellValue(DT.Columns[i].ColumnName);
+                        HC.CellStyle = HeaderStyle;
                     }
 
+                    var BodyStyle = WB.CreateCellStyle();
+                    BodyStyle.Alignment = HorizontalAlignment.Center;
+
+                    var BodyFont = WB.CreateFont();
+                    BodyFont.FontHeightInPoints = 11;
+                    BodyFont.FontName = "맑은 고딕";
+                    BodyFont.Boldweight = (short) FontBoldWeight.None;
+
+                    BodyStyle.SetFont(BodyFont);
+
                     // 엑셀의 바디 부분(Datable의 Rows 기록) 정의 및 출력
+
                     for (int i = 1; i <= DT.Rows.Count; i++)
                     {
                         var DR = DT.Rows[i - 1];
-                        var SR = WS.CreateRow(i);
+                        var BR = WS.CreateRow(i);
+
+                        // BR.RowStyle = BodyStyle;
 
                         for (int j = 0; j < DT.Columns.Count; j++)
                         {
-                            var cell = SR.CreateCell(j);
-                            cell.SetCellValue(DR[DT.Columns[j].ColumnName] as string);
+                            var BC = BR.CreateCell(j);
+
+                            BC.SetCellValue(DR[DT.Columns[j].ColumnName] as string);
+                            BC.CellStyle = BodyStyle;
                         }
                     }
                 }
