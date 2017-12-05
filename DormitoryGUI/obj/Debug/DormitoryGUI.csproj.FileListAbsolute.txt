@@ -136,4 +136,9 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\Dormi
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.CoreCompileInputs.cache
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
-E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\bin\Debug\NPOI.dll
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\bin\Debug\NPOI.OOXML.dll
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\bin\Debug\NPOI.OpenXml4Net.dll
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\bin\Debug\NPOI.OpenXmlFormats.dll
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\bin\Debug\NPOI.xml

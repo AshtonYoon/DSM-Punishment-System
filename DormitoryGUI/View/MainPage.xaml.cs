@@ -556,7 +556,8 @@ namespace DormitoryGUI
         {
             var target = (StudentListViewModel)GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
                 mainWindow.NavigatePage(
-                    new PunishmentLogPage(target.Name,
+                    new PunishmentLogPage(
+                        target.Name,
                         target.ClassNumber,
                         target.GoodPoint,
                         target.BadPoint,

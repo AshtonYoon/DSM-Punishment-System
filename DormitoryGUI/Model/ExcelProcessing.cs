@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.XSSF.UserModel;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
@@ -153,6 +154,7 @@ namespace DormitoryGUI.Model
 
         /// <summary>
         ///    DataSet 을 Excel 파일로 저장한다.
+        ///    [ NPOI 라이브러리를 이용한 컨버팅 작업 진행중 ]
         /// </summary>
         /// <param name="FileName">
         ///    Excel File 명 PullPath
@@ -178,90 +180,49 @@ namespace DormitoryGUI.Model
             // 파일 확장자가 xls 이나 xlsx 가 아니면 아예 파일을 안만들어서
             // 템프파일로 생성후 지정한 파일명으로 변경..
 
-            OleDbConnection OleDBConn = null;
-
             try
             {
-                OleDbCommand Cmd = null;
-                string ConnStr = "";
-
-                if (OldExcel)
-                {
-                    TempFile = TempFile + ".xls";
-                    ConnStr = string.Format(ConnectStrFrm_Excel97_2003, TempFile, "YES", "0");
-                }
-                else
-                {
-                    TempFile = TempFile + ".xlsx";
-                    ConnStr = string.Format(ConnectStrFrm_Excel, TempFile, "YES", "0");
-                }
-
-                OleDBConn = new OleDbConnection(ConnStr);
-                OleDBConn.Open();
-
-                // Create Table(s).. : 테이블 단위 처리
+                XSSFWorkbook WB = new XSSFWorkbook();
+                
                 foreach (DataTable DT in DS.Tables)
                 {
-                    String TableName = DT.TableName;
+                    var WS = WB.CreateSheet(DT.TableName);
+                    var WR = WS.CreateRow(0);
 
-                    StringBuilder FldsInfo = new StringBuilder();
-                    StringBuilder Flds = new StringBuilder();
-
-                    // Create Field(s) String : 현재 테이블의 Field 명 생성
-                    foreach (DataColumn Column in DT.Columns)
+                    // 엑셀의 헤더 부분(DataTable의 Columns 기록) 정의 및 출력
+                    for (int i = 0; i < DT.Columns.Count; i++)
                     {
-                        if (FldsInfo.Length > 0)
-                        {
-                            FldsInfo.Append(",");
-                            Flds.Append(",");
-                        }
-
-                        FldsInfo.Append("[" + Column.ColumnName.Replace("'", "''") + "] CHAR(255)");
-                        Flds.Append(Column.ColumnName.Replace("'", "''"));
+                        var WC = WR.CreateCell(i);
+                        WC.SetCellValue(DT.Columns[i].ColumnName);
                     }
 
-                    // Table Create
-                    Cmd = new OleDbCommand("CREATE TABLE " + TableName + "(" + FldsInfo.ToString() + ")", OleDBConn);
-                    Cmd.ExecuteNonQuery();
-
-                    // Insert Data
-                    foreach (DataRow DR in DT.Rows)
+                    // 엑셀의 바디 부분(Datable의 Rows 기록) 정의 및 출력
+                    for (int i = 1; i <= DT.Rows.Count; i++)
                     {
-                        StringBuilder Values = new StringBuilder();
-                        foreach (DataColumn Column in DT.Columns)
-                        {
-                            if (Values.Length > 0) Values.Append(",");
-                            Values.Append("'" + DR[Column.ColumnName].ToString().Replace("'", "''") + "'");
-                        }
+                        var DR = DT.Rows[i - 1];
+                        var SR = WS.CreateRow(i);
 
-                        Cmd = new OleDbCommand(
-                            "INSERT INTO [" + TableName + "$]" +
-                            "(" + Flds.ToString() + ") " +
-                            "VALUES (" + Values.ToString() + ")",
-                            OleDBConn);
-                        Cmd.ExecuteNonQuery();
+                        for (int j = 0; j < DT.Columns.Count; j++)
+                        {
+                            var cell = SR.CreateCell(j);
+                            cell.SetCellValue(DR[DT.Columns[j].ColumnName] as string);
+                        }
                     }
+                }
+
+                using (FileStream FS = new FileStream(TempFile, FileMode.Create, FileAccess.Write))
+                {
+                    WB.Write(FS);
                 }
             }
             catch (Exception)
             {
                 result = false;
             }
-            finally
-            {
-                if (OleDBConn != null) OleDBConn.Close();
-                try
-                {
-                    if (File.Exists(TempFile))
-                    {
-                        File.Move(TempFile, FileName);
-                    }
-                }
-                catch { }
-            }
+
             return result;
         }
-
+        
         /// <summary>
         ///    Excel 파일을 DataSet 으로 변환하여 반환한다.
         /// </summary>
@@ -286,6 +247,5 @@ namespace DormitoryGUI.Model
         {
             return SaveExcel(ExcelFile, DS, true, false);
         }
-        
     }
 }
