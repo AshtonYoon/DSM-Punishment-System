@@ -520,8 +520,6 @@ namespace DormitoryGUI
                 Filter = "Excel Files (*.xlsx)|*.xlsx"
             };
 
-            string fileName = DateTime.Now.ToLongDateString().Replace(" ", "_");
-
             DataSet dataSet = new DataSet();
 
             for (int i = 1; i <= 3; i++)
@@ -541,7 +539,40 @@ namespace DormitoryGUI
 
                 foreach (var item in items)
                 {
-                    dataTable.Rows.Add(new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, string.Empty, string.Empty, item.CurrentStep });
+                    JObject jobj = new JObject
+                    {
+                        { "USER_UUID", item.UserUUID }
+                    };
+
+                    JArray logs = Info.MultiJson(Info.Server.STUDENT_LOG, jobj) as JArray;
+
+                    StringBuilder goodLogsBuilder = new StringBuilder();
+                    StringBuilder badLogsBuilder = new StringBuilder();
+
+                    if (logs != null)
+                    {
+                        foreach (JObject log in logs)
+                        {
+                            switch ((int)log["POINT_TYPE"])
+                            {
+                                case 0:
+                                    goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["POINT_MEMO"], log["POINT_VALUE"]);
+                                    break;
+
+                                case 1:
+                                    badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["POINT_MEMO"], log["POINT_VALUE"]);
+                                    break;
+                            }
+                        }
+                    }
+
+                    int goodLogsCount = goodLogsBuilder.ToString().Length;
+                    string goodLogsString = (goodLogsCount > 0) ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1) : string.Empty;
+
+                    int badLogsCount = badLogsBuilder.ToString().Length;
+                    string badLogsString = (badLogsCount > 0) ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1) : string.Empty;
+
+                    dataTable.Rows.Add(new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, goodLogsString, badLogsString, item.CurrentStep });
                 }
 
                 dataSet.Tables.Add(dataTable);

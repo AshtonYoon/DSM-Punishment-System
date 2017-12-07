@@ -183,15 +183,15 @@ namespace DormitoryGUI.Model
 
                 foreach (DataTable DT in DS.Tables)
                 {
-                    var WS = WB.CreateSheet(DT.TableName);
-                    var HR = WS.CreateRow(0);
+                    XSSFSheet WS = WB.CreateSheet(DT.TableName) as XSSFSheet;
+                    XSSFRow HR = WS.CreateRow(0) as XSSFRow;
 
-                    var HeaderStyle = WB.CreateCellStyle();
+                    XSSFCellStyle HeaderStyle = WB.CreateCellStyle() as XSSFCellStyle;
 
                     HeaderStyle.Alignment = HorizontalAlignment.Center;
                     HeaderStyle.VerticalAlignment = VerticalAlignment.Center;
 
-                    var HeaderFont = WB.CreateFont();
+                    XSSFFont HeaderFont = WB.CreateFont() as XSSFFont;
 
                     HeaderFont.FontHeightInPoints = 11;
                     HeaderFont.FontName = "맑은 고딕";
@@ -199,13 +199,13 @@ namespace DormitoryGUI.Model
                     
                     HeaderStyle.SetFont(HeaderFont);
 
-                    var ColumnWidths = new int[]{ 9, 12, 8, 8, 24, 24, 14 };
+                    int[] ColumnWidths = new int[]{ 9, 12, 8, 8, 30, 30, 14 };
 
                     // 엑셀의 헤더 부분(DataTable의 Columns 기록) 정의 및 출력
 
                     for (int i = 0; i < DT.Columns.Count; i++)
                     {
-                        var HC = HR.CreateCell(i);
+                        XSSFCell HC = HR.CreateCell(i) as XSSFCell;
 
                         HC.SetCellValue(DT.Columns[i].ColumnName);
                         HC.CellStyle = HeaderStyle;
@@ -213,12 +213,13 @@ namespace DormitoryGUI.Model
                         WS.SetColumnWidth(i, (int)((ColumnWidths[i] + 0.72) * 256));
                     }
 
-                    var BodyStyle = WB.CreateCellStyle();
+                    XSSFCellStyle BodyStyle = WB.CreateCellStyle() as XSSFCellStyle;
 
                     BodyStyle.Alignment = HorizontalAlignment.Center;
                     BodyStyle.VerticalAlignment = VerticalAlignment.Center;
+                    BodyStyle.WrapText = true;
 
-                    var BodyFont = WB.CreateFont();
+                    XSSFFont BodyFont = WB.CreateFont() as XSSFFont;
 
                     BodyFont.FontHeightInPoints = 11;
                     BodyFont.FontName = "맑은 고딕";
@@ -228,18 +229,20 @@ namespace DormitoryGUI.Model
 
                     // 엑셀의 바디 부분(Datable의 Rows 기록) 정의 및 출력
 
-                    for (int i = 1; i <= DT.Rows.Count; i++)
+                    int RowCount = 0;
+                    
+                    foreach (DataRow DR in DT.Rows)
                     {
-                        var DR = DT.Rows[i - 1];
-                        var BR = WS.CreateRow(i);
+                        XSSFRow BR = WS.CreateRow(++RowCount) as XSSFRow;
+                        BR.HeightInPoints = 28 * Math.Max(DR["상점 내역"].ToString().Split('\n').Length, DR["벌점 내역"].ToString().Split('\n').Length);
 
-                        // BR.RowStyle = BodyStyle;
+                        int ColumnCount = 0;
 
-                        for (int j = 0; j < DT.Columns.Count; j++)
+                        foreach (DataColumn DC in DT.Columns)
                         {
-                            var BC = BR.CreateCell(j);
+                            XSSFCell BC = BR.CreateCell(ColumnCount++) as XSSFCell;
 
-                            BC.SetCellValue(DR[DT.Columns[j].ColumnName] as string);
+                            BC.SetCellValue(DR[DC.ColumnName] as string);
                             BC.CellStyle = BodyStyle;
                         }
                     }
@@ -248,7 +251,6 @@ namespace DormitoryGUI.Model
                 using (FileStream FS = new FileStream(TempFile, FileMode.Create, FileAccess.Write))
                 {
                     WB.Write(FS);
-
                 }
             }
             catch (Exception)
