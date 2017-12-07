@@ -32,7 +32,7 @@ namespace DormitoryGUI.View
 
         private int UUID;
 
-        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, int currentStep, int uuid)
+        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, string currentStep, int uuid)
         {
             InitializeComponent();
 
@@ -78,7 +78,7 @@ namespace DormitoryGUI.View
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: int.Parse(json["PUNISH_STATUS"].ToString()),
+                    currentStep: SetStatus(json["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
 
@@ -187,6 +187,25 @@ namespace DormitoryGUI.View
                     + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
                     pointValue: obj["POINT_VALUE"].ToString(),
                     pointCause: obj["POINT_MEMO"].ToString()));
+            }
+        }
+
+        private string SetStatus(string x)
+        {
+            switch (x)
+            {
+                case "0":
+                    return " ";
+                case "1":
+                    return "1단계";
+                case "2":
+                    return "2단계";
+                case "3":
+                    return "1out";
+                case "4":
+                    return "2out";
+                default:
+                    return "이게 왜떠";
             }
         }
     }

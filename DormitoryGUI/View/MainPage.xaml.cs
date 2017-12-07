@@ -294,7 +294,7 @@ namespace DormitoryGUI
                     isChecked: false,
                     goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: int.Parse(student["PUNISH_STATUS"].ToString()),
+                    currentStep: SetStatus(student["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(student["USER_UUID"].ToString())));
                 }
             }
