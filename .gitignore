@@ -1,0 +1,8 @@
+# Visual Studio
+/.vs/
+
+# Debug Binary files
+/DormitoryGUI/bin/Debug/
+
+# Nuget Packages
+/packages/
