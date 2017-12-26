@@ -282,9 +282,9 @@ namespace DormitoryGUI
 
             foreach(JObject student in studentList)
             {
-                if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command)||
-                    student["USER_NAME"].ToString().Contains(command)||
-                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command)||
+                if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command) ||
+                    student["USER_NAME"].ToString().Contains(command) ||
+                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command) ||
                     student["TOTAL_BAD_SCORE"].ToString().Contains(command))
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
@@ -401,11 +401,15 @@ namespace DormitoryGUI
                             userUUID: element.UserUUID
                         )
                     );
+
+                    element.IsChecked = false;
                 }
             }
 
             ResultList.ItemsSource = Deduplication(resultListCollection as IEnumerable<StudentListViewModel>);
             ResultList.Items.Refresh();
+
+            SearchList.Items.Refresh();
         }
 
         private T GetAncestorOfType<T>(FrameworkElement child)  where T : FrameworkElement
@@ -520,7 +524,10 @@ namespace DormitoryGUI
                 Filter = "Excel Files (*.xlsx)|*.xlsx"
             };
 
-            string fileName = DateTime.Now.ToLongDateString().Replace(" ", "_");
+            if (!(bool)saveDialog.ShowDialog())
+            {
+                return;
+            }
 
             DataSet dataSet = new DataSet();
 
@@ -580,17 +587,14 @@ namespace DormitoryGUI
                 dataSet.Tables.Add(dataTable);
             }
 
-            if ((bool)saveDialog.ShowDialog())
+            if (ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet))
             {
-                if (ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet))
-                {
-                    MessageBox.Show("Complete saving");
-                }
+                MessageBox.Show("Complete saving");
+            }
 
-                else
-                {
-                    MessageBox.Show("Failed saving");
-                }
+            else
+            {
+                MessageBox.Show("Failed saving");
             }
         }
 
