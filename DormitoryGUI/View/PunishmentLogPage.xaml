@@ -395,7 +395,7 @@
                       SelectionChanged="StudentList_SelectionChanged">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True">
-                        <GridViewColumn>
+                        <!--<GridViewColumn>
                             <GridViewColumn.Header>
                                 <CheckBox VerticalAlignment="Center"
                                           BorderThickness="1.2"
@@ -412,7 +412,7 @@
                                               IsChecked="{Binding IsChecked}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        </GridViewColumn>-->
                         <GridViewColumn Header="학번"
                                         DisplayMemberBinding="{Binding Path=ClassNumber}" />
                         <GridViewColumn Header="이름"

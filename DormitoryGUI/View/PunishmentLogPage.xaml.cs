@@ -25,8 +25,8 @@ namespace DormitoryGUI.View
     {
         private StudentList listviewCollection;
 
-        private RoutedEventHandler UnCheckedEventHandler;
-        private RoutedEventHandler CheckedEventHandler;
+        // private RoutedEventHandler UnCheckedEventHandler;
+        // private RoutedEventHandler CheckedEventHandler;
 
         private JArray studentList;
 
@@ -43,7 +43,7 @@ namespace DormitoryGUI.View
                 this.NavigationService.GoBack();
             };
 
-            UnCheckedEventHandler += new RoutedEventHandler((s, e) => {
+            /* UnCheckedEventHandler += new RoutedEventHandler((s, e) => {
                 var target = GetAncestorOfType<ListView>(s as CheckBox);
                 foreach (var element in target.Items)
                 {
@@ -64,7 +64,7 @@ namespace DormitoryGUI.View
                 }
 
                 target.Items.Refresh();
-            });
+            }); */
 
             object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
             studentList = (JArray)masterData;
@@ -78,7 +78,7 @@ namespace DormitoryGUI.View
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: SetStatus(json["PUNISH_STATUS"].ToString()),
+                    currentStep: Info.ParseStatus(json["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
 
@@ -120,7 +120,7 @@ namespace DormitoryGUI.View
             TotalPunishStep.Content = target.CurrentStep.ToString();
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        /* private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckedEventHandler?.Invoke(sender, e);
         }
@@ -128,7 +128,7 @@ namespace DormitoryGUI.View
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             UnCheckedEventHandler?.Invoke(sender, e);
-        }
+        } */
 
         private void StudentList_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -139,16 +139,15 @@ namespace DormitoryGUI.View
 
             double[] columnRatio =
             {
-                0.15,
-                0.425,
-                0.425
+                0.4,
+                0.6
             };
 
             foreach (var element in gridView.Columns)
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
         }
 
-        private void ItemCheckBox_Checked(object sender, RoutedEventArgs e)
+        /* private void ItemCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             var target = GetAncestorOfType<ListView>(sender as CheckBox);
             var targetItem = GetAncestorOfType<ListViewItem>(sender as CheckBox);
@@ -160,7 +159,7 @@ namespace DormitoryGUI.View
         private void ItemCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
 
-        }
+        } */ 
 
         private void SetLogData()
         {
@@ -187,25 +186,6 @@ namespace DormitoryGUI.View
                     + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
                     pointValue: obj["POINT_VALUE"].ToString(),
                     pointCause: obj["POINT_MEMO"].ToString()));
-            }
-        }
-
-        private string SetStatus(string x)
-        {
-            switch (x)
-            {
-                case "0":
-                    return " ";
-                case "1":
-                    return "1단계";
-                case "2":
-                    return "2단계";
-                case "3":
-                    return "1out";
-                case "4":
-                    return "2out";
-                default:
-                    return "이게 왜떠";
             }
         }
     }

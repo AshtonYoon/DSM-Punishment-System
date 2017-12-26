@@ -64,5 +64,24 @@ namespace DormitoryGUI
             }
             return null;
         }
+
+        public static string ParseStatus(string status)
+        {
+            switch (status)
+            {
+                case "0":
+                    return " ";
+                case "1":
+                    return "1단계";
+                case "2":
+                    return "2단계";
+                case "3":
+                    return "1out";
+                case "4":
+                    return "2out";
+                default:
+                    return "이게 왜떠";
+            }
+        }
     }
 }

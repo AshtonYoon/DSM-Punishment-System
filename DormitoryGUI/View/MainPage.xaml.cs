@@ -69,10 +69,10 @@ namespace DormitoryGUI
                 target.Items.Refresh();
             });
 
-            UploadExcel.Click += (s, e) =>
+            /* UploadExcel.Click += (s, e) =>
             {
                 SetStudentData();
-            };
+            }; */
 
             PunishmentList.Click += (s, e) =>
             {
@@ -108,7 +108,7 @@ namespace DormitoryGUI
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: SetStatus(json["PUNISH_STATUS"].ToString()),
+                    currentStep: Info.ParseStatus(json["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
         }
@@ -294,7 +294,7 @@ namespace DormitoryGUI
                     isChecked: false,
                     goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: SetStatus(student["PUNISH_STATUS"].ToString()),
+                    currentStep: Info.ParseStatus(student["PUNISH_STATUS"].ToString()),
                     userUUID: int.Parse(student["USER_UUID"].ToString())));
                 }
             }
@@ -604,25 +604,6 @@ namespace DormitoryGUI
                         target.UserUUID
                     )
                 );
-        }
-
-        private string SetStatus(string x)
-        {
-            switch (x)
-            {
-                case "0":
-                    return " ";
-                case "1":
-                    return "1단계";
-                case "2":
-                    return "2단계";
-                case "3":
-                    return "1out";
-                case "4":
-                    return "2out";
-                default:
-                    return "이게 왜떠";
-            }
         }
     }
 }
