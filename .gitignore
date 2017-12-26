@@ -1,0 +1,8 @@
+# Projects Files
+/.vs/DormitoryGUI/v15/
+
+# Debug Binary files
+/DormitoryGUI/bin/Debug/
+
+# Nuget Packages
+/packages/
