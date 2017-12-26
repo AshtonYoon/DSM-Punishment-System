@@ -32,7 +32,7 @@ namespace DormitoryGUI.View
 
         private int UUID;
 
-        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, int currentStep, int uuid)
+        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, string currentStep, int uuid)
         {
             InitializeComponent();
 
@@ -78,11 +78,7 @@ namespace DormitoryGUI.View
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
-<<<<<<< HEAD
                     currentStep: Info.ParseStatus(json["PUNISH_STATUS"].ToString()),
-=======
-                    currentStep: int.Parse(json["PUNISH_STATUS"].ToString()),
->>>>>>> 8fe8050e640dcdc99a8d0b92960eb6c525f528c7
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
 

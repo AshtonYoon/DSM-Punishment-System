@@ -108,11 +108,7 @@ namespace DormitoryGUI
                     isChecked: false,
                     goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
-<<<<<<< HEAD
                     currentStep: Info.ParseStatus(json["PUNISH_STATUS"].ToString()),
-=======
-                    currentStep: int.Parse(json["PUNISH_STATUS"].ToString()),
->>>>>>> 8fe8050e640dcdc99a8d0b92960eb6c525f528c7
                     userUUID: int.Parse(json["USER_UUID"].ToString())));
             }
         }
@@ -298,11 +294,7 @@ namespace DormitoryGUI
                     isChecked: false,
                     goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
                     badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
-<<<<<<< HEAD
                     currentStep: Info.ParseStatus(student["PUNISH_STATUS"].ToString()),
-=======
-                    currentStep: int.Parse(student["PUNISH_STATUS"].ToString()),
->>>>>>> 8fe8050e640dcdc99a8d0b92960eb6c525f528c7
                     userUUID: int.Parse(student["USER_UUID"].ToString())));
                 }
             }
