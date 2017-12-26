@@ -1,14 +1,9 @@
-﻿using NPOI.XSSF.UserModel;
+﻿using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
 namespace DormitoryGUI.Model
 {
     class ExcelProcessing
@@ -20,7 +15,6 @@ namespace DormitoryGUI.Model
             "Mode=ReadWrite|Share Deny None;" +
             "Extended Properties='Excel 8.0; HDR={1}; IMEX={2}';" +
             "Persist Security Info=False";
-
         // 확장명 XLSX (Excel 2007 이상용)
         private const string ConnectStrFrm_Excel =
             "Provider=Microsoft.ACE.OLEDB.12.0;" +
@@ -28,7 +22,6 @@ namespace DormitoryGUI.Model
             "Mode=ReadWrite|Share Deny None;" +
             "Extended Properties='Excel 12.0; HDR={1}; IMEX={2}';" +
             "Persist Security Info=False";
-
         /// <summary>
         ///    Excel 파일의 형태를 반환한다.
         ///    -2 : Error  
@@ -47,6 +40,7 @@ namespace DormitoryGUI.Model
             };
 
             // result -2=error, -1=not excel , 0=xls , 1=xlsx
+
             int result = -1;
 
             FileInfo FI = new FileInfo(XlsFile);
@@ -65,6 +59,7 @@ namespace DormitoryGUI.Model
                         if (FH[j] != ExcelHeader[i, j]) break;
                         else if (j == 4) result = i;
                     }
+
                     if (result >= 0) break;
                 }
             }
@@ -77,9 +72,9 @@ namespace DormitoryGUI.Model
             {
                 FS.Close();
             }
+
             return result;
         }
-
         /// <summary>
         ///    Excel 파일을 DataSet 으로 변환하여 반환한다.
         /// </summary>
@@ -118,6 +113,7 @@ namespace DormitoryGUI.Model
 
             OleDbConnection OleDBConn = null;
             OleDbDataAdapter OleDBAdap = null;
+
             DataTable Schema;
 
             try
@@ -149,9 +145,10 @@ namespace DormitoryGUI.Model
             {
                 if (OleDBConn != null) OleDBConn.Close();
             }
+
             return DS;
         }
-
+       
         /// <summary>
         ///    DataSet 을 Excel 파일로 저장한다.
         ///    [ NPOI 라이브러리를 이용한 컨버팅 작업 진행중 ]
@@ -168,48 +165,88 @@ namespace DormitoryGUI.Model
         /// <param name="OldExcel">
         ///    xls 형태로 저장할 것인지 여부, false 이면 xlsx 형태로 저장함.
         /// </param>
+
         private static bool SaveExcel(string FileName, DataSet DS, bool ExistDel, bool OldExcel)
         {
             bool result = true;
 
             if (File.Exists(FileName))
+            {
                 if (ExistDel) File.Delete(FileName);
                 else return result;
+            }
 
             string TempFile = FileName;
+            
             // 파일 확장자가 xls 이나 xlsx 가 아니면 아예 파일을 안만들어서
             // 템프파일로 생성후 지정한 파일명으로 변경..
 
             try
             {
                 XSSFWorkbook WB = new XSSFWorkbook();
-                
+
                 foreach (DataTable DT in DS.Tables)
                 {
-                    var WS = WB.CreateSheet(DT.TableName);
-                    var WR = WS.CreateRow(0);
+                    XSSFSheet WS = WB.CreateSheet(DT.TableName) as XSSFSheet;
+                    XSSFRow HR = WS.CreateRow(0) as XSSFRow;
 
+                    XSSFCellStyle HeaderStyle = WB.CreateCellStyle() as XSSFCellStyle;
+                    HeaderStyle.Alignment = HorizontalAlignment.Center;
+                    HeaderStyle.VerticalAlignment = VerticalAlignment.Center;
+
+                    XSSFFont HeaderFont = WB.CreateFont() as XSSFFont;
+                    HeaderFont.FontHeightInPoints = 11;
+                    HeaderFont.FontName = "맑은 고딕";
+                    HeaderFont.Boldweight = (short)FontBoldWeight.Bold;
+
+                    HeaderStyle.SetFont(HeaderFont);
+
+                    int[] ColumnWidths = new int[] { 9, 12, 8, 8, 30, 30, 14 };
+                    
                     // 엑셀의 헤더 부분(DataTable의 Columns 기록) 정의 및 출력
+
                     for (int i = 0; i < DT.Columns.Count; i++)
                     {
-                        var WC = WR.CreateCell(i);
-                        WC.SetCellValue(DT.Columns[i].ColumnName);
+                        XSSFCell HC = HR.CreateCell(i) as XSSFCell;
+
+                        HC.SetCellValue(DT.Columns[i].ColumnName);
+                        HC.CellStyle = HeaderStyle;
+
+                        WS.SetColumnWidth(i, (int)((ColumnWidths[i] + 0.72) * 256));
                     }
 
-                    // 엑셀의 바디 부분(Datable의 Rows 기록) 정의 및 출력
-                    for (int i = 1; i <= DT.Rows.Count; i++)
-                    {
-                        var DR = DT.Rows[i - 1];
-                        var SR = WS.CreateRow(i);
+                    XSSFCellStyle BodyStyle = WB.CreateCellStyle() as XSSFCellStyle;
+                    BodyStyle.Alignment = HorizontalAlignment.Center;
+                    BodyStyle.VerticalAlignment = VerticalAlignment.Center;
+                    BodyStyle.WrapText = true;
 
-                        for (int j = 0; j < DT.Columns.Count; j++)
+                    XSSFFont BodyFont = WB.CreateFont() as XSSFFont;
+                    BodyFont.FontHeightInPoints = 11;
+                    BodyFont.FontName = "맑은 고딕";
+                    BodyFont.Boldweight = (short)FontBoldWeight.None;
+
+                    BodyStyle.SetFont(BodyFont);
+                    
+                    // 엑셀의 바디 부분(Datable의 Rows 기록) 정의 및 출력
+
+                    int RowCount = 0;
+
+                    foreach (DataRow DR in DT.Rows)
+                    {
+                        XSSFRow BR = WS.CreateRow(++RowCount) as XSSFRow;
+                        BR.HeightInPoints = 28 * Math.Max(DR["상점 내역"].ToString().Split('\n').Length, DR["벌점 내역"].ToString().Split('\n').Length);
+
+                        int ColumnCount = 0;
+
+                        foreach (DataColumn DC in DT.Columns)
                         {
-                            var cell = SR.CreateCell(j);
-                            cell.SetCellValue(DR[DT.Columns[j].ColumnName] as string);
+                            XSSFCell BC = BR.CreateCell(ColumnCount++) as XSSFCell;
+
+                            BC.SetCellValue(DR[DC.ColumnName] as string);
+                            BC.CellStyle = BodyStyle;
                         }
                     }
                 }
-
                 using (FileStream FS = new FileStream(TempFile, FileMode.Create, FileAccess.Write))
                 {
                     WB.Write(FS);
@@ -222,13 +259,14 @@ namespace DormitoryGUI.Model
 
             return result;
         }
-        
+
         /// <summary>
         ///    Excel 파일을 DataSet 으로 변환하여 반환한다.
         /// </summary>
         /// <param name="ExcelFile">
         ///    읽어올 Excel File 명(전체경로)입니다.
         /// </param>
+
         public static DataSet OpenExcelDB(string ExcelFile)
         {
             return OpenExcel(ExcelFile, true);
@@ -243,6 +281,7 @@ namespace DormitoryGUI.Model
         /// <param name="DS">
         ///    저장할 대상 DataSet 입니다.
         /// </param>
+
         public static bool SaveExcelDB(string ExcelFile, DataSet DS)
         {
             return SaveExcel(ExcelFile, DS, true, false);
