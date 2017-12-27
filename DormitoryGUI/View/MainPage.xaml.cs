@@ -46,11 +46,13 @@ namespace DormitoryGUI
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
             resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
 
-            UnCheckedEventHandler += new RoutedEventHandler((s, e)=> {
+
+            UnCheckedEventHandler += new RoutedEventHandler((s, e) =>
+            {
                 var target = GetAncestorOfType<ListView>(s as CheckBox);
                 foreach (var element in target.Items)
                 {
-                    ((StudentListViewModel)element).IsChecked = false;
+                    ((StudentListViewModel) element).IsChecked = false;
                 }
                 target.SelectedItems.Clear();
 
@@ -62,7 +64,7 @@ namespace DormitoryGUI
                 var target = GetAncestorOfType<ListView>(s as CheckBox);
                 foreach (var element in target.Items)
                 {
-                    ((StudentListViewModel)element).IsChecked = true;
+                    ((StudentListViewModel) element).IsChecked = true;
                     target.SelectedItems.Add(element);
                 }
 
@@ -74,10 +76,7 @@ namespace DormitoryGUI
                 SetStudentData();
             }; */
 
-            PunishmentList.Click += (s, e) =>
-            {
-                mainWindow.NavigatePage(new PunishmentListPage());
-            };
+            PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage()); };
 
             //((INotifyCollectionChanged)SearchList.Items).CollectionChanged += ListView_CollectionChanged;
 
@@ -97,10 +96,10 @@ namespace DormitoryGUI
         public void Update()
         {
             object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
-            studentList = (JArray)masterData;
-            
+            studentList = (JArray) masterData;
+
             foreach (JObject json in studentList)
-            { 
+            {
                 listviewCollection.Add(new ViewModel.StudentListViewModel(
                     roomNumber: 0.ToString(),
                     classNumber: json["USER_SCHOOL_NUMBER"].ToString(),
@@ -113,41 +112,49 @@ namespace DormitoryGUI
             }
         }
 
-        private enum Step { First, Second, Third, Fourth };
+        private enum Step
+        {
+            First,
+            Second,
+            Third,
+            Fourth
+        }
 
         private Step CurrentStep = Step.First;
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            if (((bool)Good.IsChecked || (bool)Bad.IsChecked) && CurrentStep == Step.First)
+            if (((bool) Good.IsChecked || (bool) Bad.IsChecked) && CurrentStep == Step.First)
             {
                 HideAnimation(FirstGrid);
                 ShowAnimation(SecondGrid);
 
-                if(((bool)Good.IsChecked))
-                    PunishmentComboBox.PunishmentType = (int)Info.POINT_TYPE.GOOD;
+                if (((bool) Good.IsChecked))
+                    PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.GOOD;
 
-                else if (((bool)Bad.IsChecked))
-                    PunishmentComboBox.PunishmentType = (int)Info.POINT_TYPE.BAD;
+                else if (((bool) Bad.IsChecked))
+                    PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.BAD;
 
                 CurrentStep = Step.Second;
             }
 
-            if(PunishmentComboBox.SelectedItem != null && CurrentStep == Step.Second)
+            if (PunishmentComboBox.SelectedItem != null && CurrentStep == Step.Second)
             {
                 //Do something
                 HideAnimation(SecondGrid);
                 ShowAnimation(ThirdGrid);
 
-                PunishmentSlider.SliderValue = (PunishmentComboBox.SelectedItem as PunishmentListViewModel).MinimumPoint;
-                
+                PunishmentSlider.SliderValue =
+                    (PunishmentComboBox.SelectedItem as PunishmentListViewModel).MinimumPoint;
+
                 CurrentStep = Step.Third;
                 return;
             }
-            
+
             if (CurrentStep == Step.Third)
             {
-                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                    MessageBoxResult.Yes)
                 {
                     /**
                         json = {
@@ -159,13 +166,14 @@ namespace DormitoryGUI
                     */
                     JObject obj = new JObject
                     {
-                        { "DEST_UUID", Info.mainPage.TeacherUUID }
+                        {"DEST_UUID", Info.mainPage.TeacherUUID}
                     };
 
                     PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
                     obj.Add("POINT_UUID", item.PointUUID);
 
-                    if (PunishmentSlider.SliderValue >=  item.MinimumPoint && PunishmentSlider.SliderValue <= item.MaximumPoint)
+                    if (PunishmentSlider.SliderValue >= item.MinimumPoint &&
+                        PunishmentSlider.SliderValue <= item.MaximumPoint)
                     {
                         // 부여하고자 하는 벌점이 최댓값, 최솟값을 넘지 않는지에 대해 검사
 
@@ -193,6 +201,27 @@ namespace DormitoryGUI
                         MessageBox.Show("벌점은 최댓값과 최솟값을 넘을 수 없습니다.");
                     }
                 }
+            }
+        }
+
+        private void ApplyPointBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentStep == Step.Second)
+            {
+                //Do something
+                HideAnimation(SecondGrid);
+                ShowAnimation(FirstGrid);
+
+                CurrentStep = Step.First;
+                return;
+            }
+
+            if (CurrentStep == Step.Third)
+            {
+                CurrentStep = Step.Second;
+
+                HideAnimation(ThirdGrid);
+                ShowAnimation(SecondGrid);
             }
         }
 
@@ -232,10 +261,11 @@ namespace DormitoryGUI
 
             Storyboard.SetTarget(FadeOutAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration)
-            {
-                EasingFunction = new QuadraticEase()
-            };
+            ThicknessAnimation ShiftLeftAnimation =
+                new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration)
+                {
+                    EasingFunction = new QuadraticEase()
+                };
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -260,10 +290,11 @@ namespace DormitoryGUI
 
             Storyboard.SetTarget(FadeInAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
-            {
-                EasingFunction = new QuadraticEase()
-            };
+            ThicknessAnimation ShiftLeftAnimation =
+                new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
+                {
+                    EasingFunction = new QuadraticEase()
+                };
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -280,25 +311,27 @@ namespace DormitoryGUI
             string command = SearchCommand.Text;
             listviewCollection.Clear();
 
-            foreach(JObject student in studentList)
+            foreach (JObject student in studentList)
             {
-                if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command)||
-                    student["USER_NAME"].ToString().Contains(command)||
-                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command)||
+                if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command) ||
+                    student["USER_NAME"].ToString().Contains(command) ||
+                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command) ||
                     student["TOTAL_BAD_SCORE"].ToString().Contains(command))
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
-                    roomNumber: student["user_school_room_number"] != null ? student["user_school_room_number"].ToString() : "NULL",
-                    classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
-                    name: student["USER_NAME"].ToString(),
-                    isChecked: false,
-                    goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
-                    badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: Info.ParseStatus(student["PUNISH_STATUS"].ToString()),
-                    userUUID: int.Parse(student["USER_UUID"].ToString())));
+                        roomNumber: student["user_school_room_number"] != null
+                            ? student["user_school_room_number"].ToString()
+                            : "NULL",
+                        classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
+                        name: student["USER_NAME"].ToString(),
+                        isChecked: false,
+                        goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
+                        badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
+                        currentStep: Info.ParseStatus(student["PUNISH_STATUS"].ToString()),
+                        userUUID: int.Parse(student["USER_UUID"].ToString())));
                 }
             }
-           
+
             //UnCheckedEventHandler?.Invoke(sender, e);
         }
 
@@ -318,7 +351,7 @@ namespace DormitoryGUI
                 Filter = "Excel Files (*.xlsx)|*.xls"
             };
             bool? result = dialog.ShowDialog();
-            if((bool)result)
+            if ((bool) result)
             {
                 JArray list = new JArray();
 
@@ -385,7 +418,7 @@ namespace DormitoryGUI
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach(StudentListViewModel element in SearchList.Items)
+            foreach (StudentListViewModel element in SearchList.Items)
             {
                 if (element.IsChecked)
                 {
@@ -408,13 +441,13 @@ namespace DormitoryGUI
             ResultList.Items.Refresh();
         }
 
-        private T GetAncestorOfType<T>(FrameworkElement child)  where T : FrameworkElement
+        private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
         {
             var parent = VisualTreeHelper.GetParent(child);
             if (parent != null && !(parent is T))
-                return GetAncestorOfType<T>((FrameworkElement)parent);
+                return GetAncestorOfType<T>((FrameworkElement) parent);
 
-            return (T)parent;
+            return (T) parent;
         }
 
         private void ResultList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -432,7 +465,7 @@ namespace DormitoryGUI
             var targets = e.AddedItems;
             foreach (var element in targets)
             {
-                ((StudentListViewModel)element).IsChecked = true;
+                ((StudentListViewModel) element).IsChecked = true;
             }
             listview.Items.Refresh();
         }
@@ -440,7 +473,7 @@ namespace DormitoryGUI
         private IEnumerable<StudentListViewModel> Deduplication(IEnumerable<StudentListViewModel> source)
         {
             return source.GroupBy(x => x.ClassNumber)
-                                 .Select(y => y.First());
+                .Select(y => y.First());
         }
 
         private void ResultList_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -458,7 +491,7 @@ namespace DormitoryGUI
 
         private void ResultList_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Delete)
+            if (e.Key == Key.Delete)
                 DeleteSelectedItem();
         }
 
@@ -478,7 +511,7 @@ namespace DormitoryGUI
 
         private void SelectAllCommand_Click(object sender, RoutedEventArgs e)
         {
-            foreach(StudentListViewModel element in ResultList.Items)
+            foreach (StudentListViewModel element in ResultList.Items)
             {
                 element.IsChecked = true;
                 ResultList.SelectedItems.Add(element);
@@ -496,7 +529,6 @@ namespace DormitoryGUI
 
         private void ItemCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void DeselectAllCommand_Click(object sender, RoutedEventArgs e)
@@ -528,8 +560,8 @@ namespace DormitoryGUI
             {
                 // 1, 2, 3 학년 별 DataTable 분리
 
-                var items = listviewCollection.Where(item => item.ClassNumber.StartsWith(i.ToString()));    // 학년 별 컬렉션 필터링
-                DataTable dataTable = new DataTable($"{i}학년");   // 학년 별 DataTable 생성 (예: 1학년)
+                var items = listviewCollection.Where(item => item.ClassNumber.StartsWith(i.ToString())); // 학년 별 컬렉션 필터링
+                DataTable dataTable = new DataTable($"{i}학년"); // 학년 별 DataTable 생성 (예: 1학년)
 
                 dataTable.Columns.Add("학번");
                 dataTable.Columns.Add("이름");
@@ -543,7 +575,7 @@ namespace DormitoryGUI
                 {
                     JObject jobj = new JObject
                     {
-                        { "USER_UUID", item.UserUUID }
+                        {"USER_UUID", item.UserUUID}
                     };
 
                     JArray logs = Info.MultiJson(Info.Server.STUDENT_LOG, jobj) as JArray;
@@ -555,7 +587,7 @@ namespace DormitoryGUI
                     {
                         foreach (JObject log in logs)
                         {
-                            switch ((int)log["POINT_TYPE"])
+                            switch ((int) log["POINT_TYPE"])
                             {
                                 case 0:
                                     goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["POINT_MEMO"], log["POINT_VALUE"]);
@@ -569,18 +601,26 @@ namespace DormitoryGUI
                     }
 
                     int goodLogsCount = goodLogsBuilder.ToString().Length;
-                    string goodLogsString = (goodLogsCount > 0) ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1) : string.Empty;
+                    string goodLogsString = (goodLogsCount > 0)
+                        ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1)
+                        : string.Empty;
 
                     int badLogsCount = badLogsBuilder.ToString().Length;
-                    string badLogsString = (badLogsCount > 0) ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1) : string.Empty;
+                    string badLogsString = (badLogsCount > 0)
+                        ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1)
+                        : string.Empty;
 
-                    dataTable.Rows.Add(new object[] { item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, goodLogsString, badLogsString, item.CurrentStep });
+                    dataTable.Rows.Add(new object[]
+                    {
+                        item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, goodLogsString, badLogsString,
+                        item.CurrentStep
+                    });
                 }
 
                 dataSet.Tables.Add(dataTable);
             }
 
-            if ((bool)saveDialog.ShowDialog())
+            if ((bool) saveDialog.ShowDialog())
             {
                 if (ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet))
                 {
@@ -596,17 +636,17 @@ namespace DormitoryGUI
 
         private void Log_Click(object sender, RoutedEventArgs e)
         {
-            var target = (StudentListViewModel)GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
-                mainWindow.NavigatePage(
-                    new PunishmentLogPage(
-                        target.Name,
-                        target.ClassNumber,
-                        target.GoodPoint,
-                        target.BadPoint,
-                        target.CurrentStep,
-                        target.UserUUID
-                    )
-                );
+            var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
+            mainWindow.NavigatePage(
+                new PunishmentLogPage(
+                    target.Name,
+                    target.ClassNumber,
+                    target.GoodPoint,
+                    target.BadPoint,
+                    target.CurrentStep,
+                    target.UserUUID
+                )
+            );
         }
     }
 }
