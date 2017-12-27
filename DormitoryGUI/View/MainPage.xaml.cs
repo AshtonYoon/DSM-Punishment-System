@@ -586,15 +586,16 @@ namespace DormitoryGUI
 
                 dataSet.Tables.Add(dataTable);
             }
+            
 
             if (ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet))
             {
-                MessageBox.Show("Complete saving");
+                MessageBox.Show("엑셀 파일 저장을 완료했습니다.");
             }
 
             else
             {
-                MessageBox.Show("Failed saving");
+                MessageBox.Show("엑셀 파일 저장에 실패하였습니다.");
             }
         }
 
