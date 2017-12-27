@@ -276,3 +276,4 @@ C:\Users\dwg76\Downloads\DSM-Punishment-System-master\DSM-Punishment-System-mast
 C:\Users\dwg76\Downloads\DSM-Punishment-System-master\DSM-Punishment-System-master\DormitoryGUI\obj\Debug\DormitoryGUI.Properties.Resources.resources
 C:\Users\dwg76\Downloads\DSM-Punishment-System-master\DSM-Punishment-System-master\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
 C:\Users\dwg76\Downloads\DSM-Punishment-System-master\DSM-Punishment-System-master\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache

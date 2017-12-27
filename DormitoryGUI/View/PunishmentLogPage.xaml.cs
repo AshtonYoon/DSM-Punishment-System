@@ -104,29 +104,7 @@ namespace DormitoryGUI.View
                 TotalPunishStep.Content = target.CurrentStep.ToString();
             }
         }
-        //        private void StudentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //        {
-        //            var target = (StudentListViewModel)e.AddedItems[e.AddedItems.Count - 1];
-        //            UUID = target.UserUUID;
-        //
-        //            SetLogData();
-        //
-        //            StudentName.Content = target.Name;
-        //            ClassNumber.Content = target.ClassNumber;
-        //            TotalGoodPoint.Content = target.GoodPoint.ToString();
-        //            TotalBadPoint.Content = target.BadPoint.ToString();
-        //            TotalPunishStep.Content = target.CurrentStep.ToString();
-        //        }
-
-        /* private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckedEventHandler?.Invoke(sender, e);
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            UnCheckedEventHandler?.Invoke(sender, e);
-        } */
+       
         private void StudentList_SizeChanged(object sender, SizeChangedEventArgs e)
 
         {

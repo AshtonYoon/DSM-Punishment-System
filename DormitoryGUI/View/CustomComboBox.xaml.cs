@@ -69,5 +69,10 @@ namespace DormitoryGUI.View
                 }
             }
         }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
