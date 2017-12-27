@@ -630,19 +630,11 @@
         </Grid>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height=".3*" />
-                <RowDefinition Height="9*" />
+                <RowDefinition Height="19" />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Grid.Background>
-                    <LinearGradientBrush EndPoint="0.504,2"
-                                         StartPoint="0.504,0.03">
-                        <GradientStop Color="#FFBCBCBC"
-                                      Offset="0" />
-                        <GradientStop Color="#FFFFFFFF"
-                                      Offset="0.367" />
-                    </LinearGradientBrush>
-                </Grid.Background>
+
                 <TextBox x:Name="CurrentDate"
                          HorizontalAlignment="Right"
                          Foreground="Black"

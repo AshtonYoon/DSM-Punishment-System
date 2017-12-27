@@ -71,27 +71,12 @@ namespace DormitoryGUI
                 target.Items.Refresh();
             });
 
-            /* UploadExcel.Click += (s, e) =>
-            {
-                SetStudentData();
-            }; */
-
             PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage()); };
-
-            //((INotifyCollectionChanged)SearchList.Items).CollectionChanged += ListView_CollectionChanged;
 
             this.mainWindow = mainWindow;
 
             Update();
         }
-
-        //private void ListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    if(e.Action == NotifyCollectionChangedAction.Add)
-        //    {
-
-        //    }
-        //}
 
         public void Update()
         {
@@ -117,7 +102,6 @@ namespace DormitoryGUI
             First,
             Second,
             Third,
-            Fourth
         }
 
         private Step CurrentStep = Step.First;
@@ -129,10 +113,10 @@ namespace DormitoryGUI
                 HideAnimation(FirstGrid);
                 ShowAnimation(SecondGrid);
 
-                if (((bool) Good.IsChecked))
+                if ((bool) Good.IsChecked)
                     PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.GOOD;
 
-                else if (((bool) Bad.IsChecked))
+                else if ((bool) Bad.IsChecked)
                     PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.BAD;
 
                 CurrentStep = Step.Second;
@@ -140,12 +124,11 @@ namespace DormitoryGUI
 
             if (PunishmentComboBox.SelectedItem != null && CurrentStep == Step.Second)
             {
-                //Do something
                 HideAnimation(SecondGrid);
                 ShowAnimation(ThirdGrid);
 
                 PunishmentSlider.SliderValue =
-                    (PunishmentComboBox.SelectedItem as PunishmentListViewModel).MinimumPoint;
+                    ((PunishmentListViewModel) PunishmentComboBox.SelectedItem).MinimumPoint;
 
                 CurrentStep = Step.Third;
                 return;
@@ -156,7 +139,7 @@ namespace DormitoryGUI
                 if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
                     MessageBoxResult.Yes)
                 {
-                    /**
+                    /** Response
                         json = {
 	                        "DEST_UUID":123
 	                        "TARGET":[12,32,43,STUDENT_UUID]
@@ -208,7 +191,6 @@ namespace DormitoryGUI
         {
             if (CurrentStep == Step.Second)
             {
-                //Do something
                 HideAnimation(SecondGrid);
                 ShowAnimation(FirstGrid);
 
@@ -331,8 +313,6 @@ namespace DormitoryGUI
                         userUUID: int.Parse(student["USER_UUID"].ToString())));
                 }
             }
-
-            //UnCheckedEventHandler?.Invoke(sender, e);
         }
 
         private void SearchCommand_KeyUp(object sender, KeyEventArgs e)
@@ -556,7 +536,7 @@ namespace DormitoryGUI
                 Filter = "Excel Files (*.xlsx)|*.xlsx"
             };
 
-            if (!(bool)saveDialog.ShowDialog())
+            if (!(bool) saveDialog.ShowDialog())
             {
                 return;
             }
@@ -627,6 +607,7 @@ namespace DormitoryGUI
                 dataSet.Tables.Add(dataTable);
             }
             
+
 
             if (ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet))
             {

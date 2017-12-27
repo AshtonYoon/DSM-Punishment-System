@@ -72,6 +72,7 @@
                            FontSize="40"/>
                     <Label x:Name="PointCause" 
                            Grid.Column="1"
+                           UseLayoutRounding="True"
                            Content="이것은 내용입니다. 이것은 내용입니다"
                            VerticalAlignment="Center"
                            VerticalContentAlignment="Center"
