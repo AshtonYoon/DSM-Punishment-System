@@ -496,15 +496,37 @@
                                        Grid.Row="1"/>
                 </Grid>
                 <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="13*"/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="ApplyPointBackButton"
+                            Width="21"
+                            Height="21"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            BorderBrush="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Click="ApplyPointBackButton_Click"
+                            Grid.Row="0" Margin="6,-1,6,2"
+                            >
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius"
+                                        Value="12.5"></Setter>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                     <Button x:Name="ApplyPointButton"
-                            Width="25"
-                            Height="25"
+                            Width="21"
+                            Height="21"
                             Background="Transparent"
                             BorderThickness="1"
                             BorderBrush="White"
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Center"
-                            Click="ApplyPointButton_Click">
+                            Click="ApplyPointButton_Click" Margin="6,1,6,1" Grid.Row="1">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius"
@@ -512,13 +534,15 @@
                             </Style>
                         </Button.Resources>
                     </Button>
+
+
                     <!--Arrow-->
                     <Grid RenderTransformOrigin="0.5,0.5"
                           VerticalAlignment="Bottom"
                           HorizontalAlignment="Center"
-                          Margin="0,0,0,5"
+                          Margin="10,0,10,5"
                           Width="15"
-                          Height="15">
+                          Height="15" Grid.Row="1">
                         <Rectangle Fill="#FFF4F4F5"
                                    Height="1.364"
                                    Width="12"
@@ -552,6 +576,50 @@
                                     <ScaleTransform />
                                     <SkewTransform />
                                     <RotateTransform Angle="-45" />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>
+                    <Grid RenderTransformOrigin="0.5,0.5"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        Margin="10,0,10,6"
+                        Width="15"
+                        Height="15">
+                        <Rectangle Fill="#FFF4F4F5"
+                            Height="1.364"
+                            Width="12"
+                            VerticalAlignment="Center"
+                            RenderTransformOrigin="0.5,0.5" />
+                        <Rectangle Fill="#FFF4F4F5"
+                            Height="1"
+                            Width="9"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            RenderTransformOrigin="0.5 0.5"
+                            Margin="0,4,6,0">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform Angle="130.386" />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Fill="#FFF4F4F5"
+                            Height="1"
+                            Width="8"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Right"
+                            RenderTransformOrigin="0.5 0.5"
+                            Margin="0,0,7,4">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform Angle="-131.977" />
                                     <TranslateTransform />
                                 </TransformGroup>
                             </Rectangle.RenderTransform>
