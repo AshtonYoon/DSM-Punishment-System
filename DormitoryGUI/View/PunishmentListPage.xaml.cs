@@ -25,10 +25,10 @@ namespace DormitoryGUI.View
     {
         private JArray ruleList;
 
+        private PunishmentListViewModel selectedItem;
+
         private PunishmentList punishmentGoodList;
         private PunishmentList punishmentBadList;
-        private RoutedEventHandler UnCheckedEventHandler;
-        private RoutedEventHandler CheckedEventHandler;
 
         public PunishmentListPage()
         {
@@ -44,31 +44,8 @@ namespace DormitoryGUI.View
             InitializePunishmentList();
 
             BackButton.Click += (s, e) => {
-                this.NavigationService.GoBack();
+                NavigationService.GoBack();
             };
-
-            UnCheckedEventHandler += new RoutedEventHandler((s, e) => {
-                var target = GetAncestorOfType<ListView>(s as CheckBox);
-                foreach (var element in target.Items)
-                {
-                    ((PunishmentListViewModel)element).IsChecked = false;
-                }
-                target.SelectedItems.Clear();
-
-                target.Items.Refresh();
-            });
-
-            CheckedEventHandler += new RoutedEventHandler((s, e) =>
-            {
-                var target = GetAncestorOfType<ListView>(s as CheckBox);
-                foreach (var element in target.Items)
-                {
-                    ((PunishmentListViewModel)element).IsChecked = true;
-                    target.SelectedItems.Add(element);
-                }
-
-                target.Items.Refresh();
-            });
         }
 
         private void AddPushimentListButton_Click(object sender, RoutedEventArgs e)
@@ -90,7 +67,7 @@ namespace DormitoryGUI.View
             rule.Add("POINT_MEMO", PunishmentName.Text);
 
             //최소, 최대 점수
-            rule.Add("POINT_MIN", MinimunPoint.SliderValue);
+            rule.Add("POINT_MIN", MinimumPoint.SliderValue);
             rule.Add("POINT_MAX", MaximumPoint.SliderValue);
 
             //TEACHER_UUID
@@ -104,9 +81,55 @@ namespace DormitoryGUI.View
             UpdatePunishmentList();
         }
 
+        private void DelPunishmentListButton_Click(object sender, EventArgs e)
+        {
+            if (selectedItem != null)
+            {
+                JObject jobj = new JObject
+                {
+                    { "DEST", Info.mainPage.TeacherUUID },
+                    { "POINT_UUID", selectedItem.PointUUID }
+                };
+
+                Info.MultiJson(Info.Server.DELETE_RULE_DATA, jobj);
+
+                MessageBox.Show("항목 삭제 완료");
+
+                selectedItem = null;
+
+                UpdatePunishmentList();
+            }
+        }
+
+        private void EditPunishmentListButton_Click(object sender, EventArgs e)
+        {
+            if (selectedItem != null)
+            {
+                if (!(CheckNameValue() && CheckSliderValue()))
+                    return;
+
+                JObject jobj = new JObject
+                {
+                    { "DEST", Info.mainPage.TeacherUUID },
+                    { "POINT_UUID", selectedItem.PointUUID },
+                    { "POINT_MEMO", PunishmentName.Text },
+                    { "POINT_MIN", MinimumPoint.SliderValue },
+                    { "POINT_MAX", MaximumPoint.SliderValue }
+                };
+
+                Info.MultiJson(Info.Server.EDIT_RULE_DATA, jobj);
+
+                MessageBox.Show("항목 수정 완료");
+
+                selectedItem = null;
+
+                UpdatePunishmentList();
+            }
+        }
+
         private bool CheckSliderValue()
         {
-            if(MinimunPoint.SliderValue <= MaximumPoint.SliderValue)
+            if(MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
             {
                 return true;
             }
@@ -140,6 +163,32 @@ namespace DormitoryGUI.View
             }
         }
 
+        private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 특정 상벌점 항목 선택 시 유형, 이름, 최소, 최대 점수 출력
+
+            if (e.AddedItems.Count != 0)
+            {
+                var target = (PunishmentListViewModel)e.AddedItems[0];
+
+                if (target.PointType == (int)Info.POINT_TYPE.GOOD)
+                {
+                    GoodPoint.IsChecked = true;
+                }
+                else if (target.PointType == (int)Info.POINT_TYPE.BAD)
+                {
+                    BadPoint.IsChecked = true;
+                }
+
+                PunishmentName.Text = target.PunishmentName;
+
+                MinimumPoint.SliderValue = target.MinimumPoint;
+                MaximumPoint.SliderValue = target.MaximumPoint;
+
+                selectedItem = target;
+            }
+        }
+
         private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             var listView = sender as ListView;
@@ -149,33 +198,13 @@ namespace DormitoryGUI.View
 
             double[] columnRatio =
             {
-                0.1,
-                0.6,
+                0.7,
                 0.15,
                 0.15
             };
 
             foreach (var element in gridView.Columns)
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
-        }
-
-        private void SearchList_KeyUp(object sender, KeyEventArgs e)
-        {
-            var target = sender as ListView;
-            if (e.Key == Key.Delete)
-            {
-                if (target.Name.Contains("Good"))
-                    DeleteSelectedItem(target, punishmentGoodList);
-
-                else if(target.Name.Contains("Bad"))
-                    DeleteSelectedItem(target, punishmentBadList);
-            }
-        }
-
-        private void DeleteSelectedItem(ListView listView, PunishmentList collection)
-        {
-            listView.ItemsSource = collection.Where(x => !x.IsChecked);
-            listView.Items.Refresh();
         }
 
         private void InitializePunishmentList()
@@ -189,15 +218,18 @@ namespace DormitoryGUI.View
                 {
                     punishmentGoodList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
+                        pointType: int.Parse(element["POINT_TYPE"].ToString()),
                         minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
                         maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
                         pointUUID: int.Parse(element["POINT_UUID"].ToString()),
                         isChecked: false));
                 }
+
                 else if (int.Parse(element["POINT_TYPE"].ToString()) == (int)Info.POINT_TYPE.BAD)
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
+                        pointType: int.Parse(element["POINT_TYPE"].ToString()),
                         minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
                         maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
                         pointUUID: int.Parse(element["POINT_UUID"].ToString()),
@@ -214,16 +246,6 @@ namespace DormitoryGUI.View
             ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
 
             InitializePunishmentList();
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckedEventHandler?.Invoke(sender, e);
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            UnCheckedEventHandler?.Invoke(sender, e);
         }
     }
 }

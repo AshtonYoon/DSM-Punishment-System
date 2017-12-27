@@ -443,29 +443,10 @@
                               Margin="10"
                               BorderThickness="0"
                               SizeChanged="SearchList_SizeChanged"
-                              ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}"
-                              KeyUp="SearchList_KeyUp">
+                              SelectionChanged="SearchList_SelectionChanged"
+                              ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="True">
-                                <GridViewColumn>
-                                    <GridViewColumn.Header>
-                                        <CheckBox VerticalAlignment="Center"
-                                                  BorderThickness="1.2"
-                                                  Checked="CheckBox_Checked"
-                                                  Unchecked="CheckBox_Unchecked"/>
-                                    </GridViewColumn.Header>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox x:Name="ItemCheckBox"
-                                                      VerticalAlignment="Center"
-                                                      BorderBrush="#777777"
-                                                      IsChecked="{Binding IsChecked}" />
-                                            <!--<DataTemplate>
-                                                   <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
-                                               </DataTemplate>-->
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
                                 <GridViewColumn Header="항목"
                                                 DisplayMemberBinding="{Binding Path=PunishmentName}" />
                                 <GridViewColumn Header="최소"
@@ -483,28 +464,10 @@
                               Margin="10"
                               BorderThickness="0"
                               SizeChanged="SearchList_SizeChanged"
+                              SelectionChanged="SearchList_SelectionChanged"
                               ItemsSource="{Binding Source={StaticResource PunishmentGoodListKey}}">
                         <ListView.View>
                             <GridView AllowsColumnReorder="True">
-                                <GridViewColumn>
-                                    <GridViewColumn.Header>
-                                        <CheckBox VerticalAlignment="Center"
-                                                  BorderThickness="1.2"
-                                                  Checked="CheckBox_Checked"
-                                                  Unchecked="CheckBox_Unchecked"/>
-                                    </GridViewColumn.Header>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox x:Name="ItemCheckBox"
-                                                      VerticalAlignment="Center"
-                                                      BorderBrush="#777777"
-                                                      IsChecked="{Binding IsChecked}" />
-                                            <!--<DataTemplate>
-                                                   <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
-                                               </DataTemplate>-->
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
                                 <GridViewColumn Header="항목"
                                                 DisplayMemberBinding="{Binding Path=PunishmentName}" />
                                 <GridViewColumn Header="최소"
@@ -524,6 +487,7 @@
                     <Button Grid.Column="0"
                             Margin="10"
                             Content="수정"
+                            Click="EditPunishmentListButton_Click"
                             Background="White"
                             BorderBrush="Transparent"
                             BorderThickness="0">
@@ -537,6 +501,7 @@
                     <Button Grid.Column="1"
                             Margin="10"
                             Content="삭제"
+                            Click="DelPunishmentListButton_Click"
                             Background="White"
                             BorderBrush="Transparent"
                             BorderThickness="0">
@@ -581,7 +546,7 @@
                     </TextBox>
                     <Label Content="최소점수"
                            Margin="0,40,0,0" />
-                    <local:CustomSlider x:Name="MinimunPoint"/>
+                    <local:CustomSlider x:Name="MinimumPoint"/>
                     <Label Content="최대점수"
                            Margin="0,40,0,0" />
                     <local:CustomSlider x:Name="MaximumPoint"/>

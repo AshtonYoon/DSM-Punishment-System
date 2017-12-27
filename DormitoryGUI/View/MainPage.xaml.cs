@@ -239,6 +239,7 @@ namespace DormitoryGUI
             {
                 EasingFunction = new QuadraticEase()
             };
+
             Storyboard.SetTargetProperty(FadeOutAnimation, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(FadeOutAnimation, target);
@@ -248,6 +249,7 @@ namespace DormitoryGUI
                 {
                     EasingFunction = new QuadraticEase()
                 };
+
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -268,15 +270,16 @@ namespace DormitoryGUI
             {
                 EasingFunction = new QuadraticEase()
             };
+
             Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(FadeInAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation =
-                new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
-                {
-                    EasingFunction = new QuadraticEase()
-                };
+            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
+
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -301,9 +304,7 @@ namespace DormitoryGUI
                     student["TOTAL_BAD_SCORE"].ToString().Contains(command))
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
-                        roomNumber: student["user_school_room_number"] != null
-                            ? student["user_school_room_number"].ToString()
-                            : "NULL",
+                        roomNumber: student["user_school_room_number"] != null ? student["user_school_room_number"].ToString() : "NULL",
                         classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
                         name: student["USER_NAME"].ToString(),
                         isChecked: false,
@@ -348,6 +349,7 @@ namespace DormitoryGUI
                             obj.Add("USER_SCHOOL_NUMBER", num);
 
                             var name = row.ItemArray[Array.IndexOf(row.ItemArray, item) + 1].ToString();
+
                             if (name != "")
                                 obj.Add("USER_NAME", name);
                             else
@@ -545,7 +547,7 @@ namespace DormitoryGUI
 
             for (int i = 1; i <= 3; i++)
             {
-                var items = resultListCollection.Where(s => s.ClassNumber.StartsWith(i.ToString()));
+                var items = listviewCollection.Where(s => s.ClassNumber.StartsWith(i.ToString()));
                 var dataTable = new DataTable(string.Format("{0}학년", i));
 
                 dataTable.Columns.Add("학번");
@@ -608,7 +610,7 @@ namespace DormitoryGUI
                 dataSet.Tables.Add(dataTable);
             }
 
-            if (ExcelProcessing.SaveExcelDB(saveFileDialog.SafeFileName, dataSet))
+            if (ExcelProcessing.SaveExcelDB(saveFileDialog.FileName, dataSet))
             {
                 MessageBox.Show("엑셀 데이터 저장 성공");
             }

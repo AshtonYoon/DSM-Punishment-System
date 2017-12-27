@@ -157,19 +157,6 @@
                     Value="18" />
             <Setter Property="Background"
                     Value="Transparent">
-                <!--<Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0"
-                                         EndPoint="0,1">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="{DynamicResource BorderLightColor}"
-                                              Offset="0.0" />
-                                <GradientStop Color="{DynamicResource BorderDarkColor}"
-                                              Offset="1.0" />
-                            </GradientStopCollection>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                </Setter.Value>-->
             </Setter>
             <Setter Property="Template">
                 <Setter.Value>
@@ -658,19 +645,6 @@
                         <ColumnDefinition Width="5*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel VerticalAlignment="Center">
-                        <!--<view:SideMenuButton x:Name="UploadExcel"
-                                             Margin="0, 15"
-                                             ButtonBackground="#1f7244"
-                                             ImageSource="/Image/upload.png">
-                            <view:SideMenuButton.ToolTip>
-                                <ToolTip BorderThickness="0">
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">업로드</TextBlock>
-                                        <TextBlock>엑셀파일로 부터 학생정보를 불러옵니다.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </view:SideMenuButton.ToolTip>
-                        </view:SideMenuButton>-->
                         <view:SideMenuButton x:Name="DownloadExcel"
                                              Margin="0, 15"
                                              ButtonBackground="#1f7244"
@@ -832,9 +806,6 @@
                                                           VerticalAlignment="Center"
                                                           BorderBrush="#777777"
                                                           IsChecked="{Binding IsChecked}"/>
-                                                <!--<DataTemplate>
-                                                   <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
-                                               </DataTemplate>-->
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -848,8 +819,6 @@
                                                     DisplayMemberBinding="{Binding Path=BadPoint}" />
                                     <GridViewColumn Header="단계"
                                                     DisplayMemberBinding="{Binding Path=CurrentStep}" />
-                                    <!--<GridViewColumn Header="호실"
-                                        DisplayMemberBinding="{Binding Path=RoomNumber}" />-->
                                     <GridViewColumn Header="상벌점 기록조회">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>

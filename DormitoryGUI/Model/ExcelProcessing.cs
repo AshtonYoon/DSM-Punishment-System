@@ -247,6 +247,7 @@ namespace DormitoryGUI.Model
                         }
                     }
                 }
+
                 using (FileStream FS = new FileStream(TempFile, FileMode.Create, FileAccess.Write))
                 {
                     WB.Write(FS);
@@ -255,7 +256,6 @@ namespace DormitoryGUI.Model
             catch (Exception)
             {
                 result = false;
-                throw;
             }
 
             return result;

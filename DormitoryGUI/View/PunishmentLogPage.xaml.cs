@@ -85,18 +85,13 @@ namespace DormitoryGUI.View
 
         private void StudentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AddSelectionByClick(StudentList, e);
-        }
-        
-        private void AddSelectionByClick(ListView listview, SelectionChangedEventArgs e)
-        {
-            listview.Items.Refresh();           
-            var targets = e.AddedItems;
             if (e.AddedItems.Count != 0)
             {
-                var target = (StudentListViewModel) e.AddedItems[e.AddedItems.Count - 1];
+                var target = (StudentListViewModel)e.AddedItems[0];
                 UUID = target.UserUUID;
+
                 SetLogData();
+
                 StudentName.Content = target.Name;
                 ClassNumber.Content = target.ClassNumber;
                 TotalGoodPoint.Content = target.GoodPoint.ToString();
