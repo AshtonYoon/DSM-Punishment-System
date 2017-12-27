@@ -29,7 +29,8 @@ namespace DormitoryGUI.View
 
         private int UUID;
 
-        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, string currentStep, int uuid)
+        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint,
+            string currentStep, int uuid)
         {
             InitializeComponent();
 
@@ -41,7 +42,7 @@ namespace DormitoryGUI.View
             };
 
             object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
-            studentList = (JArray)masterData;
+            studentList = (JArray) masterData;
 
             foreach (JObject json in studentList)
             {
@@ -66,35 +67,46 @@ namespace DormitoryGUI.View
             TotalBadPoint.Content = totalBadPoint.ToString();
             TotalPunishStep.Content = currentStep.ToString();
 
-            foreach(StudentListViewModel item in StudentList.Items)
+            foreach (StudentListViewModel item in StudentList.Items)
             {
                 if (item.UserUUID == uuid)
                     StudentList.SelectedItems.Add(item);
             }
         }
+
         private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
         {
             var parent = VisualTreeHelper.GetParent(child);
             if (parent != null && !(parent is T))
-                return GetAncestorOfType<T>((FrameworkElement)parent);
+                return GetAncestorOfType<T>((FrameworkElement) parent);
 
-            return (T)parent;
+            return (T) parent;
         }
+
         private void StudentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var target = (StudentListViewModel)e.AddedItems[e.AddedItems.Count - 1];
-            UUID = target.UserUUID;
-
-            SetLogData();
-
-            StudentName.Content = target.Name;
-            ClassNumber.Content = target.ClassNumber;
-            TotalGoodPoint.Content = target.GoodPoint.ToString();
-            TotalBadPoint.Content = target.BadPoint.ToString();
-            TotalPunishStep.Content = target.CurrentStep.ToString();
+            AddSelectionByClick(StudentList, e);
         }
-
+        
+        private void AddSelectionByClick(ListView listview, SelectionChangedEventArgs e)
+        {
+            listview.Items.Refresh();           
+            var targets = e.AddedItems;
+            if (e.AddedItems.Count != 0)
+            {
+                var target = (StudentListViewModel) e.AddedItems[e.AddedItems.Count - 1];
+                UUID = target.UserUUID;
+                SetLogData();
+                StudentName.Content = target.Name;
+                ClassNumber.Content = target.ClassNumber;
+                TotalGoodPoint.Content = target.GoodPoint.ToString();
+                TotalBadPoint.Content = target.BadPoint.ToString();
+                TotalPunishStep.Content = target.CurrentStep.ToString();
+            }
+        }
+        
         private void StudentList_SizeChanged(object sender, SizeChangedEventArgs e)
+
         {
             var listView = sender as ListView;
             var gridView = listView.View as GridView;
@@ -112,32 +124,66 @@ namespace DormitoryGUI.View
         }
 
         private void SetLogData()
+
         {
             JObject jobj = new JObject
             {
-                { "USER_UUID", UUID }
+                {"USER_UUID", UUID}
             };
 
             object temp = Info.MultiJson(Info.Server.STUDENT_LOG, jobj);
             if (temp == null)
                 return;
 
-            JArray result = (JArray)temp;
+            JArray result = (JArray) temp;
             Timeline.Children.Clear();
 
             for (int i = result.Count - 1; i >= 0; i--)
             {
-                JObject obj = (JObject)result[i];
-                
+                JObject obj = (JObject) result[i];
+
                 bool isGood = obj["POINT_TYPE"].ToString().Equals("0");
 
                 Timeline.Children.Add(new TimelineBlock(
                     isGood: isGood,
                     createTime: DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongDateString()
-                    + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
+                                + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
                     pointValue: obj["POINT_VALUE"].ToString(),
                     pointCause: obj["POINT_MEMO"].ToString()));
             }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string command = SearchCommand.Text;
+            listviewCollection.Clear();
+
+            foreach (JObject student in studentList)
+            {
+                if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command) ||
+                    student["USER_NAME"].ToString().Contains(command) ||
+                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command) ||
+                    student["TOTAL_BAD_SCORE"].ToString().Contains(command))
+                {
+                    listviewCollection.Add(new ViewModel.StudentListViewModel(
+                        roomNumber: student["user_school_room_number"] != null
+                            ? student["user_school_room_number"].ToString()
+                            : "NULL",
+                        classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
+                        name: student["USER_NAME"].ToString(),
+                        isChecked: false,
+                        goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
+                        badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
+                        currentStep: Info.ParseStatus(student["PUNISH_STATUS"].ToString()),
+                        userUUID: int.Parse(student["USER_UUID"].ToString())));
+                }
+            }
+        }
+
+        private void SearchCommand_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                SearchButton_Click(sender, null);
         }
     }
 }
