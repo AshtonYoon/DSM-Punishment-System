@@ -46,26 +46,6 @@ namespace DormitoryGUI.View
             }
         }
 
-        //public Panel toolTip
-        //{
-        //    get
-        //    {
-        //        return (Panel)buttonToolTip.Content;
-        //    }
-        //    set
-        //    {
-        //        if(value is Panel)
-        //            buttonToolTip.Content = value;
-        //        else
-        //            buttonToolTip.Content = new Grid
-        //            {
-        //                Children = {
-        //                    value
-        //                }
-        //            };
-        //    }
-        //}
-
         public SideMenuButton()
         {
             InitializeComponent();

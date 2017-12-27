@@ -255,6 +255,7 @@ namespace DormitoryGUI.Model
             catch (Exception)
             {
                 result = false;
+                throw;
             }
 
             return result;

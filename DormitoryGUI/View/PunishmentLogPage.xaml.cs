@@ -25,9 +25,6 @@ namespace DormitoryGUI.View
     {
         private StudentList listviewCollection;
 
-        // private RoutedEventHandler UnCheckedEventHandler;
-        // private RoutedEventHandler CheckedEventHandler;
-
         private JArray studentList;
 
         private int UUID;
@@ -40,31 +37,8 @@ namespace DormitoryGUI.View
 
             BackButton.Click += (s, e) =>
             {
-                this.NavigationService.GoBack();
+                NavigationService.GoBack();
             };
-
-            /* UnCheckedEventHandler += new RoutedEventHandler((s, e) => {
-                var target = GetAncestorOfType<ListView>(s as CheckBox);
-                foreach (var element in target.Items)
-                {
-                    ((StudentListViewModel)element).IsChecked = false;
-                }
-                target.SelectedItems.Clear();
-
-                target.Items.Refresh();
-            });
-
-            CheckedEventHandler += new RoutedEventHandler((s, e) =>
-            {
-                var target = GetAncestorOfType<ListView>(s as CheckBox);
-                foreach (var element in target.Items)
-                {
-                    ((StudentListViewModel)element).IsChecked = true;
-                    target.SelectedItems.Add(element);
-                }
-
-                target.Items.Refresh();
-            }); */
 
             object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
             studentList = (JArray)masterData;
@@ -120,16 +94,6 @@ namespace DormitoryGUI.View
             TotalPunishStep.Content = target.CurrentStep.ToString();
         }
 
-        /* private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckedEventHandler?.Invoke(sender, e);
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            UnCheckedEventHandler?.Invoke(sender, e);
-        } */
-
         private void StudentList_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             var listView = sender as ListView;
@@ -147,26 +111,13 @@ namespace DormitoryGUI.View
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
         }
 
-        /* private void ItemCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            var target = GetAncestorOfType<ListView>(sender as CheckBox);
-            var targetItem = GetAncestorOfType<ListViewItem>(sender as CheckBox);
-
-            target.SelectedItems.Add(targetItem);
-            target.Items.Refresh();
-        }
-            
-        private void ItemCheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-
-        } */ 
-
         private void SetLogData()
         {
             JObject jobj = new JObject
             {
                 { "USER_UUID", UUID }
             };
+
             object temp = Info.MultiJson(Info.Server.STUDENT_LOG, jobj);
             if (temp == null)
                 return;
