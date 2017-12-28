@@ -72,7 +72,7 @@ namespace DormitoryGUI
             });
 
             PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage()); };
-
+            CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTarget()); };
             this.mainWindow = mainWindow;
 
             Update();
@@ -633,6 +633,11 @@ namespace DormitoryGUI
                     target.UserUUID
                 )
             );
+        }
+
+        private void SearchCommand_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -79,11 +79,11 @@
     <Compile Include="Model\ExcelProcessing.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\PunishmentListViewModel.cs" />
+    <Compile Include="View\CheckPunishmentTargetPage.xaml.cs">
+      <DependentUpon>CheckPunishmentTargetPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CustomComboBox.xaml.cs">
       <DependentUpon>CustomComboBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\CustomPopup.xaml.cs">
-      <DependentUpon>CustomPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomSlider.xaml.cs">
       <DependentUpon>CustomSlider.xaml</DependentUpon>
@@ -103,11 +103,11 @@
     <Compile Include="View\TimelineBlock.xaml.cs">
       <DependentUpon>TimelineBlock.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\CustomComboBox.xaml">
+    <Page Include="View\CheckPunishmentTargetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CustomPopup.xaml">
+    <Page Include="View\CustomComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

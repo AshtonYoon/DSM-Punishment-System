@@ -379,7 +379,7 @@
               Grid.Row="1">
             <local:SideMenuButton x:Name="BackButton"
                                   ButtonBackground="#90dfaa"
-                                  ImageSource="/Image/left-arrow.png">
+                                  ImageSource="/Image/left-arrow.png" Loaded="BackButton_Loaded">
                 <local:SideMenuButton.ToolTip>
                     <ToolTip BorderThickness="0">
                         <StackPanel>

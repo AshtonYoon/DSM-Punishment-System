@@ -225,5 +225,6 @@ namespace DormitoryGUI.View
         {
             UnCheckedEventHandler?.Invoke(sender, e);
         }
+       
     }
 }

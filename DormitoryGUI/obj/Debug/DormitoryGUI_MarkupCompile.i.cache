@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\Develop\Project\DMS_C#\DormitoryGUI\App.xaml
-11924745682
+11369021779
 
-251855981551
+251276290842
 20-30722914
-View\CustomComboBox.xaml;View\CustomPopup.xaml;View\CustomSlider.xaml;View\LoginPage.xaml;View\MainPage.xaml;MainWindow.xaml;View\PermissionManagementPage.xaml;View\PunishmentListPage.xaml;View\PunishmentLogPage.xaml;View\SideMenuButton.xaml;View\TimelineBlock.xaml;
+View\CheckPunishmentTargetPage.xaml;View\CustomComboBox.xaml;View\CustomSlider.xaml;View\LoginPage.xaml;View\MainPage.xaml;MainWindow.xaml;View\PermissionManagementPage.xaml;View\PunishmentListPage.xaml;View\PunishmentLogPage.xaml;View\SideMenuButton.xaml;View\TimelineBlock.xaml;
 
 True
 

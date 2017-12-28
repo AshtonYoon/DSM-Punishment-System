@@ -190,10 +190,8 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\Dorm
 E:\Develop\Project\DMS_C#\DormitoryGUI\bin\Debug\DormitoryGUI.exe
 E:\Develop\Project\DMS_C#\DormitoryGUI\bin\Debug\Newtonsoft.Json.dll
 E:\Develop\Project\DMS_C#\DormitoryGUI\bin\Debug\SciChart.Wpf.UI.Transitionz.dll
-E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CustomPopup.baml
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\LoginPage.baml
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CustomComboBox.g.cs
-E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CustomPopup.g.cs
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CustomSlider.g.cs
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\LoginPage.g.cs
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\MainPage.g.cs
@@ -277,3 +275,5 @@ C:\Users\dwg76\Downloads\DSM-Punishment-System-master\DSM-Punishment-System-mast
 C:\Users\dwg76\Downloads\DSM-Punishment-System-master\DSM-Punishment-System-master\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
 C:\Users\dwg76\Downloads\DSM-Punishment-System-master\DSM-Punishment-System-master\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.g.cs
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.baml
