@@ -49,9 +49,8 @@ namespace DormitoryGUI.View
             };
 
             this.mainWindow = mainWindow;
-            this.mainWindow.Title = "상벌점 항목 조회";
         }
-
+        
         private void AddPushimentListButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(CheckNameValue() && CheckSliderValue()))

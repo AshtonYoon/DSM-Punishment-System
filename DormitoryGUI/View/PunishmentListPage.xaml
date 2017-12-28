@@ -444,6 +444,7 @@
                                   Margin="10"
                                   BorderThickness="0"
                                   SizeChanged="SearchList_SizeChanged"
+                                  SelectionChanged="SearchList_SelectionChanged"
                                   ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="True">
@@ -464,6 +465,7 @@
                                   Margin="10"
                                   BorderThickness="0"
                                   SizeChanged="SearchList_SizeChanged"
+                                  SelectionChanged="SearchList_SelectionChanged"
                                   ItemsSource="{Binding Source={StaticResource PunishmentGoodListKey}}">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="True">
@@ -567,13 +569,5 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <StackPanel Grid.Column="1"
-                    Grid.Row="2"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-            <Label Content="Del : 선택한 항목 삭제&#x09;" />
-            <Label Content="Shift + 마우스 드래그 : 다중 선택" />
-        </StackPanel>
     </Grid>
 </Page>

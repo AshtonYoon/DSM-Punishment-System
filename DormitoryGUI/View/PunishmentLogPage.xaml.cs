@@ -39,7 +39,7 @@ namespace DormitoryGUI.View
 
             BackButton.Click += (s, e) =>
             {
-                mainWindow.NavigatePage(new MainPage(mainWindow));
+                NavigationService.GoBack();
             };
 
             object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
@@ -75,7 +75,6 @@ namespace DormitoryGUI.View
             }
 
             this.mainWindow = mainWindow;
-            this.mainWindow.Title = "상벌점 내역 조회";
         }
 
         private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
