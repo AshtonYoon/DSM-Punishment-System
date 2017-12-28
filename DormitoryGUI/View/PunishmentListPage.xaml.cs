@@ -152,17 +152,17 @@ namespace DormitoryGUI.View
             {
                 var target = (PunishmentListViewModel) e.AddedItems[0];
 
-                if (target.MaximumPoint >= 0)
+                if (target.MaxPoint >= 0)
                 {
                     GoodPoint.IsChecked = true;
-                    MinimumPoint.SliderValue = target.MinimumPoint;
-                    MaximumPoint.SliderValue = target.MaximumPoint;
+                    MinimumPoint.SliderValue = target.MinPoint;
+                    MaximumPoint.SliderValue = target.MaxPoint;
                 }
-                else if (target.MaximumPoint <= 0)
+                else if (target.MaxPoint<= 0)
                 {
                     BadPoint.IsChecked = true;
-                    MinimumPoint.SliderValue = Math.Abs(target.MinimumPoint);
-                    MaximumPoint.SliderValue = Math.Abs(target.MaximumPoint);
+                    MinimumPoint.SliderValue = Math.Abs(target.MinPoint);
+                    MaximumPoint.SliderValue = Math.Abs(target.MaxPoint);
                 }
 
                 PunishmentName.Text = target.PunishmentName;
