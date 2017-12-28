@@ -61,10 +61,10 @@ namespace DormitoryGUI.View
                 if (int.Parse(element["POINT_TYPE"].ToString()) == PunishmentType)
                 {
                     punishmentList.Add(new PunishmentListViewModel(
-                        punishmentName: element["POINT_MEMO"].ToString(),
+                        name: element["POINT_MEMO"].ToString(),
                         pointType: int.Parse(element["POINT_TYPE"].ToString()),
-                        minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
+                        minPoint: int.Parse(element["POINT_MIN"].ToString()),
+                        maxPoint: int.Parse(element["POINT_MAX"].ToString()),
                         pointUUID: int.Parse(element["POINT_UUID"].ToString()),
                         isChecked: false));
                 }

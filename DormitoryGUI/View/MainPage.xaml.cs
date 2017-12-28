@@ -82,7 +82,7 @@ namespace DormitoryGUI
 
         public void Update()
         {
-            HttpWebResponse webResponse = Info.JSONRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
+            HttpWebResponse webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
             if (webResponse.StatusCode != HttpStatusCode.OK)
             {

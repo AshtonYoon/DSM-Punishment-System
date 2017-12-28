@@ -44,7 +44,7 @@ namespace DormitoryGUI.View
             punishmentGoodList = Resources["PunishmentGoodListKey"] as PunishmentList;
             punishmentBadList = Resources["PunishmentBadListKey"] as PunishmentList;
 
-            webResponse = Info.JSONRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
+            webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
 
             InitializePunishmentList();
 
@@ -66,7 +66,7 @@ namespace DormitoryGUI.View
             };
 
 //            Info.MultiJson(Info.Server.ADD_RULE_DATA, rule);
-            webResponse = Info.JSONRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
+            webResponse = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
 
             if (webResponse.StatusCode == HttpStatusCode.OK)
                 MessageBox.Show("항목 추가가 완료되었습니다.");
@@ -80,10 +80,9 @@ namespace DormitoryGUI.View
             {
                 JObject jobj = new JObject
                 {
-                    {"DEST", Info.mainPage.TeacherUUID},
-                    {"POINT_UUID", selectedItem.PunishId}
+                    {"rule_id", selectedItem.PunishId}
                 };
-
+                Info.GenerateRequest("DELETE", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, jobj);
 //                Info.MultiJson(Info.Server.DELETE_RULE_DATA, jobj);
 
                 MessageBox.Show("항목 삭제 완료");
@@ -101,15 +100,14 @@ namespace DormitoryGUI.View
                     return;
 
                 JObject jobj = new JObject
-                {
-                    {"DEST", Info.mainPage.TeacherUUID},
-                    {"POINT_UUID", selectedItem.PunishId},
-                    {"POINT_MEMO", PunishmentName.Text},
-                    {"POINT_MIN", MinimumPoint.SliderValue},
-                    {"POINT_MAX", MaximumPoint.SliderValue}
+                {                    
+                    {"runle_id", selectedItem.PunishId},
+                    {"name", PunishmentName.Text},
+                    {"min_point", MinimumPoint.SliderValue},
+                    {"max_point", MaximumPoint.SliderValue}
                 };
-            
-                webResponse = Info.JSONRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
+
+                webResponse = Info.GenerateRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
                 if (webResponse.StatusCode == HttpStatusCode.OK)
                     MessageBox.Show("항목 수정 완료");
 
@@ -198,22 +196,22 @@ namespace DormitoryGUI.View
 
             foreach (var element in ruleList)
             {
-                if (int.Parse(element["POINT_TYPE"].ToString()) == (int) Info.POINT_TYPE.GOOD)
+                if (int.Parse(element["min_point"].ToString()) >= 0) // min_point가 0보다 크면 상점
                 {
                     punishmentGoodList.Add(new PunishmentListViewModel(
-                        punishmentName: element["POINT_MEMO"].ToString(),
-                        minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
-                        punishId: int.Parse(element["POINT_UUID"].ToString())));
+                        name: element["name"].ToString(),
+                        minPoint: int.Parse(element["minPoint"].ToString()),
+                        maxPoint: int.Parse(element["maxPoint"].ToString()),
+                        id: int.Parse(element["id"].ToString())));
                 }
 
-                else if (int.Parse(element["POINT_TYPE"].ToString()) == (int) Info.POINT_TYPE.BAD)
+                else if (int.Parse(element["min_point"].ToString()) <= 0) // min_point가 0보다 작으면 벌점
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(
-                        punishmentName: element["POINT_MEMO"].ToString(),
-                        minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
-                        punishId: int.Parse(element["POINT_UUID"].ToString())));
+                        name: element["name"].ToString(),
+                        minPoint: Math.Abs(int.Parse(element["minPoint"].ToString())),
+                        maxPoint: Math.Abs(int.Parse(element["maxPoint"].ToString())),
+                        id: int.Parse(element["Id"].ToString())));
                 }
             }
 
@@ -224,7 +222,7 @@ namespace DormitoryGUI.View
         private void UpdatePunishmentList()
         {
             //            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
-            webResponse = Info.JSONRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
+            webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
             InitializePunishmentList();
         }
     }
