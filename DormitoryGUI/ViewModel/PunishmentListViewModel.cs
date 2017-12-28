@@ -12,14 +12,14 @@ namespace DormitoryGUI.ViewModel
         private string punishmentName;
         private int maximumPoint;
         private int minimumPoint;
-        private int punishId;       
+        private string punishId;       
 
         public string PunishmentName { get => punishmentName; set => punishmentName = value; }        
         public int MaximumPoint { get => maximumPoint; set => maximumPoint = value; }
         public int MinimumPoint { get => minimumPoint; set => minimumPoint = value; }
-        public int PunishId { get => punishId; set => punishId = value; }        
+        public string PunishId { get => punishId; set => punishId = value; }        
 
-        public PunishmentListViewModel(string punishmentName, int maximumPoint, int minimumPoint, int punishId)
+        public PunishmentListViewModel(string punishmentName, int maximumPoint, int minimumPoint, string punishId)
         {
             this.punishmentName = punishmentName;            
             this.maximumPoint = maximumPoint;
