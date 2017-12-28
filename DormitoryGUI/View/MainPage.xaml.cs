@@ -152,53 +152,53 @@ namespace DormitoryGUI
 
             if (CurrentStep == Step.Third)
             {
-                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
-                    MessageBoxResult.Yes)
+                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    /** Response
+                    /** Request
                         json = {
-	                        "DEST_UUID":123
-	                        "TARGET":[12,32,43,STUDENT_UUID]
-	                        "POINT_UUID":123
-	                        "POINT_VALUE":1567
+	                        "id":city7320 (student ID)
+	                        "rule_id":50045
+	                        "point":12
                         } 
                     */
-                    JObject obj = new JObject
-                    {
-                        {"DEST_UUID", Info.mainPage.TeacherUUID}
-                    };
 
                     PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
-                    obj.Add("POINT_UUID", item.PointUUID);
 
-                    if (PunishmentSlider.SliderValue >= item.MinimumPoint &&
-                        PunishmentSlider.SliderValue <= item.MaximumPoint)
+                    if (PunishmentSlider.SliderValue < item.MinimumPoint || PunishmentSlider.SliderValue > item.MaximumPoint)
                     {
                         // 부여하고자 하는 벌점이 최댓값, 최솟값을 넘지 않는지에 대해 검사
 
-                        obj.Add("POINT_VALUE", PunishmentSlider.SliderValue);
-
-                        var targets = new JArray();
-
-                        foreach (StudentListViewModel element in ResultList.Items)
-                            targets.Add(element.UserUUID);
-
-                        obj.Add("TARGET", targets);
-                        Info.MultiJson(Info.Server.GIVE_SCORE, obj);
-
-                        listviewCollection.Clear();
-                        Update();
-                        MessageBox.Show("처리가 완료되었습니다.");
-
-                        CurrentStep = Step.First;
-
-                        HideAnimation(ThirdGrid);
-                        ShowAnimation(FirstGrid);
-                    }
-                    else
-                    {
                         MessageBox.Show("벌점은 최댓값과 최솟값을 넘을 수 없습니다.");
+                        return;
                     }
+
+                    foreach (StudentListViewModel student in ResultList.Items)
+                    {
+                        JObject jsonBody = new JObject
+                        {
+                            { "id", student.ID },
+                            { "rule_id", item.PunishId },
+                            { "point", PunishmentSlider.SliderValue },
+                        };
+
+                        HttpWebResponse webResponse = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, jsonBody);
+
+                        if (webResponse.StatusCode != HttpStatusCode.Created)
+                        {
+                            MessageBox.Show("처리 실패");
+                            break; 
+                        }
+                    }
+
+                    listviewCollection.Clear();
+                    Update();
+
+                    MessageBox.Show("처리가 완료되었습니다.");
+
+                    CurrentStep = Step.First;
+
+                    HideAnimation(ThirdGrid);
+                    ShowAnimation(FirstGrid);
                 }
             }
         }
@@ -319,15 +319,16 @@ namespace DormitoryGUI
                     student["TOTAL_GOOD_SCORE"].ToString().Contains(command) ||
                     student["TOTAL_BAD_SCORE"].ToString().Contains(command))
                 {
+                    string status = student["PUNISH_STATUS"].ToString();
+
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
-                        roomNumber: student["user_school_room_number"] != null ? student["user_school_room_number"].ToString() : "NULL",
-                        classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
-                        name: student["USER_NAME"].ToString(),
-                        isChecked: false,
-                        goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
-                        badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
-                        currentStep: Info.ParseStatus(student["PUNISH_STATUS"].ToString()),
-                        userUUID: int.Parse(student["USER_UUID"].ToString())));
+                        id: student["id"].ToString(),
+                        classNumber: student["number"].ToString(),
+                        name: student["name"].ToString(),
+                        goodPoint: int.Parse(student["good_point"].ToString()),
+                        badPoint: int.Parse(student["bad_point"].ToString()),
+                        currentStep: status == "null" ? 0 : int.Parse(status),
+                        isChecked: false));
                 }
             }
         }
@@ -336,54 +337,6 @@ namespace DormitoryGUI
         {
             if (e.Key == Key.Enter)
                 SearchButton_Click(sender, null);
-        }
-
-        /// <summary>
-        /// 명단 넣어줌
-        /// </summary>
-        private void SetStudentData()
-        {
-            OpenFileDialog dialog = new OpenFileDialog()
-            {
-                Filter = "Excel Files (*.xlsx)|*.xls"
-            };
-            bool? result = dialog.ShowDialog();
-            if ((bool) result)
-            {
-                JArray list = new JArray();
-
-                var studentExcel = ExcelProcessing.OpenExcelDB(dialog.FileName);
-                var studentList = studentExcel.Tables[0];
-
-                foreach (DataRow row in studentList.Rows)
-                {
-                    foreach (var item in row.ItemArray)
-                    {
-                        JObject obj = new JObject();
-                        if (int.TryParse(item.ToString(), out int num))
-                        {
-                            obj.Add("USER_SCHOOL_NUMBER", num);
-
-                            var name = row.ItemArray[Array.IndexOf(row.ItemArray, item) + 1].ToString();
-
-                            if (name != "")
-                                obj.Add("USER_NAME", name);
-                            else
-                                obj.Add("USER_NAME", "이름 없음");
-
-                            obj.Add("TOTAL_GOOD_SCORE", 0);
-
-                            obj.Add("TOTAL_BAD_SCORE", 0);
-
-                            obj.Add("PUNISH_STATUS", 0);
-                            list.Add(obj);
-                        }
-                    }
-                }
-
-                Info.MultiJson(Info.Server.SET_STUDENT_DATA, list);
-                MessageBox.Show("데이터 설정이 완료되었습니다.");
-            }
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -422,14 +375,13 @@ namespace DormitoryGUI
                 {
                     resultListCollection.Add(
                         new StudentListViewModel(
+                            id: element.ID,
                             isChecked: element.IsChecked,
-                            roomNumber: element.RoomNumber,
                             name: element.Name,
                             classNumber: element.ClassNumber,
                             goodPoint: element.GoodPoint,
                             badPoint: element.BadPoint,
-                            currentStep: element.CurrentStep,
-                            userUUID: element.UserUUID
+                            currentStep: element.CurrentStep
                         )
                     );
 
@@ -576,12 +528,22 @@ namespace DormitoryGUI
 
                 foreach (StudentListViewModel item in items)
                 {
-                    JObject jobj = new JObject
-                    {
-                        {"USER_UUID", item.UserUUID }
-                    };
+                    HttpWebResponse webResponse = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{item.ID}", "", "") ;
 
-                    JArray logs = Info.MultiJson(Info.Server.STUDENT_LOG, jobj) as JArray;
+                    if (webResponse.StatusCode != HttpStatusCode.OK)
+                    {
+                        return;
+                    }
+
+                    JArray logs;
+
+                    using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
+                    {
+                        string responseString = streamReader.ReadToEnd();
+                        JArray responseJSON = JArray.Parse(responseString);
+
+                        logs = responseJSON;
+                    }
 
                     StringBuilder goodLogsBuilder = new StringBuilder();
                     StringBuilder badLogsBuilder = new StringBuilder();
@@ -590,15 +552,13 @@ namespace DormitoryGUI
                     {
                         foreach (JObject log in logs)
                         {
-                            switch ((int)log["POINT_TYPE"])
+                            if ((int)log["point"] > 0)
                             {
-                                case 0:
-                                    goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["POINT_MEMO"], log["POINT_VALUE"]);
-                                    break;
-
-                                case 1:
-                                    badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["POINT_MEMO"], log["POINT_VALUE"]);
-                                    break;
+                                goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
+                            }
+                            else if ((int)log["p"] < 0)
+                            {
+                                badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
                             }
                         }
                     }
@@ -643,13 +603,13 @@ namespace DormitoryGUI
 
             mainWindow.NavigatePage(
                 new PunishmentLogPage(
-                    mainWindow,
-                    target.Name,
-                    target.ClassNumber,
-                    target.GoodPoint,
-                    target.BadPoint,
-                    target.CurrentStep,
-                    target.UserUUID
+                    mainWindow: mainWindow,
+                    id: target.ID,
+                    name: target.Name,
+                    classNumber: target.ClassNumber,
+                    goodPoint: target.GoodPoint,
+                    badPoint: target.BadPoint,
+                    currentStep: target.CurrentStep
                 )
             );
         }

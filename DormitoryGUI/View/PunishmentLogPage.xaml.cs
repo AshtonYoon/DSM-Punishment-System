@@ -3,7 +3,9 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,9 +31,7 @@ namespace DormitoryGUI.View
 
         private JArray studentList;
 
-        private int UUID;
-
-        public PunishmentLogPage(MainWindow mainWindow, string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, string currentStep, int uuid)
+        public PunishmentLogPage(MainWindow mainWindow, string id, string name, string classNumber, int goodPoint, int badPoint, int currentStep)
         {
             InitializeComponent();
 
@@ -42,37 +42,42 @@ namespace DormitoryGUI.View
                 NavigationService.GoBack();
             };
 
-            object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
-            studentList = (JArray) masterData;
+            HttpWebResponse webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
-            foreach (JObject json in studentList)
+            if (webResponse.StatusCode != HttpStatusCode.OK)
             {
-                listviewCollection.Add(new ViewModel.StudentListViewModel(
-                    roomNumber: 0.ToString(),
-                    classNumber: json["USER_SCHOOL_NUMBER"].ToString(),
-                    name: json["USER_NAME"].ToString(),
-                    isChecked: false,
-                    goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
-                    badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: Info.ParseStatus(json["PUNISH_STATUS"].ToString()),
-                    userUUID: int.Parse(json["USER_UUID"].ToString())));
+                return;
             }
 
-            UUID = uuid;
+            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
+            {
+                string responseString = streamReader.ReadToEnd();
+                JArray responseJSON = JArray.Parse(responseString);
 
-            SetLogData();
+                studentList = responseJSON;
+            }
+
+            foreach (JObject student in studentList)
+            {
+                string status = student["penalty_traning_status"].ToString();
+
+                listviewCollection.Add(new ViewModel.StudentListViewModel(    
+                    id: student["id"].ToString(),
+                    classNumber: student["number"].ToString(),
+                    name: student["name"].ToString(),
+                    goodPoint: int.Parse(student["good_point"].ToString()),
+                    badPoint: int.Parse(student["bad_point"].ToString()),
+                    isChecked: false,
+                    currentStep: status == "NULL" ? 0 : int.Parse(status)));
+            }
+
+            SetLogData(id);
 
             StudentName.Content = name;
-            ClassNumber.Content = schoolNumber;
-            TotalGoodPoint.Content = totalGoodPoint.ToString();
-            TotalBadPoint.Content = totalBadPoint.ToString();
+            ClassNumber.Content = classNumber;
+            TotalGoodPoint.Content = goodPoint.ToString();
+            TotalBadPoint.Content = badPoint.ToString();
             TotalPunishStep.Content = currentStep.ToString();
-
-            foreach (StudentListViewModel item in StudentList.Items)
-            {
-                if (item.UserUUID == uuid)
-                    StudentList.SelectedItems.Add(item);
-            }
 
             this.mainWindow = mainWindow;
         }
@@ -91,9 +96,7 @@ namespace DormitoryGUI.View
             if (e.AddedItems.Count != 0)
             {
                 var target = (StudentListViewModel)e.AddedItems[0];
-                UUID = target.UserUUID;
-
-                SetLogData();
+                SetLogData(target.ID);
 
                 StudentName.Content = target.Name;
                 ClassNumber.Content = target.ClassNumber;
@@ -121,33 +124,39 @@ namespace DormitoryGUI.View
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
         }
 
-        private void SetLogData()
-
+        private void SetLogData(string id)
         {
-            JObject jobj = new JObject
+            HttpWebResponse webResponse = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{id}", Info.mainPage.AccessToken, "");
+
+            if (webResponse.StatusCode != HttpStatusCode.OK)
             {
-                {"USER_UUID", UUID}
-            };
-
-            object temp = Info.MultiJson(Info.Server.STUDENT_LOG, jobj);
-            if (temp == null)
                 return;
+            }
 
-            JArray result = (JArray) temp;
+            JArray logs;
+
+            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
+            {
+                string responseString = streamReader.ReadToEnd();
+                JArray responseJSON = JArray.Parse(responseString);
+
+                logs = responseJSON;
+            }
+
             Timeline.Children.Clear();
 
-            for (int i = result.Count - 1; i >= 0; i--)
+            for (int i = logs.Count - 1; i >= 0; i--)
             {
-                JObject obj = (JObject) result[i];
+                JObject log = (JObject) logs[i];
 
-                bool isGood = obj["POINT_TYPE"].ToString().Equals("0");
+                bool isGood = int.Parse(log["point"].ToString()) > 0;
 
                 Timeline.Children.Add(new TimelineBlock(
                     isGood: isGood,
-                    createTime: DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongDateString()
-                                + " " + DateTime.Parse(obj["CREATE_TIME"].ToString()).ToLongTimeString(),
-                    pointValue: obj["POINT_VALUE"].ToString(),
-                    pointCause: obj["POINT_MEMO"].ToString()));
+                    createTime: DateTime.Parse(log["time"].ToString()).ToLongDateString()
+                                + " " + DateTime.Parse(log["time"].ToString()).ToLongTimeString(),
+                    pointValue: log["point"].ToString(),
+                    pointCause: log["reason"].ToString()));
             }
         }
 
@@ -158,22 +167,21 @@ namespace DormitoryGUI.View
 
             foreach (JObject student in studentList)
             {
-                if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command) ||
-                    student["USER_NAME"].ToString().Contains(command) ||
-                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command) ||
-                    student["TOTAL_BAD_SCORE"].ToString().Contains(command))
+                if (student["number"].ToString().Contains(command) ||
+                    student["name"].ToString().Contains(command) ||
+                    student["good_point"].ToString().Contains(command) ||
+                    student["bad_point"].ToString().Contains(command))
                 {
+                    string status = student["penalty_training_status"].ToString();
+
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
-                        roomNumber: student["user_school_room_number"] != null
-                            ? student["user_school_room_number"].ToString()
-                            : "NULL",
-                        classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
-                        name: student["USER_NAME"].ToString(),
+                        id: student["id"].ToString(),
+                        classNumber: student["number"].ToString(),
+                        name: student["name"].ToString(),
                         isChecked: false,
-                        goodPoint: int.Parse(student["TOTAL_GOOD_SCORE"].ToString()),
-                        badPoint: int.Parse(student["TOTAL_BAD_SCORE"].ToString()),
-                        currentStep: Info.ParseStatus(student["PUNISH_STATUS"].ToString()),
-                        userUUID: int.Parse(student["USER_UUID"].ToString())));
+                        goodPoint: int.Parse(student["good_point"].ToString()),
+                        badPoint: int.Parse(student["bad_point"].ToString()),
+                        currentStep: status == "null" ? 0 : int.Parse(status)));
                 }
             }
         }
