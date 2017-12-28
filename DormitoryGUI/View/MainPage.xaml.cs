@@ -72,10 +72,9 @@ namespace DormitoryGUI
             });
             
             PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage(mainWindow)); };
-            CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTarget()); };
+            CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTargetPage(mainWindow)); };
 
             this.mainWindow = mainWindow;
-            this.mainWindow.Title = "메인";
 
             Update();
         }

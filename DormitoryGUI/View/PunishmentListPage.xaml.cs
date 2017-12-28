@@ -45,13 +45,12 @@ namespace DormitoryGUI.View
             InitializePunishmentList();
 
             BackButton.Click += (s, e) => {
-                mainWindow.NavigatePage(new MainPage(mainWindow));
+                NavigationService.GoBack();
             };
 
             this.mainWindow = mainWindow;
-            this.mainWindow.Title = "상벌점 항목 조회";
         }
-
+        
         private void AddPushimentListButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(CheckNameValue() && CheckSliderValue()))

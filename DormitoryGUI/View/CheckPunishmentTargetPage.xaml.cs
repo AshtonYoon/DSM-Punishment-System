@@ -17,9 +17,11 @@ namespace DormitoryGUI.View
     /// <summary>
     /// CheckPunishmentTarget.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class CheckPunishmentTarget : Page
+    public partial class CheckPunishmentTargetPage : Page
     {
-        public CheckPunishmentTarget()
+        private readonly MainWindow mainWindow;
+
+        public CheckPunishmentTargetPage(MainWindow mainWindow)
         {
             InitializeComponent();
 
@@ -27,6 +29,7 @@ namespace DormitoryGUI.View
                 this.NavigationService.GoBack();
             };
 
+            this.mainWindow = mainWindow;
         }
 
         private void StudentList_SelectionChanged(object sender, SelectionChangedEventArgs e)

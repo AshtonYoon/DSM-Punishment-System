@@ -32,17 +32,16 @@ namespace DormitoryGUI.View
             BackButton.Click += (s, e) => {
                 if (MessageBox.Show("설정을 저장하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                 {
-                    mainWindow.NavigatePage(new MainPage(mainWindow));
+                    NavigationService.GoBack();
                 }
                 else
                 {
                     SavePermission();
-                    mainWindow.NavigatePage(new MainPage(mainWindow));
+                    NavigationService.GoBack();
                 }
             };
 
             this.mainWindow = mainWindow;
-            this.mainWindow.Title = "권한 관리";
         }
 
         private void InitializePermission()
