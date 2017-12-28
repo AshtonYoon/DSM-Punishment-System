@@ -15,26 +15,22 @@ namespace DormitoryGUI
     {
         public static MainPageViewModel mainPage = new MainPageViewModel();
 
+        // 새로운 상벌점 서버를 위한 PATH 수정 
         public class Server
         {
-            private const string SERVER_URL = "http://dsm2015.cafe24.com:3141/";
-            public const string LOGIN_URL = SERVER_URL + "login";
-            public const string GET_PERMISSION_URL = SERVER_URL + "permission/get";
-            public const string SET_PERMSSION_URL = SERVER_URL + "permission/set";
-            public const string GET_STUDENT_DATA = SERVER_URL + "student/get";
-            public const string STUDENT_LOG = SERVER_URL + "student/log";
-            public const string GET_RULE_DATA = SERVER_URL + "rule/get";
-            public const string ADD_RULE_DATA = SERVER_URL + "rule/add";
-            public const string DELETE_RULE_DATA = SERVER_URL + "rule/del";
-            public const string EDIT_RULE_DATA = SERVER_URL + "rule/edit";
-            public const string GIVE_SCORE = SERVER_URL + "score/give";
-            public const string GET_EXCEL_DATA = SERVER_URL + "excel/get";
-            public const string SET_STUDENT_DATA = SERVER_URL + "student/add";
+            private const string SERVER_URL = "http://dsm2015.cafe24.com:3001/";
+            public const string AUTH = SERVER_URL + "admin/auth";
+            public const string REFRESH = SERVER_URL + "admin/refresh";
+            public const string MANAGING_POINT = SERVER_URL + "admin/managing/point";
+            public const string MANAGING_STUDENT = SERVER_URL + "admin/managing/student";
+            public const string MANAGING_RULE = SERVER_URL + "admin/managing/rule";
         }
 
         
         // 상벌점 유형 { 0: 상점, 1: 벌점 }
         public enum POINT_TYPE { GOOD = 0, BAD };
+
+        // 이전 상벌점 서버 전용 request
         public static object MultiJson(string url, object json)
         { 
             try
@@ -71,23 +67,37 @@ namespace DormitoryGUI
             return null;
         }
 
-        public static string ParseStatus(string status)
+        // 새로운 상벌점 서버 전용 request
+        public static HttpWebResponse JSONRequest(string method, string url, string token, object json)
         {
-            switch (status)
+            try
             {
-                case "0":
-                    return " ";
-                case "1":
-                    return "1단계";
-                case "2":
-                    return "2단계";
-                case "3":
-                    return "1out";
-                case "4":
-                    return "2out";
-                default:
-                    return "이게 왜떠";
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+
+                httpWebRequest.ContentType = "application/json";
+
+                httpWebRequest.Method = method;
+                httpWebRequest.Headers["Autorization"] = token;
+
+                byte[] jsonBody = Encoding.UTF8.GetBytes(json.ToString());
+
+                if (method != "GET")
+                {
+                    using (Stream stream = httpWebRequest.GetRequestStream())
+                    {
+                        stream.Write(jsonBody, 0, jsonBody.Length);
+                    }
+                }
+                
+                HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                return httpWebResponse;
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            return null;
         }
     }
 }

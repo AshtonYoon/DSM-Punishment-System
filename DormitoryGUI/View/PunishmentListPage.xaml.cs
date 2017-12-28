@@ -44,33 +44,24 @@ namespace DormitoryGUI.View
 
             InitializePunishmentList();
 
-            BackButton.Click += (s, e) => {
-                NavigationService.GoBack();
-            };
+            BackButton.Click += (s, e) => { NavigationService.GoBack(); };
 
             this.mainWindow = mainWindow;
         }
-        
+
         private void AddPushimentListButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(CheckNameValue() && CheckSliderValue()))
                 return;
 
             JObject rule = new JObject
-            {
-                { "POINT_TYPE", (bool)GoodPoint.IsChecked ? (int)Info.POINT_TYPE.GOOD : (int)Info.POINT_TYPE.BAD },
-                { "POINT_MEMO", PunishmentName.Text },
-                { "POINT_MIN", MinimumPoint.SliderValue },
-                { "POINT_MAX", MaximumPoint.SliderValue },
-            };
+            {               
+                {"name", PunishmentName.Text},
+                {"min_point", (bool) GoodPoint.IsChecked ? MinimumPoint.SliderValue : 0 - MinimumPoint.SliderValue},
+                {"max_point", (bool) GoodPoint.IsChecked ? MaximumPoint.SliderValue : 0 - MaximumPoint.SliderValue}
+            };            
 
-            JObject jobj = new JObject
-            {
-                { "DEST", Info.mainPage.TeacherUUID },
-                { "RULE", rule }
-            };
-
-            Info.MultiJson(Info.Server.ADD_RULE_DATA, jobj);
+            Info.MultiJson(Info.Server.ADD_RULE_DATA, rule);
 
             MessageBox.Show("항목 추가가 완료되었습니다.");
 
@@ -83,8 +74,8 @@ namespace DormitoryGUI.View
             {
                 JObject jobj = new JObject
                 {
-                    { "DEST", Info.mainPage.TeacherUUID },
-                    { "POINT_UUID", selectedItem.PointUUID }
+                    {"DEST", Info.mainPage.TeacherUUID},
+                    {"POINT_UUID", selectedItem.PunishId}
                 };
 
                 Info.MultiJson(Info.Server.DELETE_RULE_DATA, jobj);
@@ -105,11 +96,11 @@ namespace DormitoryGUI.View
 
                 JObject jobj = new JObject
                 {
-                    { "DEST", Info.mainPage.TeacherUUID },
-                    { "POINT_UUID", selectedItem.PointUUID },
-                    { "POINT_MEMO", PunishmentName.Text },
-                    { "POINT_MIN", MinimumPoint.SliderValue },
-                    { "POINT_MAX", MaximumPoint.SliderValue }
+                    {"DEST", Info.mainPage.TeacherUUID},
+                    {"POINT_UUID", selectedItem.PunishId},
+                    {"POINT_MEMO", PunishmentName.Text},
+                    {"POINT_MIN", MinimumPoint.SliderValue},
+                    {"POINT_MAX", MaximumPoint.SliderValue}
                 };
 
                 Info.MultiJson(Info.Server.EDIT_RULE_DATA, jobj);
@@ -122,11 +113,10 @@ namespace DormitoryGUI.View
             }
         }
 
-      
 
         private bool CheckSliderValue()
         {
-            if(MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
+            if (MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
             {
                 return true;
             }
@@ -156,21 +146,22 @@ namespace DormitoryGUI.View
 
             if (e.AddedItems.Count != 0)
             {
-                var target = (PunishmentListViewModel)e.AddedItems[0];
+                var target = (PunishmentListViewModel) e.AddedItems[0];
 
-                if (target.PointType == (int)Info.POINT_TYPE.GOOD)
+                if (target.MaximumPoint >= 0)
                 {
                     GoodPoint.IsChecked = true;
+                    MinimumPoint.SliderValue = target.MinimumPoint;
+                    MaximumPoint.SliderValue = target.MaximumPoint;
                 }
-                else if (target.PointType == (int)Info.POINT_TYPE.BAD)
+                else if (target.MaximumPoint <= 0)
                 {
                     BadPoint.IsChecked = true;
+                    MinimumPoint.SliderValue = Math.Abs(target.MinimumPoint);
+                    MaximumPoint.SliderValue = Math.Abs(target.MaximumPoint);
                 }
 
                 PunishmentName.Text = target.PunishmentName;
-
-                MinimumPoint.SliderValue = target.MinimumPoint;
-                MaximumPoint.SliderValue = target.MaximumPoint;
 
                 selectedItem = target;
             }
@@ -201,26 +192,22 @@ namespace DormitoryGUI.View
 
             foreach (var element in ruleList)
             {
-                if (int.Parse(element["POINT_TYPE"].ToString()) == (int)Info.POINT_TYPE.GOOD)
+                if (int.Parse(element["POINT_TYPE"].ToString()) == (int) Info.POINT_TYPE.GOOD)
                 {
                     punishmentGoodList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
-                        pointType: int.Parse(element["POINT_TYPE"].ToString()),
                         minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
                         maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
-                        pointUUID: int.Parse(element["POINT_UUID"].ToString()),
-                        isChecked: false));
+                        punishId: int.Parse(element["POINT_UUID"].ToString())));
                 }
 
-                else if (int.Parse(element["POINT_TYPE"].ToString()) == (int)Info.POINT_TYPE.BAD)
+                else if (int.Parse(element["POINT_TYPE"].ToString()) == (int) Info.POINT_TYPE.BAD)
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(
                         punishmentName: element["POINT_MEMO"].ToString(),
-                        pointType: int.Parse(element["POINT_TYPE"].ToString()),
                         minimumPoint: int.Parse(element["POINT_MIN"].ToString()),
                         maximumPoint: int.Parse(element["POINT_MAX"].ToString()),
-                        pointUUID: int.Parse(element["POINT_UUID"].ToString()),
-                        isChecked: false));
+                        punishId: int.Parse(element["POINT_UUID"].ToString())));
                 }
             }
 

@@ -9,7 +9,9 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,7 +48,6 @@ namespace DormitoryGUI
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
             resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
 
-
             UnCheckedEventHandler += new RoutedEventHandler((s, e) =>
             {
                 var target = GetAncestorOfType<ListView>(s as CheckBox);
@@ -81,20 +82,34 @@ namespace DormitoryGUI
 
         public void Update()
         {
-            object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
-            studentList = (JArray) masterData;
+            HttpWebResponse webResponse = Info.JSONRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
-            foreach (JObject json in studentList)
+            if (webResponse.StatusCode != HttpStatusCode.OK)
             {
+                return;
+            }
+
+            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
+            {
+                string responseString = streamReader.ReadToEnd();
+                JArray responseJSON = JArray.Parse(responseString);
+
+                studentList = responseJSON;
+            }
+
+            foreach (JObject student in studentList)
+            {
+                string status = student["penalty_training_status"].ToString();
+
                 listviewCollection.Add(new ViewModel.StudentListViewModel(
-                    roomNumber: 0.ToString(),
-                    classNumber: json["USER_SCHOOL_NUMBER"].ToString(),
-                    name: json["USER_NAME"].ToString(),
-                    isChecked: false,
-                    goodPoint: int.Parse(json["TOTAL_GOOD_SCORE"].ToString()),
-                    badPoint: int.Parse(json["TOTAL_BAD_SCORE"].ToString()),
-                    currentStep: Info.ParseStatus(json["PUNISH_STATUS"].ToString()),
-                    userUUID: int.Parse(json["USER_UUID"].ToString())));
+                    id: student["id"].ToString(),
+                    classNumber: student["number"].ToString(),
+                    name: student["name"].ToString(),
+                    goodPoint: int.Parse(student["good_point"].ToString()),
+                    badPoint: int.Parse(student["bad_point"].ToString()),
+                    currentStep: status == "null" ? 0 : int.Parse(status),
+                    isChecked: false
+                ));
             }
         }
 

@@ -31,67 +31,28 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            JObject data = new JObject
+            JObject jobj = new JObject
             {
-                { "ID", ID.Text },
-                { "PW", Sha1Encrypt(Password.Password) }
+                { "id", ID.Text },
+                { "pw", Password.Password }
             };
 
-            JObject response = GetStringFromJson(Info.Server.LOGIN_URL, data);
+            HttpWebResponse webResponse = Info.JSONRequest("POST", Info.Server.AUTH, "", jobj);
 
-            if (response["TEACHER_UUID"] != null)
+            if (webResponse.StatusCode != HttpStatusCode.OK)
             {
-                Info.mainPage.Name = response["TEACHER_NAME"].ToString();
-
-                Info.mainPage.PermissionData = new KeyValuePair<bool, bool>
-                    (Int32.Parse(response["STUDENT_MANAGE"].ToString()) == 1
-                    , Int32.Parse(response["SCORE_MANAGE"].ToString()) == 1);
-
-                Info.mainPage.TeacherUUID = Int32.Parse(response["TEACHER_UUID"].ToString());
-                
-                mainWindow.NavigatePage(new MainPage(mainWindow));
+                MessageBox.Show("로그인 실패");
+                return;
             }
-            else
+
+            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
             {
-                MessageBox.Show("로그인에 실패하였습니다.");
+                string responseString = streamReader.ReadToEnd();
+                JObject responseJSON = JObject.Parse(responseString);
+
+                Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
+                Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
             }
-        }
-
-        private JObject GetStringFromJson(string url, JObject json)
-        {
-            try
-            {
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-
-                byte[] postBody = Encoding.UTF8.GetBytes(json.ToString());
-                using (Stream stream = httpWebRequest.GetRequestStream())
-                {
-                    stream.Write(postBody, 0, postBody.Length);
-                    using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
-                    {
-                        if (httpResponse.StatusCode != HttpStatusCode.OK)
-                            return JObject.Parse("{}");
-
-                        using (StreamReader streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                        {
-                            string result = streamReader.ReadToEnd();
-                            return JObject.Parse(result);
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return JObject.Parse("{}");
-            }
-        }
-
-        private static string Sha1Encrypt(string input)
-        {
-            var hash = (new SHA1Managed()).ComputeHash(Encoding.UTF8.GetBytes(input));
-            return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
         }
 
         private void Password_KeyUp(object sender, KeyEventArgs e)
