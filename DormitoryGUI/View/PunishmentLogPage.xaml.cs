@@ -23,14 +23,15 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class PunishmentLogPage : Page
     {
+        private readonly MainWindow mainWindow;
+
         private StudentList listviewCollection;
 
         private JArray studentList;
 
         private int UUID;
 
-        public PunishmentLogPage(string name, string schoolNumber, int totalGoodPoint, int totalBadPoint,
-            string currentStep, int uuid)
+        public PunishmentLogPage(MainWindow mainWindow, string name, string schoolNumber, int totalGoodPoint, int totalBadPoint, string currentStep, int uuid)
         {
             InitializeComponent();
 
@@ -38,7 +39,7 @@ namespace DormitoryGUI.View
 
             BackButton.Click += (s, e) =>
             {
-                NavigationService.GoBack();
+                mainWindow.NavigatePage(new MainPage(mainWindow));
             };
 
             object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
@@ -72,6 +73,9 @@ namespace DormitoryGUI.View
                 if (item.UserUUID == uuid)
                     StudentList.SelectedItems.Add(item);
             }
+
+            this.mainWindow = mainWindow;
+            this.mainWindow.Title = "상벌점 내역 조회";
         }
 
         private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement

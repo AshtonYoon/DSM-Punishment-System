@@ -21,7 +21,9 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class PermissionManagementPage : Page
     {
-        public PermissionManagementPage()
+        private readonly MainWindow mainWindow;
+
+        public PermissionManagementPage(MainWindow mainWindow)
         {
             InitializeComponent();
 
@@ -30,14 +32,17 @@ namespace DormitoryGUI.View
             BackButton.Click += (s, e) => {
                 if (MessageBox.Show("설정을 저장하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                 {
-                    NavigationService.GoBack();
+                    mainWindow.NavigatePage(new MainPage(mainWindow));
                 }
                 else
                 {
                     SavePermission();
-                    NavigationService.GoBack();
+                    mainWindow.NavigatePage(new MainPage(mainWindow));
                 }
             };
+
+            this.mainWindow = mainWindow;
+            this.mainWindow.Title = "권한 관리";
         }
 
         private void InitializePermission()

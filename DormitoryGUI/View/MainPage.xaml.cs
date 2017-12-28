@@ -70,10 +70,12 @@ namespace DormitoryGUI
 
                 target.Items.Refresh();
             });
-
-            PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage()); };
+            
+            PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage(mainWindow)); };
             CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTarget()); };
+
             this.mainWindow = mainWindow;
+            this.mainWindow.Title = "메인";
 
             Update();
         }
@@ -528,7 +530,7 @@ namespace DormitoryGUI
 
         private void Permission_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.NavigatePage(new PermissionManagementPage());
+            mainWindow.NavigatePage(new PermissionManagementPage(mainWindow));
         }
 
         private void DownloadExcel_Click(object sender, RoutedEventArgs e)
@@ -627,6 +629,7 @@ namespace DormitoryGUI
 
             mainWindow.NavigatePage(
                 new PunishmentLogPage(
+                    mainWindow,
                     target.Name,
                     target.ClassNumber,
                     target.GoodPoint,
