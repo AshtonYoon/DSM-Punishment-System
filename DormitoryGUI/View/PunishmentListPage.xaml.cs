@@ -23,14 +23,15 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class PunishmentListPage : Page
     {
-        private JArray ruleList;
-
         private PunishmentListViewModel selectedItem;
+        private JArray ruleList;
 
         private PunishmentList punishmentGoodList;
         private PunishmentList punishmentBadList;
 
-        public PunishmentListPage()
+        private readonly MainWindow mainWindow;
+
+        public PunishmentListPage(MainWindow mainWindow)
         {
             InitializeComponent();
 
@@ -46,6 +47,9 @@ namespace DormitoryGUI.View
             BackButton.Click += (s, e) => {
                 NavigationService.GoBack();
             };
+
+            this.mainWindow = mainWindow;
+            this.mainWindow.Title = "상벌점 항목 조회";
         }
 
         private void AddPushimentListButton_Click(object sender, RoutedEventArgs e)
@@ -53,28 +57,21 @@ namespace DormitoryGUI.View
             if (!(CheckNameValue() && CheckSliderValue()))
                 return;
 
-            JObject obj = new JObject();
+            JObject rule = new JObject
+            {
+                { "POINT_TYPE", (bool)GoodPoint.IsChecked ? (int)Info.POINT_TYPE.GOOD : (int)Info.POINT_TYPE.BAD },
+                { "POINT_MEMO", PunishmentName.Text },
+                { "POINT_MIN", MinimumPoint.SliderValue },
+                { "POINT_MAX", MaximumPoint.SliderValue },
+            };
 
-            JObject rule = new JObject();
-            
-            //상벌점 종류
-            if ((bool)GoodPoint.IsChecked)
-                rule.Add("POINT_TYPE", (int)Info.POINT_TYPE.GOOD);
-            else
-                rule.Add("POINT_TYPE", (int)Info.POINT_TYPE.BAD);
+            JObject jobj = new JObject
+            {
+                { "DEST", Info.mainPage.TeacherUUID },
+                { "RULE", rule }
+            };
 
-            //항목 이름
-            rule.Add("POINT_MEMO", PunishmentName.Text);
-
-            //최소, 최대 점수
-            rule.Add("POINT_MIN", MinimumPoint.SliderValue);
-            rule.Add("POINT_MAX", MaximumPoint.SliderValue);
-
-            //TEACHER_UUID
-            obj.Add("DEST", "1");
-            obj.Add("RULE", rule);
-
-            Info.MultiJson(Info.Server.ADD_RULE_DATA, obj);
+            Info.MultiJson(Info.Server.ADD_RULE_DATA, jobj);
 
             MessageBox.Show("항목 추가가 완료되었습니다.");
 
@@ -96,7 +93,6 @@ namespace DormitoryGUI.View
                 MessageBox.Show("항목 삭제 완료");
 
                 selectedItem = null;
-
                 UpdatePunishmentList();
             }
         }
@@ -127,6 +123,8 @@ namespace DormitoryGUI.View
             }
         }
 
+      
+
         private bool CheckSliderValue()
         {
             if(MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
@@ -138,16 +136,6 @@ namespace DormitoryGUI.View
                 MessageBox.Show("최소 벌점은 최대 벌점값을 넘을 수 없습니다.");
                 return false;
             }
-        }
-
-        //나중에 중복 제거
-        private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
-        {
-            var parent = VisualTreeHelper.GetParent(child);
-            if (parent != null && !(parent is T))
-                return GetAncestorOfType<T>((FrameworkElement)parent);
-
-            return (T)parent;
         }
 
         private bool CheckNameValue()
@@ -198,9 +186,9 @@ namespace DormitoryGUI.View
 
             double[] columnRatio =
             {
-                0.7,
-                0.15,
-                0.15
+                0.6,
+                0.2,
+                0.2
             };
 
             foreach (var element in gridView.Columns)
@@ -246,6 +234,6 @@ namespace DormitoryGUI.View
             ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
 
             InitializePunishmentList();
-        }       
+        }
     }
 }
