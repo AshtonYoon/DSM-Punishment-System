@@ -92,7 +92,6 @@ namespace DormitoryGUI.View
                 MessageBox.Show("항목 삭제 완료");
 
                 selectedItem = null;
-
                 UpdatePunishmentList();
             }
         }
@@ -123,6 +122,8 @@ namespace DormitoryGUI.View
             }
         }
 
+      
+
         private bool CheckSliderValue()
         {
             if(MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
@@ -147,24 +148,6 @@ namespace DormitoryGUI.View
             {
                 return true;
             }
-        }
-
-        private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var listView = sender as ListView;
-            var gridView = listView.View as GridView;
-
-            var workingWidth = listView.ActualWidth - 18;
-
-            double[] columnRatio =
-            {
-                0.6,
-                0.2,
-                0.2
-            };
-
-            foreach (var element in gridView.Columns)
-                element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
         }
 
         private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -193,6 +176,24 @@ namespace DormitoryGUI.View
             }
         }
 
+        private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var listView = sender as ListView;
+            var gridView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - 18;
+
+            double[] columnRatio =
+            {
+                0.6,
+                0.2,
+                0.2
+            };
+
+            foreach (var element in gridView.Columns)
+                element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
+        }
+
         private void InitializePunishmentList()
         {
             punishmentGoodList.Clear();
@@ -210,6 +211,7 @@ namespace DormitoryGUI.View
                         pointUUID: int.Parse(element["POINT_UUID"].ToString()),
                         isChecked: false));
                 }
+
                 else if (int.Parse(element["POINT_TYPE"].ToString()) == (int)Info.POINT_TYPE.BAD)
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(
