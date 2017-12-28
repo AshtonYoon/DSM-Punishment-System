@@ -477,24 +477,6 @@
                       SelectionChanged="StudentList_SelectionChanged" HorizontalAlignment="Left" Width="277" Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True">
-                        <!--<GridViewColumn>
-                            <GridViewColumn.Header>
-                                <CheckBox VerticalAlignment="Center"
-                                          BorderThickness="1.2"
-                                          Checked="CheckBox_Checked"
-                                          Unchecked="CheckBox_Unchecked" />
-                            </GridViewColumn.Header>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox x:Name="ItemCheckBox"
-                                              VerticalAlignment="Center"
-                                              BorderBrush="#777777"
-                                              Checked="ItemCheckBox_Checked"
-                                              Unchecked="ItemCheckBox_Unchecked"
-                                              IsChecked="{Binding IsChecked}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>-->
                         <GridViewColumn Header="학번"
                                         DisplayMemberBinding="{Binding Path=ClassNumber}" />
                         <GridViewColumn Header="이름"

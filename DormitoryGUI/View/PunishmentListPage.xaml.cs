@@ -23,9 +23,8 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class PunishmentListPage : Page
     {
-        private JArray ruleList;
-
         private PunishmentListViewModel selectedItem;
+        private JArray ruleList;
 
         private PunishmentList punishmentGoodList;
         private PunishmentList punishmentBadList;
@@ -138,16 +137,6 @@ namespace DormitoryGUI.View
             }
         }
 
-        //나중에 중복 제거
-        private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
-        {
-            var parent = VisualTreeHelper.GetParent(child);
-            if (parent != null && !(parent is T))
-                return GetAncestorOfType<T>((FrameworkElement)parent);
-
-            return (T)parent;
-        }
-
         private bool CheckNameValue()
         {
             if (PunishmentName.Text == string.Empty)
@@ -159,6 +148,24 @@ namespace DormitoryGUI.View
             {
                 return true;
             }
+        }
+
+        private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var listView = sender as ListView;
+            var gridView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - 18;
+
+            double[] columnRatio =
+            {
+                0.6,
+                0.2,
+                0.2
+            };
+
+            foreach (var element in gridView.Columns)
+                element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
         }
 
         private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -187,24 +194,6 @@ namespace DormitoryGUI.View
             }
         }
 
-        private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var listView = sender as ListView;
-            var gridView = listView.View as GridView;
-
-            var workingWidth = listView.ActualWidth - 18;
-
-            double[] columnRatio =
-            {
-                0.7,
-                0.15,
-                0.15
-            };
-
-            foreach (var element in gridView.Columns)
-                element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
-        }
-
         private void InitializePunishmentList()
         {
             punishmentGoodList.Clear();
@@ -222,7 +211,6 @@ namespace DormitoryGUI.View
                         pointUUID: int.Parse(element["POINT_UUID"].ToString()),
                         isChecked: false));
                 }
-
                 else if (int.Parse(element["POINT_TYPE"].ToString()) == (int)Info.POINT_TYPE.BAD)
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(

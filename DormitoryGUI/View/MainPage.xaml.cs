@@ -70,8 +70,9 @@ namespace DormitoryGUI
 
                 target.Items.Refresh();
             });
-
+            
             PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage(mainWindow)); };
+            CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTarget()); };
 
             this.mainWindow = mainWindow;
             this.mainWindow.Title = "메인";
@@ -637,6 +638,11 @@ namespace DormitoryGUI
                     target.UserUUID
                 )
             );
+        }
+
+        private void SearchCommand_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

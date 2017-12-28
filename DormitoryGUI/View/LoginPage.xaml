@@ -34,7 +34,7 @@
                 <BlurEffect Radius="20" />
             </Image.Effect>
         </Image>
-        <Grid Grid.ColumnSpan="3"
+        <Grid Grid.ColumnSpan="3" Grid.Column="0"
               Background="Black"
               Opacity="0.5" />
         <StackPanel Grid.Column="1"

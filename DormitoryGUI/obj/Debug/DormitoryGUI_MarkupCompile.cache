@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\
 DormitoryGUI
 none
 false
 DEBUG;TRACE
-E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\App.xaml
-11924745682
+E:\Develop\Project\DMS_C#\DormitoryGUI\App.xaml
+11369021779
 
-21-1975250027
-20515943293
-View\CustomComboBox.xaml;View\CustomPopup.xaml;View\CustomSlider.xaml;View\LoginPage.xaml;View\MainPage.xaml;MainWindow.xaml;View\PermissionManagementPage.xaml;View\PunishmentListPage.xaml;View\PunishmentLogPage.xaml;View\SideMenuButton.xaml;View\TimelineBlock.xaml;
+211740026560
+20-30722914
+View\CheckPunishmentTargetPage.xaml;View\CustomComboBox.xaml;View\CustomSlider.xaml;View\LoginPage.xaml;View\MainPage.xaml;MainWindow.xaml;View\PermissionManagementPage.xaml;View\PunishmentListPage.xaml;View\PunishmentLogPage.xaml;View\SideMenuButton.xaml;View\TimelineBlock.xaml;
 
 False
 
