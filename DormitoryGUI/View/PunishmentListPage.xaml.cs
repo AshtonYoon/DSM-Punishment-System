@@ -44,7 +44,7 @@ namespace DormitoryGUI.View
             punishmentGoodList = Resources["PunishmentGoodListKey"] as PunishmentList;
             punishmentBadList = Resources["PunishmentBadListKey"] as PunishmentList;
 
-            webResponse = Info.JSONRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");            
+            webResponse = Info.JSONRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
 
             InitializePunishmentList();
 
@@ -108,11 +108,10 @@ namespace DormitoryGUI.View
                     {"POINT_MIN", MinimumPoint.SliderValue},
                     {"POINT_MAX", MaximumPoint.SliderValue}
                 };
-
+            
+                webResponse = Info.JSONRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
                 if (webResponse.StatusCode == HttpStatusCode.OK)
-                    webResponse = Info.JSONRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
-
-                MessageBox.Show("항목 수정 완료");
+                    MessageBox.Show("항목 수정 완료");
 
                 selectedItem = null;
 
