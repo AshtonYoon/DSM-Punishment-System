@@ -25,9 +25,6 @@ namespace DormitoryGUI.View
     {
         private StudentList listviewCollection;
 
-        // private RoutedEventHandler UnCheckedEventHandler;
-        // private RoutedEventHandler CheckedEventHandler;
-
         private JArray studentList;
 
         private int UUID;
@@ -39,7 +36,10 @@ namespace DormitoryGUI.View
 
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
 
-            BackButton.Click += (s, e) => { this.NavigationService.GoBack(); };
+            BackButton.Click += (s, e) =>
+            {
+                NavigationService.GoBack();
+            };
 
             object masterData = Info.MultiJson(Info.Server.GET_STUDENT_DATA, "");
             studentList = (JArray) masterData;
@@ -85,18 +85,13 @@ namespace DormitoryGUI.View
 
         private void StudentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AddSelectionByClick(StudentList, e);
-        }
-
-        private void AddSelectionByClick(ListView listview, SelectionChangedEventArgs e)
-        {
-            listview.Items.Refresh();           
-            var targets = e.AddedItems;
             if (e.AddedItems.Count != 0)
             {
-                var target = (StudentListViewModel) e.AddedItems[e.AddedItems.Count - 1];
+                var target = (StudentListViewModel)e.AddedItems[0];
                 UUID = target.UserUUID;
+
                 SetLogData();
+
                 StudentName.Content = target.Name;
                 ClassNumber.Content = target.ClassNumber;
                 TotalGoodPoint.Content = target.GoodPoint.ToString();
@@ -104,7 +99,7 @@ namespace DormitoryGUI.View
                 TotalPunishStep.Content = target.CurrentStep.ToString();
             }
         }
-       
+        
         private void StudentList_SizeChanged(object sender, SizeChangedEventArgs e)
 
         {
@@ -130,6 +125,7 @@ namespace DormitoryGUI.View
             {
                 {"USER_UUID", UUID}
             };
+
             object temp = Info.MultiJson(Info.Server.STUDENT_LOG, jobj);
             if (temp == null)
                 return;

@@ -239,6 +239,7 @@ namespace DormitoryGUI
             {
                 EasingFunction = new QuadraticEase()
             };
+
             Storyboard.SetTargetProperty(FadeOutAnimation, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(FadeOutAnimation, target);
@@ -248,6 +249,7 @@ namespace DormitoryGUI
                 {
                     EasingFunction = new QuadraticEase()
                 };
+
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -268,15 +270,16 @@ namespace DormitoryGUI
             {
                 EasingFunction = new QuadraticEase()
             };
+
             Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(FadeInAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation =
-                new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
-                {
-                    EasingFunction = new QuadraticEase()
-                };
+            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
+
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -301,9 +304,7 @@ namespace DormitoryGUI
                     student["TOTAL_BAD_SCORE"].ToString().Contains(command))
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
-                        roomNumber: student["user_school_room_number"] != null
-                            ? student["user_school_room_number"].ToString()
-                            : "NULL",
+                        roomNumber: student["user_school_room_number"] != null ? student["user_school_room_number"].ToString() : "NULL",
                         classNumber: student["USER_SCHOOL_NUMBER"].ToString(),
                         name: student["USER_NAME"].ToString(),
                         isChecked: false,
@@ -348,6 +349,7 @@ namespace DormitoryGUI
                             obj.Add("USER_SCHOOL_NUMBER", num);
 
                             var name = row.ItemArray[Array.IndexOf(row.ItemArray, item) + 1].ToString();
+
                             if (name != "")
                                 obj.Add("USER_NAME", name);
                             else
@@ -531,24 +533,22 @@ namespace DormitoryGUI
 
         private void DownloadExcel_Click(object sender, RoutedEventArgs e)
         {
-            var saveDialog = new SaveFileDialog()
+            var saveFileDialog = new SaveFileDialog()
             {
                 Filter = "Excel Files (*.xlsx)|*.xlsx"
             };
-
-            if (!(bool) saveDialog.ShowDialog())
+            
+            if (!(bool)saveFileDialog.ShowDialog())
             {
                 return;
             }
 
-            DataSet dataSet = new DataSet();
+            var dataSet = new DataSet();
 
             for (int i = 1; i <= 3; i++)
             {
-                // 1, 2, 3 학년 별 DataTable 분리
-
-                var items = listviewCollection.Where(item => item.ClassNumber.StartsWith(i.ToString())); // 학년 별 컬렉션 필터링
-                DataTable dataTable = new DataTable($"{i}학년"); // 학년 별 DataTable 생성 (예: 1학년)
+                var items = listviewCollection.Where(s => s.ClassNumber.StartsWith(i.ToString()));
+                var dataTable = new DataTable(string.Format("{0}학년", i));
 
                 dataTable.Columns.Add("학번");
                 dataTable.Columns.Add("이름");
@@ -558,11 +558,11 @@ namespace DormitoryGUI
                 dataTable.Columns.Add("벌점 내역");
                 dataTable.Columns.Add("교육 단계");
 
-                foreach (var item in items)
+                foreach (StudentListViewModel item in items)
                 {
                     JObject jobj = new JObject
                     {
-                        {"USER_UUID", item.UserUUID}
+                        {"USER_UUID", item.UserUUID }
                     };
 
                     JArray logs = Info.MultiJson(Info.Server.STUDENT_LOG, jobj) as JArray;
@@ -574,7 +574,7 @@ namespace DormitoryGUI
                     {
                         foreach (JObject log in logs)
                         {
-                            switch ((int) log["POINT_TYPE"])
+                            switch ((int)log["POINT_TYPE"])
                             {
                                 case 0:
                                     goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["POINT_MEMO"], log["POINT_VALUE"]);
@@ -588,41 +588,43 @@ namespace DormitoryGUI
                     }
 
                     int goodLogsCount = goodLogsBuilder.ToString().Length;
-                    string goodLogsString = (goodLogsCount > 0)
-                        ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1)
-                        : string.Empty;
+                    string goodLogsString = (goodLogsCount > 0) ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1) : string.Empty;
 
                     int badLogsCount = badLogsBuilder.ToString().Length;
-                    string badLogsString = (badLogsCount > 0)
-                        ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1)
-                        : string.Empty;
+                    string badLogsString = (badLogsCount > 0) ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1) : string.Empty;
 
-                    dataTable.Rows.Add(new object[]
-                    {
-                        item.ClassNumber, item.Name, item.GoodPoint, item.BadPoint, goodLogsString, badLogsString,
-                        item.CurrentStep
-                    });
+                    dataTable.Rows.Add(
+                        new object[]
+                        {
+                            item.ClassNumber,
+                            item.Name,
+                            item.GoodPoint,
+                            item.BadPoint,
+                            goodLogsString,
+                            badLogsString,
+                            item.CurrentStep
+                        }
+                    );
                 }
 
                 dataSet.Tables.Add(dataTable);
             }
-            
 
-
-            if (ExcelProcessing.SaveExcelDB(saveDialog.FileName, dataSet))
+            if (ExcelProcessing.SaveExcelDB(saveFileDialog.FileName, dataSet))
             {
-                MessageBox.Show("엑셀 파일 저장을 완료했습니다.");
+                MessageBox.Show("엑셀 데이터 저장 성공");
             }
 
             else
             {
-                MessageBox.Show("엑셀 파일 저장에 실패하였습니다.");
+                MessageBox.Show("엑셀 데이터 저장 실패");
             }
         }
 
         private void Log_Click(object sender, RoutedEventArgs e)
         {
             var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
+
             mainWindow.NavigatePage(
                 new PunishmentLogPage(
                     target.Name,

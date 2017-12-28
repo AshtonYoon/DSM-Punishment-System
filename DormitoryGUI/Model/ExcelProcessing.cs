@@ -247,6 +247,7 @@ namespace DormitoryGUI.Model
                         }
                     }
                 }
+
                 using (FileStream FS = new FileStream(TempFile, FileMode.Create, FileAccess.Write))
                 {
                     WB.Write(FS);
