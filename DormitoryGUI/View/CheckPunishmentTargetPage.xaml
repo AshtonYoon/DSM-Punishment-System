@@ -51,9 +51,10 @@
             <Grid Grid.Column="1"
                   Background="#efefef">
                 <ListView x:Name="StudentList"
-                    Margin="13,13,13,13"
+                          Margin="13,13,13,13"
                           BorderThickness="0" SizeChanged="StudentList_OnSizeChanged"
-                          ItemsSource="{Binding Source={StaticResource StudentListKey}}" SelectionChanged="StudentList_SelectionChanged">
+                          ItemsSource="{Binding Source={StaticResource StudentListKey}}"
+                          SelectionChanged="StudentList_SelectionChanged">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn Header="학번"
@@ -76,22 +77,31 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="1" Margin="50,0,0,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <CheckBox Grid.Row="0"
                           Content="1단계 대상자 조회"
-                          FontSize="15"
-                          VerticalAlignment="Center"></CheckBox>
+                          VerticalAlignment="Center">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
                 <CheckBox Grid.Row="1"
                           Content="2단계 대상자 조회"
-                          FontSize="15"
-                          VerticalAlignment="Center"></CheckBox>
+                          VerticalAlignment="Center">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
                 <CheckBox Grid.Row="2"
                           Content="3단계 대상자 조회"
-                          FontSize="15"
-                          VerticalAlignment="Center"></CheckBox>
+                          VerticalAlignment="Center">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
             </Grid>
         </Grid>
     </Grid>
