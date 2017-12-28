@@ -68,7 +68,7 @@ namespace DormitoryGUI
         }
 
         // 새로운 상벌점 서버 전용 request
-        public static HttpWebResponse JSONRequest(string method, string url, string token, object json)
+        public static HttpWebResponse GenerateRequest(string method, string url, string token, object body)
         {
             try
             {
@@ -79,13 +79,13 @@ namespace DormitoryGUI
                 httpWebRequest.Method = method;
                 httpWebRequest.Headers["Autorization"] = token;
 
-                byte[] jsonBody = Encoding.UTF8.GetBytes(json.ToString());
+                byte[] bytesBody = Encoding.UTF8.GetBytes(body.ToString());
 
                 if (method != "GET")
                 {
                     using (Stream stream = httpWebRequest.GetRequestStream())
                     {
-                        stream.Write(jsonBody, 0, jsonBody.Length);
+                        stream.Write(bytesBody, 0, bytesBody.Length);
                     }
                 }
                 

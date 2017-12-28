@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -31,13 +32,15 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            JObject jobj = new JObject
+            var dict = new Dictionary<string, string>
             {
                 { "id", ID.Text },
                 { "pw", Password.Password }
             };
 
-            HttpWebResponse webResponse = Info.JSONRequest("POST", Info.Server.AUTH, "", jobj);
+            var form = new FormUrlEncodedContent(dict);
+
+            HttpWebResponse webResponse = Info.GenerateRequest("POST", Info.Server.AUTH, "", form);
 
             if (webResponse.StatusCode != HttpStatusCode.OK)
             {
