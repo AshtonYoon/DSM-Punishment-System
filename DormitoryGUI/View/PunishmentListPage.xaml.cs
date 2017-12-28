@@ -26,14 +26,12 @@ namespace DormitoryGUI.View
     public partial class PunishmentListPage : Page
     {
         private PunishmentListViewModel selectedItem;
-        private JArray ruleList;
+        private JArray rules;
 
         private PunishmentList punishmentGoodList;
         private PunishmentList punishmentBadList;
 
         private readonly MainWindow mainWindow;
-
-        private HttpWebResponse webResponse;
 
         public PunishmentListPage(MainWindow mainWindow)
         {
@@ -43,8 +41,6 @@ namespace DormitoryGUI.View
 
             punishmentGoodList = Resources["PunishmentGoodListKey"] as PunishmentList;
             punishmentBadList = Resources["PunishmentBadListKey"] as PunishmentList;
-
-            webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
 
             InitializePunishmentList();
 
@@ -58,18 +54,23 @@ namespace DormitoryGUI.View
             if (!(CheckNameValue() && CheckSliderValue()))
                 return;
 
-            JObject rule = new JObject
+            var requestDict = new Dictionary<string, object>
             {
                 {"name", PunishmentName.Text},
-                {"min_point", (bool) GoodPoint.IsChecked ? MinimumPoint.SliderValue : 0 - MinimumPoint.SliderValue},
-                {"max_point", (bool) GoodPoint.IsChecked ? MaximumPoint.SliderValue : 0 - MaximumPoint.SliderValue}
+                {"min_point", (bool) GoodPoint.IsChecked ? MinimumPoint.SliderValue : -1 * MinimumPoint.SliderValue},
+                {"max_point", (bool) GoodPoint.IsChecked ? MaximumPoint.SliderValue : -1 * MaximumPoint.SliderValue}
             };
+            
+            var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
 
-//            Info.MultiJson(Info.Server.ADD_RULE_DATA, rule);
-            webResponse = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
-
-            if (webResponse.StatusCode == HttpStatusCode.OK)
-                MessageBox.Show("항목 추가가 완료되었습니다.");
+            if ((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK)
+            {
+                MessageBox.Show("항목 추가 완료");
+            }
+            else
+            {
+                MessageBox.Show("항목 추가 실패");
+            }
 
             UpdatePunishmentList();
         }
@@ -78,14 +79,21 @@ namespace DormitoryGUI.View
         {
             if (selectedItem != null)
             {
-                JObject jobj = new JObject
+                var requestDict = new Dictionary<string, object>
                 {
-                    {"rule_id", selectedItem.PunishId}
+                    {"rule_id", selectedItem.ID}
                 };
-                Info.GenerateRequest("DELETE", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, jobj);
-//                Info.MultiJson(Info.Server.DELETE_RULE_DATA, jobj);
 
-                MessageBox.Show("항목 삭제 완료");
+                var responseDict = Info.GenerateRequest("DELETE", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+
+                if ((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK)
+                {
+                    MessageBox.Show("항목 삭제 완료");
+                }
+                else
+                {
+                    MessageBox.Show("항목 삭제 실패");
+                }
 
                 selectedItem = null;
                 UpdatePunishmentList();
@@ -99,17 +107,24 @@ namespace DormitoryGUI.View
                 if (!(CheckNameValue() && CheckSliderValue()))
                     return;
 
-                JObject jobj = new JObject
+                var requestDict = new Dictionary<string, object>
                 {                    
-                    {"runle_id", selectedItem.PunishId},
+                    {"rule_id", selectedItem.ID},
                     {"name", PunishmentName.Text},
                     {"min_point", MinimumPoint.SliderValue},
                     {"max_point", MaximumPoint.SliderValue}
                 };
 
-                webResponse = Info.GenerateRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
-                if (webResponse.StatusCode == HttpStatusCode.OK)
+                var responseDict = Info.GenerateRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+
+                if ((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK)
+                {
                     MessageBox.Show("항목 수정 완료");
+                }
+                else
+                {
+                    MessageBox.Show("항목 수정 실패");
+                }
 
                 selectedItem = null;
 
@@ -126,7 +141,7 @@ namespace DormitoryGUI.View
             }
             else
             {
-                MessageBox.Show("최소 벌점은 최대 벌점값을 넘을 수 없습니다.");
+                MessageBox.Show("최소 벌점은 최대 벌점을 초과할 수 없음.");
                 return false;
             }
         }
@@ -135,7 +150,7 @@ namespace DormitoryGUI.View
         {
             if (PunishmentName.Text == string.Empty)
             {
-                MessageBox.Show("항목의 이름은 비워둘 수 없습니다.");
+                MessageBox.Show("항목의 이름은 비워둘 수 없음");
                 return false;
             }
             else
@@ -151,21 +166,21 @@ namespace DormitoryGUI.View
             if (e.AddedItems.Count != 0)
             {
                 var target = (PunishmentListViewModel) e.AddedItems[0];
-
-                if (target.MaxPoint >= 0)
+                
+                if (punishmentGoodList.Contains(target))
                 {
                     GoodPoint.IsChecked = true;
-                    MinimumPoint.SliderValue = target.MinPoint;
-                    MaximumPoint.SliderValue = target.MaxPoint;
-                }
-                else if (target.MaxPoint<= 0)
-                {
-                    BadPoint.IsChecked = true;
-                    MinimumPoint.SliderValue = Math.Abs(target.MinPoint);
-                    MaximumPoint.SliderValue = Math.Abs(target.MaxPoint);
                 }
 
-                PunishmentName.Text = target.PunishmentName;
+                else if (punishmentBadList.Contains(target))
+                {
+                    BadPoint.IsChecked = true;
+                }
+
+                PunishmentName.Text = target.Name;
+
+                MinimumPoint.SliderValue = target.MinPoint;
+                MaximumPoint.SliderValue = target.MaxPoint;
 
                 selectedItem = target;
             }
@@ -191,27 +206,37 @@ namespace DormitoryGUI.View
 
         private void InitializePunishmentList()
         {
+            var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, "");
+
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+            {
+                MessageBox.Show("상벌점 항목 조회 실패");
+                return;
+            }
+
+            rules = JArray.Parse(responseDict["body"].ToString());
+
             punishmentGoodList.Clear();
             punishmentBadList.Clear();
 
-            foreach (var element in ruleList)
+            foreach (var element in rules)
             {
-                if (int.Parse(element["min_point"].ToString()) >= 0) // min_point가 0보다 크면 상점
+                if (int.Parse(element["min_point"].ToString()) > 0) // min_point가 0보다 크면 상점
                 {
                     punishmentGoodList.Add(new PunishmentListViewModel(
+                        id: element["id"].ToString(),
                         name: element["name"].ToString(),
-                        minPoint: int.Parse(element["minPoint"].ToString()),
-                        maxPoint: int.Parse(element["maxPoint"].ToString()),
-                        id: int.Parse(element["id"].ToString())));
+                        minPoint: int.Parse(element["min_point"].ToString()),
+                        maxPoint: int.Parse(element["max_point"].ToString())));
                 }
 
-                else if (int.Parse(element["min_point"].ToString()) <= 0) // min_point가 0보다 작으면 벌점
+                else if (int.Parse(element["min_point"].ToString()) < 0) // min_point가 0보다 작으면 벌점
                 {
                     punishmentBadList.Add(new PunishmentListViewModel(
+                        id: element["id"].ToString(),
                         name: element["name"].ToString(),
-                        minPoint: Math.Abs(int.Parse(element["minPoint"].ToString())),
-                        maxPoint: Math.Abs(int.Parse(element["maxPoint"].ToString())),
-                        id: int.Parse(element["Id"].ToString())));
+                        minPoint: -1 * int.Parse(element["min_point"].ToString()),
+                        maxPoint: -1 * int.Parse(element["max_point"].ToString())));
                 }
             }
 
@@ -221,8 +246,6 @@ namespace DormitoryGUI.View
 
         private void UpdatePunishmentList()
         {
-            //            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
-            webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
             InitializePunishmentList();
         }
     }

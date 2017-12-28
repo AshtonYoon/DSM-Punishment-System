@@ -27,6 +27,7 @@ namespace DormitoryGUI.View
         {
             InitializeComponent();
 
+            /*
             InitializePermission();
 
             BackButton.Click += (s, e) => {
@@ -40,11 +41,12 @@ namespace DormitoryGUI.View
                     NavigationService.GoBack();
                 }
             };
+            */
 
             this.mainWindow = mainWindow;
         }
 
-        private void InitializePermission()
+        /* private void InitializePermission()
         {
             JArray array = (JArray)Info.MultiJson(Info.Server.GET_PERMISSION_URL, "");
             foreach (JObject obj in array)
@@ -69,7 +71,6 @@ namespace DormitoryGUI.View
 
         private void SavePermission()
         {
-            /*
              json = {
                     DEST = "UUID",
                     DATA = [
@@ -85,7 +86,7 @@ namespace DormitoryGUI.View
                         }
                     ]
                 }
-             */
+
             JObject root = new JObject();
 
             JArray post = new JArray();
@@ -117,6 +118,6 @@ namespace DormitoryGUI.View
             root.Add("DATA", post);
 
             Info.MultiJson(Info.Server.SET_PERMSSION_URL, root);
-        }
+        } */
     }
 }

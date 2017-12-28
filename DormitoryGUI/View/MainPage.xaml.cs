@@ -82,32 +82,25 @@ namespace DormitoryGUI
 
         public void Update()
         {
-            HttpWebResponse webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
+            var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
-            if (webResponse.StatusCode != HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
                 return;
             }
 
-            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
-            {
-                string responseString = streamReader.ReadToEnd();
-                JArray responseJSON = JArray.Parse(responseString);
-
-                studentList = responseJSON;
-            }
+            studentList = JArray.Parse(responseDict["body"].ToString());
 
             foreach (JObject student in studentList)
             {
-                string status = student["penalty_training_status"].ToString();
 
                 listviewCollection.Add(new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
                     name: student["name"].ToString(),
-                    goodPoint: int.Parse(student["good_point"].ToString()),
-                    badPoint: int.Parse(student["bad_point"].ToString()),
-                    currentStep: status == "null" ? 0 : int.Parse(status),
+                    goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
+                    badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
+                    currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
                     isChecked: false
                 ));
             }
@@ -143,10 +136,14 @@ namespace DormitoryGUI
                 HideAnimation(SecondGrid);
                 ShowAnimation(ThirdGrid);
 
-                PunishmentSlider.SliderValue =
-                    ((PunishmentListViewModel) PunishmentComboBox.SelectedItem).MinimumPoint;
+                var target = ((PunishmentListViewModel)PunishmentComboBox.SelectedItem);
+
+                int minPoint = target.MinPoint < 0 ? -1 * target.MinPoint : target.MinPoint;
+
+                PunishmentSlider.SliderValue = minPoint;
 
                 CurrentStep = Step.Third;
+
                 return;
             }
 
@@ -164,36 +161,48 @@ namespace DormitoryGUI
 
                     PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
 
-                    if (PunishmentSlider.SliderValue < item.MinimumPoint || PunishmentSlider.SliderValue > item.MaximumPoint)
+                    int minPoint = item.MinPoint < 0 ? -1 * item.MinPoint : item.MinPoint;
+                    int maxPoint = item.MaxPoint < 0 ? -1 * item.MaxPoint : item.MaxPoint;
+
+                    if (PunishmentSlider.SliderValue < item.MaxPoint || PunishmentSlider.SliderValue > item.MaxPoint )
                     {
                         // 부여하고자 하는 벌점이 최댓값, 최솟값을 넘지 않는지에 대해 검사
 
-                        MessageBox.Show("벌점은 최댓값과 최솟값을 넘을 수 없습니다.");
+                        MessageBox.Show("최댓값과 최솟값을 초과할 수 없음");
                         return;
                     }
 
+                    bool operationComplete = true;
+
                     foreach (StudentListViewModel student in ResultList.Items)
                     {
+                        int point = item.MinPoint < 0 ? -1 * PunishmentSlider.SliderValue : PunishmentSlider.SliderValue;
+
                         JObject jsonBody = new JObject
                         {
                             { "id", student.ID },
-                            { "rule_id", item.PunishId },
-                            { "point", PunishmentSlider.SliderValue },
+                            { "rule_id", item.ID },
+                            { "point", point },
                         };
+                        
+                        var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, jsonBody);
 
-                        HttpWebResponse webResponse = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, jsonBody);
-
-                        if (webResponse.StatusCode != HttpStatusCode.Created)
+                        if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.Created)
                         {
+                            operationComplete = false;
                             MessageBox.Show("처리 실패");
+
                             break; 
                         }
                     }
 
+                    if (operationComplete)
+                    {
+                        MessageBox.Show("처리 완료");
+                    }
+
                     listviewCollection.Clear();
                     Update();
-
-                    MessageBox.Show("처리가 완료되었습니다.");
 
                     CurrentStep = Step.First;
 
@@ -280,6 +289,7 @@ namespace DormitoryGUI
         private void ShowAnimation(Panel target)
         {
             var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
+
             Storyboard HideStoryBoard = new Storyboard();
 
             DoubleAnimation FadeInAnimation = new DoubleAnimation(1, Duration)
@@ -288,7 +298,6 @@ namespace DormitoryGUI
             };
 
             Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
-
             Storyboard.SetTarget(FadeInAnimation, target);
 
             ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
@@ -297,7 +306,6 @@ namespace DormitoryGUI
             };
 
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
-
             Storyboard.SetTarget(ShiftLeftAnimation, target);
 
             HideStoryBoard.Children.Add(FadeInAnimation);
@@ -314,20 +322,18 @@ namespace DormitoryGUI
 
             foreach (JObject student in studentList)
             {
-                if (student["USER_SCHOOL_NUMBER"].ToString().Contains(command) ||
-                    student["USER_NAME"].ToString().Contains(command) ||
-                    student["TOTAL_GOOD_SCORE"].ToString().Contains(command) ||
-                    student["TOTAL_BAD_SCORE"].ToString().Contains(command))
+                if (student["number"].ToString().Contains(command) ||
+                    student["name"].ToString().Contains(command) ||
+                    student["good_point"].ToString().Contains(command) ||
+                    student["bad_point"].ToString().Contains(command))
                 {
-                    string status = student["PUNISH_STATUS"].ToString();
-
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: int.Parse(student["good_point"].ToString()),
-                        badPoint: int.Parse(student["bad_point"].ToString()),
-                        currentStep: status == "null" ? 0 : int.Parse(status),
+                        goodPoint: student["good_point"] == null ? 0 : int.Parse(student["good_point"].ToString()),
+                        badPoint: student["bad_point"] == null ? 0 : int.Parse(student["bad_point"].ToString()),
+                        currentStep: student["penalty_training_status"] == null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
                         isChecked: false));
                 }
             }
@@ -528,22 +534,15 @@ namespace DormitoryGUI
 
                 foreach (StudentListViewModel item in items)
                 {
-                    HttpWebResponse webResponse = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{item.ID}", "", "") ;
+                    var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{item.ID}", "", "") ;
 
-                    if (webResponse.StatusCode != HttpStatusCode.OK)
+                    if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
                     {
+                        MessageBox.Show("상벌점 내역 조회 실패");
                         return;
                     }
 
-                    JArray logs;
-
-                    using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
-                    {
-                        string responseString = streamReader.ReadToEnd();
-                        JArray responseJSON = JArray.Parse(responseString);
-
-                        logs = responseJSON;
-                    }
+                    JArray logs = JArray.Parse(responseDict["body"].ToString());
 
                     StringBuilder goodLogsBuilder = new StringBuilder();
                     StringBuilder badLogsBuilder = new StringBuilder();
@@ -556,7 +555,7 @@ namespace DormitoryGUI
                             {
                                 goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
                             }
-                            else if ((int)log["p"] < 0)
+                            else if ((int)log["point"] < 0)
                             {
                                 badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
                             }

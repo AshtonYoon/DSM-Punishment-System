@@ -9,22 +9,22 @@ namespace DormitoryGUI.ViewModel
 {
     class PunishmentListViewModel
     {
-        private string punishmentName;
-        private int maximumPoint;
-        private int minimumPoint;
-        private int punishId;       
+        private string id;
+        private string name;
+        private int maxPoint;
+        private int minPoint;
 
-        public string PunishmentName { get => punishmentName; set => punishmentName = value; }        
-        public int MaximumPoint { get => maximumPoint; set => maximumPoint = value; }
-        public int MinimumPoint { get => minimumPoint; set => minimumPoint = value; }
-        public int PunishId { get => punishId; set => punishId = value; }        
+        public string ID { get => id; set => id = value; }
+        public string Name { get => name; set => name = value; }        
+        public int MaxPoint { get => maxPoint; set => maxPoint = value; }
+        public int MinPoint { get => minPoint; set => minPoint = value; }
 
-        public PunishmentListViewModel(string punishmentName, int maximumPoint, int minimumPoint, int punishId)
+        public PunishmentListViewModel(string id, string name, int minPoint, int maxPoint)
         {
-            this.punishmentName = punishmentName;            
-            this.maximumPoint = maximumPoint;
-            this.minimumPoint = minimumPoint;
-            this.punishId = punishId;            
+            this.id = id;
+            this.name = name;            
+            this.minPoint = minPoint;
+            this.maxPoint = maxPoint;            
         }
     }
 

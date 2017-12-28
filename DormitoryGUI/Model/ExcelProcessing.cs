@@ -66,7 +66,6 @@ namespace DormitoryGUI.Model
             catch
             {
                 result = (-2);
-                //throw e;
             }
             finally
             {

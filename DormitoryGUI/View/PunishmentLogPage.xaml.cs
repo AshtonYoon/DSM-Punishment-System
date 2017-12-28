@@ -29,7 +29,7 @@ namespace DormitoryGUI.View
 
         private StudentList listviewCollection;
 
-        private JArray studentList;
+        private JArray students;
 
         public PunishmentLogPage(MainWindow mainWindow, string id, string name, string classNumber, int goodPoint, int badPoint, int currentStep)
         {
@@ -42,33 +42,27 @@ namespace DormitoryGUI.View
                 NavigationService.GoBack();
             };
 
-            HttpWebResponse webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
+            var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
-            if (webResponse.StatusCode != HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
+                MessageBox.Show("학생 목록 조회 실패");
                 return;
             }
 
-            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
-            {
-                string responseString = streamReader.ReadToEnd();
-                JArray responseJSON = JArray.Parse(responseString);
+            students = JArray.Parse(responseDict["body"].ToString());
 
-                studentList = responseJSON;
-            }
-
-            foreach (JObject student in studentList)
+            foreach (JObject student in students)
             {
-                string status = student["penalty_traning_status"].ToString();
 
                 listviewCollection.Add(new ViewModel.StudentListViewModel(    
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
                     name: student["name"].ToString(),
-                    goodPoint: int.Parse(student["good_point"].ToString()),
-                    badPoint: int.Parse(student["bad_point"].ToString()),
-                    isChecked: false,
-                    currentStep: status == "NULL" ? 0 : int.Parse(status)));
+                    goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
+                    badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
+                    currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
+                    isChecked: false));
             }
 
             SetLogData(id);
@@ -126,22 +120,15 @@ namespace DormitoryGUI.View
 
         private void SetLogData(string id)
         {
-            HttpWebResponse webResponse = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{id}", Info.mainPage.AccessToken, "");
+            var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{id}", Info.mainPage.AccessToken, "");
 
-            if (webResponse.StatusCode != HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
+                MessageBox.Show("상벌점 내역 조회 실패");
                 return;
             }
 
-            JArray logs;
-
-            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
-            {
-                string responseString = streamReader.ReadToEnd();
-                JArray responseJSON = JArray.Parse(responseString);
-
-                logs = responseJSON;
-            }
+            JArray logs = JArray.Parse(responseDict["body"].ToString());
 
             Timeline.Children.Clear();
 
@@ -165,7 +152,7 @@ namespace DormitoryGUI.View
             string command = SearchCommand.Text;
             listviewCollection.Clear();
 
-            foreach (JObject student in studentList)
+            foreach (JObject student in students)
             {
                 if (student["number"].ToString().Contains(command) ||
                     student["name"].ToString().Contains(command) ||

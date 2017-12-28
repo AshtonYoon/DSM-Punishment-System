@@ -2,7 +2,9 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,7 +24,7 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class CustomComboBox : UserControl
     {
-        private JArray ruleList;
+        private JArray rules;
 
         public CustomComboBox()
         {
@@ -42,6 +44,7 @@ namespace DormitoryGUI.View
         public int PunishmentType
         {
             get => punishmentType;
+
             set
             {
                 punishmentType = value;
@@ -51,22 +54,43 @@ namespace DormitoryGUI.View
 
         private void InitializePunishmentList()
         {
-            var punishmentList = Resources["PunishmentListKey"] as ViewModel.PunishmentList;
+            PunishmentList punishmentList = Resources["PunishmentListKey"] as PunishmentList;
 
-            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+            var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, "");
+
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+            {
+                return;
+            }
+
+            rules = JArray.Parse(responseDict["body"].ToString());
 
             punishmentList.Clear();
-            foreach (var element in ruleList)
+
+            foreach (JObject rule in rules)
             {
-                if (int.Parse(element["POINT_TYPE"].ToString()) == PunishmentType)
+                if (PunishmentType == 0)
                 {
-                    punishmentList.Add(new PunishmentListViewModel(
-                        name: element["POINT_MEMO"].ToString(),
-                        pointType: int.Parse(element["POINT_TYPE"].ToString()),
-                        minPoint: int.Parse(element["POINT_MIN"].ToString()),
-                        maxPoint: int.Parse(element["POINT_MAX"].ToString()),
-                        pointUUID: int.Parse(element["POINT_UUID"].ToString()),
-                        isChecked: false));
+                    if (int.Parse(rule["min_point"].ToString()) > 0)
+                    {
+                        punishmentList.Add(new PunishmentListViewModel(
+                        id: rule["id"].ToString(),
+                        name: rule["name"].ToString(),
+                        minPoint: int.Parse(rule["min_point"].ToString()),
+                        maxPoint: int.Parse(rule["max_point"].ToString())));
+                    }
+                }
+
+                else if (PunishmentType == 1)
+                {
+                    if (int.Parse(rule["min_point"].ToString()) < 0)
+                    {
+                        punishmentList.Add(new PunishmentListViewModel(
+                        id: rule["id"].ToString(),
+                        name: rule["name"].ToString(),
+                        minPoint: int.Parse(rule["min_point"].ToString()),
+                        maxPoint: int.Parse(rule["max_point"].ToString())));
+                    }
                 }
             }
         }
