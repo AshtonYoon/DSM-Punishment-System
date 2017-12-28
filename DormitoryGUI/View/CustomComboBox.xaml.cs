@@ -56,20 +56,14 @@ namespace DormitoryGUI.View
         {
             PunishmentList punishmentList = Resources["PunishmentListKey"] as PunishmentList;
 
-            HttpWebResponse webResponse = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, "");
+            var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, "");
 
-            if (webResponse.StatusCode != HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
                 return;
             }
 
-            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
-            {
-                string responseString = streamReader.ReadToEnd();
-                JArray responseJSON = JArray.Parse(responseString);
-
-                rules = responseJSON;
-            }
+            rules = JArray.Parse(responseDict["body"].ToString());
 
             punishmentList.Clear();
 
@@ -77,25 +71,25 @@ namespace DormitoryGUI.View
             {
                 if (PunishmentType == 0)
                 {
-                    if (int.Parse(rule["point"].ToString()) > 0)
+                    if (int.Parse(rule["min_point"].ToString()) > 0)
                     {
                         punishmentList.Add(new PunishmentListViewModel(
-                        punishId: rule["id"].ToString(),
-                        punishmentName: rule["reason"].ToString(),
-                        minimumPoint: int.Parse(rule["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(rule["POINT_MAX"].ToString())));
+                        id: rule["id"].ToString(),
+                        name: rule["name"].ToString(),
+                        minPoint: int.Parse(rule["min_point"].ToString()),
+                        maxPoint: int.Parse(rule["max_point"].ToString())));
                     }
                 }
 
                 else if (PunishmentType == 1)
                 {
-                    if (int.Parse(rule["point"].ToString()) < 0)
+                    if (int.Parse(rule["min_point"].ToString()) < 0)
                     {
                         punishmentList.Add(new PunishmentListViewModel(
-                        punishId: rule["id"].ToString(),
-                        punishmentName: rule["reason"].ToString(),
-                        minimumPoint: int.Parse(rule["POINT_MIN"].ToString()),
-                        maximumPoint: int.Parse(rule["POINT_MAX"].ToString())));
+                        id: rule["id"].ToString(),
+                        name: rule["name"].ToString(),
+                        minPoint: int.Parse(rule["min_point"].ToString()),
+                        maxPoint: int.Parse(rule["max_point"].ToString())));
                     }
                 }
             }

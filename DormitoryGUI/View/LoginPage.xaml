@@ -46,7 +46,7 @@
                      Foreground="White"
                      Background="Transparent"
                      BorderBrush="{x:Static SystemColors.ControlLightBrush}" 
-                     Text="tester"/>
+                     Text="unko"/>
             <Label Content="PW"
                    Foreground="White" />
             <PasswordBox x:Name="Password"
@@ -55,7 +55,7 @@
                          Foreground="White"
                          Background="Transparent"
                          BorderBrush="{x:Static SystemColors.ControlLightBrush}" 
-                         Password="test"/>
+                         Password="unko"/>
             <Label Content=""
                    Foreground="#555555" />
             <Button x:Name="LoginButton"

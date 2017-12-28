@@ -32,30 +32,26 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            var dict = new Dictionary<string, string>
+            var requestDict = new Dictionary<string, object>
             {
                 { "id", ID.Text },
                 { "pw", Password.Password }
             };
 
-            var form = new FormUrlEncodedContent(dict);
+            var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, "", requestDict);
 
-            HttpWebResponse webResponse = Info.GenerateRequest("POST", Info.Server.AUTH, "", form);
-
-            if (webResponse.StatusCode != HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
                 MessageBox.Show("로그인 실패");
                 return;
             }
 
-            using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
-            {
-                string responseString = streamReader.ReadToEnd();
-                JObject responseJSON = JObject.Parse(responseString);
+            JObject responseJSON = JObject.Parse(responseDict["body"].ToString());
 
-                Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
-                Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
-            }
+            Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
+            Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
+
+            mainWindow.NavigatePage(new MainPage(mainWindow));
         }
 
         private void Password_KeyUp(object sender, KeyEventArgs e)

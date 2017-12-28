@@ -315,6 +315,6 @@
     <Grid>
         <ComboBox x:Name="comboBox"
                   ItemsSource="{Binding Source={StaticResource PunishmentListKey}}"
-                  DisplayMemberPath="PunishmentName" SelectionChanged="comboBox_SelectionChanged" />
+                  DisplayMemberPath="Name" SelectionChanged="comboBox_SelectionChanged" />
     </Grid>
 </UserControl>
