@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,6 +32,8 @@ namespace DormitoryGUI.View
 
         private readonly MainWindow mainWindow;
 
+        private HttpWebResponse res;
+
         public PunishmentListPage(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -40,7 +43,8 @@ namespace DormitoryGUI.View
             punishmentGoodList = Resources["PunishmentGoodListKey"] as PunishmentList;
             punishmentBadList = Resources["PunishmentBadListKey"] as PunishmentList;
 
-            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+            res = Info.JSONRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
+
 
             InitializePunishmentList();
 
@@ -55,15 +59,17 @@ namespace DormitoryGUI.View
                 return;
 
             JObject rule = new JObject
-            {               
+            {
                 {"name", PunishmentName.Text},
                 {"min_point", (bool) GoodPoint.IsChecked ? MinimumPoint.SliderValue : 0 - MinimumPoint.SliderValue},
                 {"max_point", (bool) GoodPoint.IsChecked ? MaximumPoint.SliderValue : 0 - MaximumPoint.SliderValue}
-            };            
+            };
 
-            Info.MultiJson(Info.Server.ADD_RULE_DATA, rule);
+//            Info.MultiJson(Info.Server.ADD_RULE_DATA, rule);
+            res = Info.JSONRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
 
-            MessageBox.Show("항목 추가가 완료되었습니다.");
+            if (res.StatusCode == HttpStatusCode.OK)
+                MessageBox.Show("항목 추가가 완료되었습니다.");
 
             UpdatePunishmentList();
         }
@@ -78,7 +84,7 @@ namespace DormitoryGUI.View
                     {"POINT_UUID", selectedItem.PunishId}
                 };
 
-                Info.MultiJson(Info.Server.DELETE_RULE_DATA, jobj);
+//                Info.MultiJson(Info.Server.DELETE_RULE_DATA, jobj);
 
                 MessageBox.Show("항목 삭제 완료");
 
@@ -103,7 +109,9 @@ namespace DormitoryGUI.View
                     {"POINT_MAX", MaximumPoint.SliderValue}
                 };
 
-                Info.MultiJson(Info.Server.EDIT_RULE_DATA, jobj);
+                if (res.StatusCode == HttpStatusCode.OK)
+                    res = Info.JSONRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
+
 
                 MessageBox.Show("항목 수정 완료");
 
@@ -116,7 +124,7 @@ namespace DormitoryGUI.View
 
         private bool CheckSliderValue()
         {
-            if (MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
+            if ((bool)GoodPoint.IsChecked && MinimumPoint.SliderValue <= MaximumPoint.SliderValue || !(bool)GoodPoint.IsChecked && MinimumPoint.SliderValue >= MaximumPoint.SliderValue)
             {
                 return true;
             }
@@ -217,8 +225,8 @@ namespace DormitoryGUI.View
 
         private void UpdatePunishmentList()
         {
-            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
-
+            //            ruleList = Info.MultiJson(Info.Server.GET_RULE_DATA, "") as JArray;
+            res = Info.JSONRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, " ");
             InitializePunishmentList();
         }
     }
