@@ -685,22 +685,9 @@
                                 </ToolTip>
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>
-                        <view:SideMenuButton x:Name="Permission"
-                                             Margin="0, 15"
-                                             ButtonBackground="#eeeeee"
-                                             ImageSource="/Image/key.png"
-                                             Click="Permission_Click">
-                            <view:SideMenuButton.ToolTip>
-                                <ToolTip BorderThickness="0">
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">권한관리</TextBlock>
-                                        <TextBlock>관리자, 사감, 교사의 권한을 설정합니다</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </view:SideMenuButton.ToolTip>
-                        </view:SideMenuButton>
+                        
                         <view:SideMenuButton x:Name="PunishmentList"
-                                             Margin="0, 15"
+                                             Margin="0,30"
                                              ButtonBackground="#90dfaa"
                                              ImageSource="/Image/analytics.png">
                             <view:SideMenuButton.ToolTip>
