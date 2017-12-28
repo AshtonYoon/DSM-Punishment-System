@@ -25,6 +25,7 @@ namespace DormitoryGUI
             InitializeComponent();
             
             this.mainWindow = mainWindow;
+            this.mainWindow.Title = "로그인";
 
             Password.Focus();
         }
