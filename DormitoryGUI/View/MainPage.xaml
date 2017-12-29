@@ -654,10 +654,11 @@
             <Grid Grid.Row="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="10*" />
+                        <ColumnDefinition Width="107*"/>
+                        <ColumnDefinition Width="583*" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="3" Margin="0,156,583,155.8">
                         <!--<view:SideMenuButton x:Name="UploadExcel"
                                              Margin="0, 15"
                                              ButtonBackground="#1f7244"
@@ -685,7 +686,7 @@
                                 </ToolTip>
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>
-                        
+
                         <view:SideMenuButton x:Name="PunishmentList"
                                              Margin="0,30"
                                              ButtonBackground="#90dfaa"
@@ -713,7 +714,7 @@
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>
                     </StackPanel>
-                    <Grid Grid.Column="1">
+                    <Grid Grid.Column="2" Margin="0.2,0,0,-0.2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="8*" />
@@ -877,7 +878,7 @@
                             </Button.Resources>
                         </Button>
                     </Grid>
-                    <Grid Grid.Column="1" />
+                    <Grid Grid.Column="2" Margin="0.2,0,0,-0.2" />
                 </Grid>
             </Grid>
         </Grid>

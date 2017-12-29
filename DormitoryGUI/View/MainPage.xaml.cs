@@ -71,7 +71,7 @@ namespace DormitoryGUI
 
                 target.Items.Refresh();
             });
-            
+
             PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage(mainWindow)); };
             CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTargetPage(mainWindow)); };
 
@@ -84,7 +84,7 @@ namespace DormitoryGUI
         {
             var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
-            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+            if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
             {
                 return;
             }
@@ -93,14 +93,19 @@ namespace DormitoryGUI
 
             foreach (JObject student in studentList)
             {
-
                 listviewCollection.Add(new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
                     name: student["name"].ToString(),
-                    goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
-                    badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                    currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
+                    goodPoint: student["good_point"].Type == JTokenType.Null
+                        ? 0
+                        : int.Parse(student["good_point"].ToString()),
+                    badPoint: student["bad_point"].Type == JTokenType.Null
+                        ? 0
+                        : int.Parse(student["bad_point"].ToString()),
+                    currentStep: student["penalty_training_status"].Type == JTokenType.Null
+                        ? 0
+                        : int.Parse(student["penalty_training_status"].ToString()),
                     isChecked: false
                 ));
             }
@@ -136,7 +141,7 @@ namespace DormitoryGUI
                 HideAnimation(SecondGrid);
                 ShowAnimation(ThirdGrid);
 
-                var target = ((PunishmentListViewModel)PunishmentComboBox.SelectedItem);
+                var target = ((PunishmentListViewModel) PunishmentComboBox.SelectedItem);
 
                 int minPoint = target.MinPoint < 0 ? -1 * target.MinPoint : target.MinPoint;
 
@@ -149,7 +154,8 @@ namespace DormitoryGUI
 
             if (CurrentStep == Step.Third)
             {
-                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                    MessageBoxResult.Yes)
                 {
                     /** Request
                         json = {
@@ -164,11 +170,11 @@ namespace DormitoryGUI
                     int minPoint = item.MinPoint < 0 ? -1 * item.MinPoint : item.MinPoint;
                     int maxPoint = item.MaxPoint < 0 ? -1 * item.MaxPoint : item.MaxPoint;
 
-                    if (PunishmentSlider.SliderValue < item.MaxPoint || PunishmentSlider.SliderValue > item.MaxPoint )
+                    if (PunishmentSlider.SliderValue < minPoint || PunishmentSlider.SliderValue > maxPoint)
                     {
                         // 부여하고자 하는 벌점이 최댓값, 최솟값을 넘지 않는지에 대해 검사
 
-                        MessageBox.Show("최댓값과 최솟값을 초과할 수 없음");
+                        MessageBox.Show("최댓값과 최솟값을 벗어날 수 없음");
                         return;
                     }
 
@@ -176,23 +182,33 @@ namespace DormitoryGUI
 
                     foreach (StudentListViewModel student in ResultList.Items)
                     {
-                        int point = item.MinPoint < 0 ? -1 * PunishmentSlider.SliderValue : PunishmentSlider.SliderValue;
+                        int point = item.MinPoint < 0
+                            ? -1 * PunishmentSlider.SliderValue
+                            : PunishmentSlider.SliderValue;
 
-                        JObject jsonBody = new JObject
+                        /*JObject jsonBody = new JObject
                         {
                             { "id", student.ID },
                             { "rule_id", item.ID },
                             { "point", point },
-                        };
-                        
-                        var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, jsonBody);
+                        };*/
 
-                        if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.Created)
+                        var requestDict = new Dictionary<string, object>
+                        {
+                            {"id", student.ID},
+                            {"rule_id", item.ID},
+                            {"point", point}
+                        };
+
+                        var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT,
+                            Info.mainPage.AccessToken, requestDict);
+
+                        if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.Created)
                         {
                             operationComplete = false;
                             MessageBox.Show("처리 실패");
 
-                            break; 
+                            break;
                         }
                     }
 
@@ -300,10 +316,11 @@ namespace DormitoryGUI
             Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
             Storyboard.SetTarget(FadeInAnimation, target);
 
-            ThicknessAnimation ShiftLeftAnimation = new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
-            {
-                EasingFunction = new QuadraticEase()
-            };
+            ThicknessAnimation ShiftLeftAnimation =
+                new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
+                {
+                    EasingFunction = new QuadraticEase()
+                };
 
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
             Storyboard.SetTarget(ShiftLeftAnimation, target);
@@ -333,7 +350,9 @@ namespace DormitoryGUI
                         name: student["name"].ToString(),
                         goodPoint: student["good_point"] == null ? 0 : int.Parse(student["good_point"].ToString()),
                         badPoint: student["bad_point"] == null ? 0 : int.Parse(student["bad_point"].ToString()),
-                        currentStep: student["penalty_training_status"] == null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
+                        currentStep: student["penalty_training_status"] == null
+                            ? 0
+                            : int.Parse(student["penalty_training_status"].ToString()),
                         isChecked: false));
                 }
             }
@@ -511,8 +530,8 @@ namespace DormitoryGUI
             {
                 Filter = "Excel Files (*.xlsx)|*.xlsx"
             };
-            
-            if (!(bool)saveFileDialog.ShowDialog())
+
+            if (!(bool) saveFileDialog.ShowDialog())
             {
                 return;
             }
@@ -534,9 +553,9 @@ namespace DormitoryGUI
 
                 foreach (StudentListViewModel item in items)
                 {
-                    var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{item.ID}", "", "") ;
+                    var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{item.ID}", "", "");
 
-                    if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+                    if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
                     {
                         MessageBox.Show("상벌점 내역 조회 실패");
                         return;
@@ -551,11 +570,11 @@ namespace DormitoryGUI
                     {
                         foreach (JObject log in logs)
                         {
-                            if ((int)log["point"] > 0)
+                            if ((int) log["point"] > 0)
                             {
                                 goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
                             }
-                            else if ((int)log["point"] < 0)
+                            else if ((int) log["point"] < 0)
                             {
                                 badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
                             }
@@ -563,10 +582,14 @@ namespace DormitoryGUI
                     }
 
                     int goodLogsCount = goodLogsBuilder.ToString().Length;
-                    string goodLogsString = (goodLogsCount > 0) ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1) : string.Empty;
+                    string goodLogsString = (goodLogsCount > 0)
+                        ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1)
+                        : string.Empty;
 
                     int badLogsCount = badLogsBuilder.ToString().Length;
-                    string badLogsString = (badLogsCount > 0) ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1) : string.Empty;
+                    string badLogsString = (badLogsCount > 0)
+                        ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1)
+                        : string.Empty;
 
                     dataTable.Rows.Add(
                         new object[]
@@ -615,7 +638,6 @@ namespace DormitoryGUI
 
         private void SearchCommand_TextChanged(object sender, TextChangedEventArgs e)
         {
-
         }
     }
 }

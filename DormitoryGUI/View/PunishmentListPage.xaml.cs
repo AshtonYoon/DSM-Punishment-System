@@ -106,13 +106,13 @@ namespace DormitoryGUI.View
             {
                 if (!(CheckNameValue() && CheckSliderValue()))
                     return;
-
+                
                 var requestDict = new Dictionary<string, object>
                 {                    
                     {"rule_id", selectedItem.ID},
                     {"name", PunishmentName.Text},
-                    {"min_point", MinimumPoint.SliderValue},
-                    {"max_point", MaximumPoint.SliderValue}
+                    {"min_point", (bool)GoodPoint.IsChecked ? MinimumPoint.SliderValue : -1 * MinimumPoint.SliderValue},
+                    {"max_point", (bool)GoodPoint.IsChecked ? MaximumPoint.SliderValue : -1 * MaximumPoint.SliderValue}
                 };
 
                 var responseDict = Info.GenerateRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
@@ -165,7 +165,7 @@ namespace DormitoryGUI.View
             if (e.AddedItems.Count != 0)
             {
                 var target = (PunishmentListViewModel) e.AddedItems[0];
-
+                
                 if (punishmentGoodList.Contains(target))
                 {
                     GoodPoint.IsChecked = true;
