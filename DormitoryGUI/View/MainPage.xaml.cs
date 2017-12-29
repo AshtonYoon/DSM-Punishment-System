@@ -75,9 +75,9 @@ namespace DormitoryGUI
             PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage(mainWindow)); };
             CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTargetPage(mainWindow)); };
 
-            this.mainWindow = mainWindow;
-
             Update();
+
+            this.mainWindow = mainWindow;
         }
 
         public void Update()

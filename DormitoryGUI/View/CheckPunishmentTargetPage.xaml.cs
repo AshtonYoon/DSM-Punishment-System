@@ -33,14 +33,15 @@ namespace DormitoryGUI.View
             InitializeComponent();
 
             BackButton.Click += (s, e) => {
-                this.NavigationService.GoBack();
+                NavigationService.GoBack();
             };
+
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
 
+            Update();
 
             this.mainWindow = mainWindow;
-
-            Update();
+            
         }
 
         public void Update()

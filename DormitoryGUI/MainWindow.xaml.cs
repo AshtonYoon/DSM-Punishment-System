@@ -45,6 +45,11 @@ namespace DormitoryGUI
             MainContainer.NavigationUIVisibility = NavigationUIVisibility.Hidden;
         }
 
+        private void MainContainer_Navigated(object sender, NavigationEventArgs e)
+        {
+            TitleBlock.Text = (e.Content as Page).Title;
+        }
+
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();

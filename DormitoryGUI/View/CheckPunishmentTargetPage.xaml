@@ -11,7 +11,7 @@
       d:DesignHeight="600"
       d:DesignWidth="1000"
 
-      Title="벌점봉사 대상자 조회">
+      Title="다벌점 교육 대상자 조회">
 
     <Page.Resources>
         <viewmodel:StudentList x:Key="StudentListKey" />

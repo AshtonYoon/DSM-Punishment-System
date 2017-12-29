@@ -7,7 +7,7 @@
       mc:Ignorable="d"
       d:DesignHeight="600"
       d:DesignWidth="1000"
-      Title="LoginPage">
+      Title="로그인">
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

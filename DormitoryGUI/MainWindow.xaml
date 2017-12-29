@@ -18,7 +18,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Rectangle Fill="Black"/>
-        <TextBlock Text="Title" Foreground="White" VerticalAlignment="Center" Margin="20, 0"/>
+        <TextBlock x:Name="TitleBlock" Foreground="White" VerticalAlignment="Center" Margin="20, 0"/>
         <Rectangle Fill="Blue" Opacity="0.01" MouseDown="Rectangle_MouseDown"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Background="{x:Null}" BorderThickness="0">
@@ -33,6 +33,7 @@
         </StackPanel>
         <Frame x:Name="MainContainer" 
                Grid.Row="1"
-               ContentRendered="MainContainer_ContentRendered"/>
+               ContentRendered="MainContainer_ContentRendered"
+               Navigated="MainContainer_Navigated"/>
     </Grid>
 </Window>

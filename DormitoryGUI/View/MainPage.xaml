@@ -10,7 +10,7 @@
       mc:Ignorable="d"
       d:DesignHeight="600"
       d:DesignWidth="1000"
-      Title="MainPage">
+      Title="메인">
     <Page.Resources>
         <ContextMenu x:Key="ListviewItemControlMenu">
             <MenuItem Header="삭제"
