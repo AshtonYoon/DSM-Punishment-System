@@ -9,15 +9,12 @@
         Height="600" 
         Width="1000"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded"
-        ResizeMode="NoResize"
-        WindowStyle="None">
+        Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="Black"/>
+        <!--<Rectangle Fill="Black"/>
         <TextBlock x:Name="TitleBlock" Foreground="White" VerticalAlignment="Center" Margin="20, 0"/>
         <Rectangle Fill="Blue" Opacity="0.01" MouseDown="Rectangle_MouseDown"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -30,9 +27,9 @@
             <Button Background="Red" BorderThickness="0" Click="CloseButton_Click">
                 <TextBlock Text="X" Margin="5,0" Foreground="White"/>
             </Button>
-        </StackPanel>
+        </StackPanel>-->
         <Frame x:Name="MainContainer" 
-               Grid.Row="1"
+               Grid.Row="0"
                ContentRendered="MainContainer_ContentRendered"
                Navigated="MainContainer_Navigated"/>
     </Grid>
