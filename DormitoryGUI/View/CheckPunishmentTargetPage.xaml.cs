@@ -90,8 +90,8 @@ namespace DormitoryGUI.View
             double[] columnRatio =
             {
                 0.3,
-                0.35,
-                0.4
+                0.4,
+                0.3
             };
 
             foreach (var element in gridView.Columns)
