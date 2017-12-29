@@ -8,7 +8,7 @@
       mc:Ignorable="d"
       d:DesignHeight="600"
       d:DesignWidth="1000"
-      Title="PunishmentListPage">
+      Title="상벌점 항목 관리">
     <Page.Resources>
         <viewmodel:PunishmentList x:Key="PunishmentGoodListKey" />
         <viewmodel:PunishmentList x:Key="PunishmentBadListKey" />

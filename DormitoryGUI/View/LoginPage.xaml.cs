@@ -24,10 +24,10 @@ namespace DormitoryGUI
         public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            
-            this.mainWindow = mainWindow;
 
             Password.Focus();
+
+            this.mainWindow = mainWindow;
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)

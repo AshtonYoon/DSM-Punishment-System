@@ -8,7 +8,7 @@
       mc:Ignorable="d"
       d:DesignHeight="600"
       d:DesignWidth="1000"
-      Title="PunishmentLogPage"
+      Title="상벌점 내역 관리"
       Background="White">
     <Page.Resources>
         <viewmodel:StudentList x:Key="StudentListKey" />
