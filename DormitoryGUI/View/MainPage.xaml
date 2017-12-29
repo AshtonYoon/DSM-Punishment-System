@@ -670,7 +670,7 @@
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>-->
                         <view:SideMenuButton x:Name="DownloadExcel"
-                                             Margin="0, 15"
+                                             Margin="0, 10"
                                              ButtonBackground="#1f7244"
                                              ImageSource="/Image/download.png"
                                              Click="DownloadExcel_Click">
@@ -685,7 +685,7 @@
                         </view:SideMenuButton>
 
                         <view:SideMenuButton x:Name="PunishmentList"
-                                             Margin="0,15"
+                                             Margin="0,10"
                                              ButtonBackground="#90dfaa"
                                              ImageSource="/Image/analytics.png">
                             <view:SideMenuButton.ToolTip>
@@ -698,7 +698,7 @@
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>
                         <view:SideMenuButton x:Name="CheckTarget"
-                                             Margin="0, 15"
+                                             Margin="0, 10"
                                              ButtonBackground="#eeeeee"
                                              ImageSource="/Image/tick.png">
                             <view:SideMenuButton.ToolTip>
