@@ -63,7 +63,7 @@ namespace DormitoryGUI.View
             
             var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
 
-            if ((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] == HttpStatusCode.Created)
             {
                 MessageBox.Show("항목 추가 완료");
             }
@@ -134,14 +134,13 @@ namespace DormitoryGUI.View
 
         private bool CheckSliderValue()
         {
-            if ((bool) GoodPoint.IsChecked && MinimumPoint.SliderValue <= MaximumPoint.SliderValue ||
-                !(bool) GoodPoint.IsChecked && MinimumPoint.SliderValue >= MaximumPoint.SliderValue)
+            if (MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
             {
                 return true;
             }
             else
             {
-                MessageBox.Show("최소 벌점은 최대 벌점을 초과할 수 없음.");
+                MessageBox.Show("최솟값은 최댓값을 초과할 수 없음");
                 return false;
             }
         }
