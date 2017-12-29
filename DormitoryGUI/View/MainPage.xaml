@@ -685,7 +685,7 @@
                         </view:SideMenuButton>
 
                         <view:SideMenuButton x:Name="PunishmentList"
-                                             Margin="0,30"
+                                             Margin="0,15"
                                              ButtonBackground="#90dfaa"
                                              ImageSource="/Image/analytics.png">
                             <view:SideMenuButton.ToolTip>
