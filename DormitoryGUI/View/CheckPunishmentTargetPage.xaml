@@ -51,15 +51,15 @@
             <Grid Grid.Column="1"
                   Background="#efefef">
                 <ListView x:Name="StudentList"
-                          Margin="13,13,13,13"
+                          Margin="13"
+                          Opacity="0.7"
                           BorderThickness="0" SizeChanged="StudentList_OnSizeChanged"
                           ItemsSource="{Binding Source={StaticResource StudentListKey}}"
                           SelectionChanged="StudentList_SelectionChanged">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn Header="학번"
-                                            DisplayMemberBinding="{Binding Path=ClassNumber}" />
-                            <GridViewColumn Header="이름"
+                            <GridViewColumn Header="학번" DisplayMemberBinding="{Binding Path=ClassNumber}"/>
+                                <GridViewColumn Header="이름"
                                             DisplayMemberBinding="{Binding Path=Name}" />
                             <GridViewColumn Header="단계"
                                             DisplayMemberBinding="{Binding Path=CurrentStep}" />
