@@ -10,9 +10,29 @@
         Width="1000"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStyle="None">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="Black"/>
+        <TextBlock Text="Title" Foreground="White" VerticalAlignment="Center" Margin="20, 0"/>
+        <Rectangle Fill="Blue" Opacity="0.01" MouseDown="Rectangle_MouseDown"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Background="{x:Null}" BorderThickness="0">
+                <TextBlock Text="_" Margin="5,0" Foreground="White"/>
+            </Button>
+            <Button Background="{x:Null}" BorderThickness="0">
+                <TextBlock Text="ㅁ" Margin="5,0" Foreground="White"/>
+            </Button>
+            <Button Background="Red" BorderThickness="0">
+                <TextBlock Text="X" Margin="5,0" Foreground="White"/>
+            </Button>
+        </StackPanel>
         <Frame x:Name="MainContainer" 
+               Grid.Row="1"
                ContentRendered="MainContainer_ContentRendered"/>
     </Grid>
 </Window>

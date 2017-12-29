@@ -44,5 +44,17 @@ namespace DormitoryGUI
         {
             MainContainer.NavigationUIVisibility = NavigationUIVisibility.Hidden;
         }
+
+        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("ㅇㅅㅇ");
+            this.DragMove();
+        }
+
+        private void Rectangle_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("T");
+            this.DragMove();
+        }
     }
 }
