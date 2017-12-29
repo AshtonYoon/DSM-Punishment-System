@@ -47,14 +47,17 @@ namespace DormitoryGUI
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("ㅇㅅㅇ");
-            this.DragMove();
+            DragMove();
         }
 
-        private void Rectangle_MouseDown_1(object sender, MouseButtonEventArgs e)
+        private void CollapseButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("T");
-            this.DragMove();
+            Visibility = Visibility.Collapsed;
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
