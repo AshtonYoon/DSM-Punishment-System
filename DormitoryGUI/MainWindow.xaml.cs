@@ -47,10 +47,10 @@ namespace DormitoryGUI
 
         private void MainContainer_Navigated(object sender, NavigationEventArgs e)
         {
-            TitleBlock.Text = (e.Content as Page).Title;
+            Title = (e.Content as Page).Title;
         }
 
-        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        /* private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
@@ -63,6 +63,6 @@ namespace DormitoryGUI
         private void CloseButton_Click(object sender, EventArgs e)
         {
             Close();
-        }
+        } */
     }
 }
