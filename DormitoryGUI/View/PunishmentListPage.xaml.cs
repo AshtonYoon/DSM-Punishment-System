@@ -63,7 +63,7 @@ namespace DormitoryGUI.View
             
             var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
 
-            if ((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] == HttpStatusCode.Created)
             {
                 MessageBox.Show("항목 추가 완료");
             }
@@ -135,7 +135,7 @@ namespace DormitoryGUI.View
         private bool CheckSliderValue()
         {
             if ((bool) GoodPoint.IsChecked && MinimumPoint.SliderValue <= MaximumPoint.SliderValue ||
-                !(bool) GoodPoint.IsChecked && MinimumPoint.SliderValue >= MaximumPoint.SliderValue)
+                (bool) BadPoint.IsChecked && MinimumPoint.SliderValue <= MaximumPoint.SliderValue)
             {
                 return true;
             }
