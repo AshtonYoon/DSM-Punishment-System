@@ -27,7 +27,7 @@
             <Button Background="{x:Null}" BorderThickness="0">
                 <TextBlock Text="ㅁ" Margin="5,0" Foreground="White"/>
             </Button>
-            <Button Background="Red" BorderThickness="0">
+            <Button Background="Red" BorderThickness="0" Click="CloseButton_Click">
                 <TextBlock Text="X" Margin="5,0" Foreground="White"/>
             </Button>
         </StackPanel>
