@@ -97,18 +97,14 @@ namespace DormitoryGUI
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
                     name: student["name"].ToString(),
-                    goodPoint: student["good_point"].Type == JTokenType.Null
-                        ? 0
-                        : int.Parse(student["good_point"].ToString()),
-                    badPoint: student["bad_point"].Type == JTokenType.Null
-                        ? 0
-                        : int.Parse(student["bad_point"].ToString()),
-                    currentStep: student["penalty_training_status"].Type == JTokenType.Null
-                        ? 0
-                        : int.Parse(student["penalty_training_status"].ToString()),
+                    goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
+                    badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
+                    currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
                     isChecked: false
                 ));
             }
+
+            SearchList.Items.Refresh();
         }
 
         private enum Step
@@ -348,11 +344,9 @@ namespace DormitoryGUI
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"] == null ? 0 : int.Parse(student["good_point"].ToString()),
-                        badPoint: student["bad_point"] == null ? 0 : int.Parse(student["bad_point"].ToString()),
-                        currentStep: student["penalty_training_status"] == null
-                            ? 0
-                            : int.Parse(student["penalty_training_status"].ToString()),
+                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
+                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
+                        currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
                         isChecked: false));
                 }
             }

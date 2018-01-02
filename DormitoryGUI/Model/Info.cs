@@ -49,13 +49,11 @@ namespace DormitoryGUI
                     webRequest.ContentType = "application/json";
                     bodyString = body.ToString();
                 }
-
                 else if (body is Dictionary<string, object>)
                 {
                     webRequest.ContentType = "application/x-www-form-urlencoded";
                     bodyString = GenerateUrlEncodedBody(body as Dictionary<string, object>);
                 }
-
                 else
                 {
                     bodyString = body.ToString();
