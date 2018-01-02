@@ -31,7 +31,7 @@ namespace DormitoryGUI.View
 
         private JArray students;
 
-        public PunishmentLogPage(MainWindow mainWindow, string id, string name, string classNumber, int goodPoint, int badPoint, int currentStep)
+        public PunishmentLogPage(MainWindow mainWindow, string id, string name, string classNumber, int goodPoint, int badPoint, string currentStep)
         {
             InitializeComponent();
 
@@ -61,7 +61,7 @@ namespace DormitoryGUI.View
                     name: student["name"].ToString(),
                     goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
                     badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                    currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
+                    currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
                     isChecked: false));
             }
 
@@ -159,8 +159,6 @@ namespace DormitoryGUI.View
                     student["good_point"].ToString().Contains(command) ||
                     student["bad_point"].ToString().Contains(command))
                 {
-                    string status = student["penalty_training_status"].ToString();
-
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
@@ -168,7 +166,7 @@ namespace DormitoryGUI.View
                         isChecked: false,
                         goodPoint: int.Parse(student["good_point"].ToString()),
                         badPoint: int.Parse(student["bad_point"].ToString()),
-                        currentStep: status == "null" ? 0 : int.Parse(status)));
+                        currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()))));
                 }
             }
         }

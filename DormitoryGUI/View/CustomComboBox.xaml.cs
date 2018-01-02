@@ -76,8 +76,8 @@ namespace DormitoryGUI.View
                         punishmentList.Add(new PunishmentListViewModel(
                         id: rule["id"].ToString(),
                         name: rule["name"].ToString(),
-                        minPoint: int.Parse(rule["min_point"].ToString()),
-                        maxPoint: int.Parse(rule["max_point"].ToString())));
+                        minPoint: (int) rule["min_point"],
+                        maxPoint: (int) rule["max_point"]));
                     }
                 }
 
@@ -88,8 +88,8 @@ namespace DormitoryGUI.View
                         punishmentList.Add(new PunishmentListViewModel(
                         id: rule["id"].ToString(),
                         name: rule["name"].ToString(),
-                        minPoint: int.Parse(rule["min_point"].ToString()),
-                        maxPoint: int.Parse(rule["max_point"].ToString())));
+                        minPoint: (int) rule["min_point"],
+                        maxPoint: (int) rule["max_point"]));
                     }
                 }
             }

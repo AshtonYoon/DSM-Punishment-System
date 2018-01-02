@@ -28,6 +28,8 @@ namespace DormitoryGUI.View
 
         private readonly MainWindow mainWindow;
 
+        private string filter = "전체";
+
         public CheckPunishmentTargetPage(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -41,7 +43,6 @@ namespace DormitoryGUI.View
             Update();
 
             this.mainWindow = mainWindow;
-            
         }
 
         public void Update()
@@ -57,15 +58,25 @@ namespace DormitoryGUI.View
 
             foreach (JObject student in studentList)
             {
-                listviewCollection.Add(new ViewModel.StudentListViewModel(
-                    id: student["id"].ToString(),
-                    classNumber: student["number"].ToString(),
-                    name: student["name"].ToString(),
-                    goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
-                    badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                    currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
-                    isChecked: false
-                ));
+                int currentStep = student["penalty_training_status"].Type == JTokenType.Null ? 0 : (int) student["penalty_training_status"];
+
+                if (filter != "전체" && Info.ParseStatus(currentStep).Equals(filter))
+                {
+                    continue;
+                }
+
+                if (currentStep % 2 == 1)
+                {
+                    listviewCollection.Add(new ViewModel.StudentListViewModel(
+                        id: student["id"].ToString(),
+                        classNumber: student["number"].ToString(),
+                        name: student["name"].ToString(),
+                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
+                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
+                        currentStep: Info.ParseStatus(currentStep),
+                        isChecked: false
+                    ));
+                }
             }
         }
 
@@ -90,6 +101,12 @@ namespace DormitoryGUI.View
 
             foreach (var element in gridView.Columns)
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            filter = (sender as RadioButton).Content.ToString();
+            Update();
         }
     }
 }

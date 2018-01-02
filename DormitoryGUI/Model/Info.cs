@@ -101,5 +101,22 @@ namespace DormitoryGUI
 
             return queryBuilder.ToString().Substring(0, queryBuilder.ToString().Length - 1);
         }
+
+        public static string ParseStatus(int status)
+        {
+            switch(status % 2 + status / 2)
+            {
+                case 0:
+                    return "";
+                case 1:
+                    return "1단계";
+                case 2:
+                    return "2단계";
+                case 3:
+                    return "3단계";
+                default:
+                    return "엥";
+            }
+        }
     }
 }
