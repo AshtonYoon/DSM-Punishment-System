@@ -87,3 +87,4 @@ E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.Properties.Resourc
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache

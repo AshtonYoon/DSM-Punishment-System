@@ -104,7 +104,7 @@ namespace DormitoryGUI
                 ));
             }
 
-            SearchList.Items.Refresh();
+            SearchList.Items.Refresh(); 
         }
 
         private enum Step
