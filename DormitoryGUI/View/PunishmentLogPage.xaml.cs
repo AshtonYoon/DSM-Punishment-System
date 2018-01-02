@@ -137,12 +137,12 @@ namespace DormitoryGUI.View
                 JObject log = (JObject) logs[i];
 
                 bool isGood = int.Parse(log["point"].ToString()) > 0;
-
+                int point = (int) log["point"];
                 Timeline.Children.Add(new TimelineBlock(
                     isGood: isGood,
                     createTime: DateTime.Parse(log["time"].ToString()).ToLongDateString()
                                 + " " + DateTime.Parse(log["time"].ToString()).ToLongTimeString(),
-                    pointValue: log["point"].ToString(),
+                    pointValue: point > 0 ? point.ToString() : (-1 * point).ToString(),
                     pointCause: log["reason"].ToString()));
             }
         }
