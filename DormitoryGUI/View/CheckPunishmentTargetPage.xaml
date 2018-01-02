@@ -427,24 +427,24 @@
             <StackPanel
                 VerticalAlignment="Center"
                 Orientation="Vertical">
-                <CheckBox
-                    Content="1단계 대상자 조회" Height="35">
-                    <CheckBox.LayoutTransform>
-                        <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
-                    </CheckBox.LayoutTransform>
-                </CheckBox>
-                <CheckBox
-                    Content="2단계 대상자 조회" Height="35">
-                    <CheckBox.LayoutTransform>
-                        <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
-                    </CheckBox.LayoutTransform>
-                </CheckBox>
-                <CheckBox
-                    Content="3단계 대상자 조회" Height="35">
-                    <CheckBox.LayoutTransform>
-                        <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
-                    </CheckBox.LayoutTransform>
-                </CheckBox>
+                <RadioButton
+                    Content="1단계 대상자 조회" Height="35" GroupName="Traget">
+                    <RadioButton.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                    </RadioButton.LayoutTransform>
+                </RadioButton>
+                <RadioButton
+                    Content="2단계 대상자 조회" Height="35" GroupName="Traget">
+                    <RadioButton.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                    </RadioButton.LayoutTransform>
+                </RadioButton>
+                <RadioButton
+                    Content="3단계 대상자 조회" Height="35" GroupName="Traget">
+                    <RadioButton.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                    </RadioButton.LayoutTransform>
+                </RadioButton>
             </StackPanel>
         </Grid>
     </Grid>
