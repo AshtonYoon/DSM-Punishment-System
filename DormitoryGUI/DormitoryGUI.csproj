@@ -235,9 +235,6 @@
     <Resource Include="Image\line-illustration.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\wallpaper.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2%28x86 및 x64%29</ProductName>
@@ -248,6 +245,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\wallpaper.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

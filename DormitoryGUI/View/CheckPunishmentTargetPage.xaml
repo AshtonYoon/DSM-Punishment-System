@@ -430,25 +430,25 @@
                 <RadioButton
                     Checked="RadioButton_Checked" Content="전체" Height="35" IsChecked="True" GroupName="Target">
                     <RadioButton.LayoutTransform>
-                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                        <ScaleTransform ScaleX="1.25" ScaleY="1.25"></ScaleTransform>
                     </RadioButton.LayoutTransform>
                 </RadioButton>
                 <RadioButton
                     Checked="RadioButton_Checked" Content="1단계" Height="35" GroupName="Target">
                     <RadioButton.LayoutTransform>
-                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                        <ScaleTransform ScaleX="1.25" ScaleY="1.25"></ScaleTransform>
                     </RadioButton.LayoutTransform>
                 </RadioButton>
                 <RadioButton x:Name="SecondTarget"
                     Checked="RadioButton_Checked" Content="2단계" Height="35" GroupName="Target">
                     <RadioButton.LayoutTransform>
-                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                        <ScaleTransform ScaleX="1.25" ScaleY="1.25"></ScaleTransform>
                     </RadioButton.LayoutTransform>
                 </RadioButton>
                 <RadioButton
                     Checked="RadioButton_Checked" Content="3단계" Height="35" GroupName="Target">
                     <RadioButton.LayoutTransform>
-                        <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
+                        <ScaleTransform ScaleX="1.25" ScaleY="1.25"></ScaleTransform>
                     </RadioButton.LayoutTransform>
                 </RadioButton>
 
