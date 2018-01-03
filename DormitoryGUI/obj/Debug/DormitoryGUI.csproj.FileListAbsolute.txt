@@ -56,6 +56,7 @@ E:\Develop\Project\DMS_C#\DormitoryGUI\bin\Debug\SciChart.Wpf.UI.Transitionz.dll
 E:\Develop\Project\DMS_C#\DormitoryGUI\bin\Debug\Newtonsoft.Json.xml
 E:\Develop\Project\DMS_C#\DormitoryGUI\bin\Debug\NPOI.xml
 E:\Develop\Project\DMS_C#\DormitoryGUI\bin\Debug\SciChart.Wpf.UI.Transitionz.xml
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\LoginPage.baml
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.g.cs
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CustomComboBox.g.cs
