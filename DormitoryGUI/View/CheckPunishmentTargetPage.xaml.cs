@@ -105,7 +105,7 @@ namespace DormitoryGUI.View
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            filter = (sender as RadioButton).Content.ToString();
+            filter = ((RadioButton)sender).Content.ToString();
             Update();
         }
     }
