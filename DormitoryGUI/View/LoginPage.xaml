@@ -8,6 +8,50 @@
       d:DesignWidth="1920"
       d:DesignHeight="1080"
       Title="로그인">
+    <Page.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}"
+                    x:Name="Bd" BorderBrush="White"
+                    BorderThickness="2" CornerRadius="35">
+                <ScrollViewer x:Name="PART_ContentHost" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                            TargetName="Bd" />
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100" />
+                    <Setter Property="Padding" Value="55,10,0,0" />
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="PasswordBoxBaseControlTemplate" TargetType="{x:Type PasswordBox}">
+            <Border Background="{TemplateBinding Background}"
+                    x:Name="Bd" BorderBrush="White"
+                    BorderThickness="2" CornerRadius="35">
+                <ScrollViewer x:Name="PART_ContentHost" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                            TargetName="Bd" />
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100" />
+                    <Setter Property="Padding" Value="55,10,0,0" />
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Page.Resources>
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -29,42 +73,60 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <StackPanel Grid.Column="1"
-                    VerticalAlignment="Center">
-            <Label Content="ID"
-                   Foreground="White" />
-            <TextBox x:Name="ID"
-                     CaretBrush="White"
-                     Foreground="White"
-                     Background="Transparent"
-                     BorderBrush="{x:Static SystemColors.ControlLightBrush}" 
-                     Text="unko"/>
-            <Label Content="PW"
-                   Foreground="White" />
-            <PasswordBox x:Name="Password"
+        <Grid
+            Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="/Image/logo.png"
+                   Height="130" />
+            <StackPanel Grid.Row="1"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center">
+                <TextBox x:Name="ID"
+                         Margin="0,30,0,60"
+                         Padding="55,10,0,10"
+                         Template="{StaticResource TextBoxBaseControlTemplate}"
                          CaretBrush="White"
-                         KeyUp="Password_KeyUp"
                          Foreground="White"
                          Background="Transparent"
-                         BorderBrush="{x:Static SystemColors.ControlLightBrush}" 
-                         Password="unko"/>
-            <Label Content=""
-                   Foreground="#555555" />
-            <Button x:Name="LoginButton"
-                    Content="로그인"
+                         BorderBrush="{x:Static SystemColors.ControlLightBrush}"
+                         Text="unko"
+                         FontSize="40" />
+
+                <PasswordBox x:Name="Password"                              
+                             Padding="45,15,0,15"
+                             Template="{StaticResource PasswordBoxBaseControlTemplate}"
+                             CaretBrush="White"
+                             KeyUp="Password_KeyUp"
+                             Foreground="White"
+                             Background="Transparent"
+                             BorderBrush="{x:Static SystemColors.ControlLightBrush}"
+                             FontSize="30"
+                             Password="unko" />
+            </StackPanel>
+            <Button Grid.Row="2"
+                    x:Name="LoginButton"
                     Click="LoginButton_Click"
                     Foreground="White"
-                    Background="Transparent"
-                    Cursor="Hand">
+                    Width="100"
+                    Height="100"
+                    Cursor="Hand"
+                    VerticalAlignment="Top">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Image/send.png" />
+                </Button.Background>
                 <Button.Resources>
-                    <Style TargetType="Button">
+                    <Style TargetType="{x:Type Button}">
                         <Setter Property="OverridesDefaultStyle"
                                 Value="True" />
                         <Setter Property="Template">
                             <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Name="border"
-                                            BorderThickness="1"
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border"
+                                            BorderThickness="0"
                                             Padding="5"
                                             BorderBrush="{x:Static SystemColors.ControlLightBrush}"
                                             Background="{TemplateBinding Background}">
@@ -76,29 +138,70 @@
                         </Setter>
                     </Style>
                 </Button.Resources>
-                <Button.Triggers>
-                    <EventTrigger RoutedEvent="Button.MouseEnter">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation From="Transparent"
-                                                To="#66FFFFFF"
-                                                Duration="0:0:0.15"
-                                                Storyboard.TargetProperty="Background.Color" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                    <EventTrigger RoutedEvent="Button.MouseLeave">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ColorAnimation From="#66FFFFFF"
-                                                To="Transparent"
-                                                Duration="0:0:0.15"
-                                                Storyboard.TargetProperty="Background.Color" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Button.Triggers>
             </Button>
-        </StackPanel>
+        </Grid>
+        <!--        <StackPanel Grid.Column="1"          -->
+        <!--                    Grid.Row="0"-->
+        <!--                    VerticalAlignment="Center" Height="1060" >-->
+        <!--            <Image Source="/Image/logo.png"-->
+        <!--                   Height="150"-->
+        <!--                   Margin="0,130,0,150"/>-->
+        <!--            <TextBox x:Name="ID"-->
+        <!--                     Height="80"-->
+        <!--                     Margin="0,30,0,60"-->
+        <!--                     Template="{StaticResource TextBoxBaseControlTemplate}"-->
+        <!--                     CaretBrush="White"-->
+        <!--                     Foreground="White"-->
+        <!--                     Background="Transparent"                    -->
+        <!--                     BorderBrush="{x:Static SystemColors.ControlLightBrush}" -->
+        <!--                     Text="unko"-->
+        <!--                     FontSize="40"-->
+        <!--                     />-->
+        <!---->
+        <!--            <PasswordBox x:Name="Password"-->
+        <!--                         Height="80"-->
+        <!--                         Template="{StaticResource PasswordBoxBaseControlTemplate}"    -->
+        <!--                         CaretBrush="White"-->
+        <!--                         KeyUp="Password_KeyUp"-->
+        <!--                         Foreground="White"-->
+        <!--                         Background="Transparent"-->
+        <!--                         BorderBrush="{x:Static SystemColors.ControlLightBrush}" -->
+        <!--                         FontSize="40"-->
+        <!--                         Password="unko"/>-->
+        <!--            <Label Content=""-->
+        <!--                   Foreground="#555555" />-->
+        <!--            <Button x:Name="LoginButton"                    -->
+        <!--                    Click="LoginButton_Click"-->
+        <!--                    Foreground="White"               -->
+        <!--                    Width="100"-->
+        <!--                    Height="100"-->
+        <!--                    Cursor="Hand"-->
+        <!--                    Margin="0,100,0,0">-->
+        <!--                <Button.Background>-->
+        <!--                    <ImageBrush ImageSource="/Image/send.png"></ImageBrush>-->
+        <!--                </Button.Background>-->
+        <!--                <Button.Resources>-->
+        <!--                    <Style TargetType="{x:Type Button}">-->
+        <!--                        <Setter Property="OverridesDefaultStyle"-->
+        <!--                                Value="True" />-->
+        <!--                        <Setter Property="Template">-->
+        <!--                            <Setter.Value>-->
+        <!--                                <ControlTemplate TargetType="{x:Type Button}">-->
+        <!--                                    <Border x:Name="border"-->
+        <!--                                            BorderThickness="0"-->
+        <!--                                            Padding="5"-->
+        <!--                                            BorderBrush="{x:Static SystemColors.ControlLightBrush}"-->
+        <!--                                            Background="{TemplateBinding Background}">-->
+        <!--                                        <ContentPresenter HorizontalAlignment="Center"-->
+        <!--                                                          VerticalAlignment="Center" />-->
+        <!--                                    </Border>-->
+        <!--                                </ControlTemplate>-->
+        <!--                            </Setter.Value>-->
+        <!--                        </Setter>-->
+        <!--                    </Style>-->
+        <!--                </Button.Resources>-->
+        <!--            </Button>-->
+        <!---->
+        <!--        </StackPanel>-->
     </Grid>
 </Page>
