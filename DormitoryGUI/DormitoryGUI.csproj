@@ -252,5 +252,11 @@
   <ItemGroup>
     <Resource Include="Image\wallpaper.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\send.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
