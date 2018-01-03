@@ -6,8 +6,8 @@
       xmlns:local="clr-namespace:DormitoryGUI.View"
       xmlns:viewmodel="clr-namespace:DormitoryGUI.ViewModel"
       mc:Ignorable="d"
-      d:DesignHeight="600"
-      d:DesignWidth="1000"
+      d:DesignWidth="1920"
+      d:DesignHeight="1080"
       Title="상벌점 내역 관리"
       Background="White">
     <Page.Resources>

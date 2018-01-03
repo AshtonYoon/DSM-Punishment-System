@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DormitoryGUI"
         mc:Ignorable="d"
+        Width="1920"
+        Height="1080"
         Title="MainWindow" 
-        Height="600" 
-        Width="1000"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
     <Grid>
