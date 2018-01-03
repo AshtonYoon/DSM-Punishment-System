@@ -427,8 +427,8 @@
             <StackPanel
                 VerticalAlignment="Center"
                 Orientation="Vertical">
-                <RadioButton IsChecked="True"
-                    Checked="RadioButton_Checked" Content="전체" Height="35" GroupName="Target">
+                <RadioButton
+                    Checked="RadioButton_Checked" Content="전체" Height="35" IsChecked="True" GroupName="Target">
                     <RadioButton.LayoutTransform>
                         <ScaleTransform ScaleX="1.5" ScaleY="1.5"></ScaleTransform>
                     </RadioButton.LayoutTransform>
