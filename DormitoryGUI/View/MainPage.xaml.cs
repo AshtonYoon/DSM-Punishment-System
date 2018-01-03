@@ -99,7 +99,7 @@ namespace DormitoryGUI
                     name: student["name"].ToString(),
                     goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
                     badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                    currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
+                    currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
                     isChecked: false
                 ));
             }
@@ -344,9 +344,9 @@ namespace DormitoryGUI
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
-                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                        currentStep: student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()),
+                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
+                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
+                        currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : (int) student["penalty_training_status"]),
                         isChecked: false));
                 }
             }
@@ -547,7 +547,7 @@ namespace DormitoryGUI
 
                 foreach (StudentListViewModel item in items)
                 {
-                    var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{item.ID}", "", "");
+                    var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}?id={item.ID}", Info.mainPage.AccessToken, "");
 
                     if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
                     {
@@ -568,9 +568,9 @@ namespace DormitoryGUI
                             {
                                 goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
                             }
-                            else if ((int) log["point"] < 0)
+                            else
                             {
-                                badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
+                                badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], (int) log["point"] * -1);
                             }
                         }
                     }
