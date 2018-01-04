@@ -12,7 +12,7 @@
       d:DesignHeight="1080"
       Title="다벌점 교육 대상자 조회">
     
-
+ 
     <Page.Resources>
         <viewmodel:PunishmentList x:Key="PunishmentGoodListKey" />
         <viewmodel:PunishmentList x:Key="PunishmentBadListKey" />

@@ -33,8 +33,10 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.NavigatePage(new MainPage(mainWindow));
-
+            PunishmentTargetDialog dialog = new PunishmentTargetDialog();
+//            PointManageDialog dialog = new PointManageDialog();
+            dialog.ShowDialog();
+/*            
             if (!ValidateInput())
             {
                 return;
@@ -61,7 +63,7 @@ namespace DormitoryGUI
 
             MessageBox.Show(Info.mainPage.AccessToken);
 
-            mainWindow.NavigatePage(new MainPage(mainWindow));
+            mainWindow.NavigatePage(new MainPage(mainWindow));*/
         }
 
         private void Password_KeyUp(object sender, KeyEventArgs e)

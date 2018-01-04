@@ -121,6 +121,9 @@
     <Compile Include="View\PunishmentLogPage.xaml.cs">
       <DependentUpon>PunishmentLogPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PunishmentTargetDialog.xaml.cs">
+      <DependentUpon>PunishmentTargetDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PunishmentLogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PunishmentTargetDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

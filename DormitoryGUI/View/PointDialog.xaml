@@ -19,15 +19,15 @@
             <RowDefinition Height="4*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="상점" x:Name="PointType"
+        <Label Grid.Row="0" Content="상점" x:Name="PointType" FontFamily="/Font/#NanumSquareRound Bold"
                FontSize="20" Foreground="#675094" />
 
-        <local:CustomComboBox x:Name="PunishmentComboBox"
+        <local:CustomComboBox x:Name="PunishmentComboBox" FontFamily="/Font/#NanumSquareRound Bold"
                               Grid.Row="1" Padding="15,10.10,15,10" />
-        
-        <Label Grid.Row="2" FontSize="30" VerticalAlignment="Center" HorizontalContentAlignment="Right"
+
+        <Label Grid.Row="2" FontSize="30" VerticalAlignment="Center" HorizontalContentAlignment="Right" FontFamily="/Font/#NanumSquareRound Bold"
                Padding="0,0,2,0" Foreground="#898989">
-            <TextBlock Text="   점" TextDecorations="UnderLine" />
+            <TextBlock Text="   점" TextDecorations="UnderLine" FontFamily="/Font/#NanumSquareRound Bold" />
         </Label>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -35,12 +35,12 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Margin="15,10,15,10" Click="Click_OK"
+            <Button Grid.Column="0" Margin="15,10,15,10" Click="Click_OK" FontFamily="/Font/#NanumSquareRound Bold"
                     Cursor="Hand">
                 <Button.Template>
                     <ControlTemplate>
                         <Border CornerRadius="5" Background="#675094">
-                            <TextBlock Text="확인" Foreground="White"
+                            <TextBlock Text="확인" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontSize="13" />
@@ -54,7 +54,7 @@
                     <ControlTemplate>
                         <Border CornerRadius="5" Background="#675094">
                             <TextBlock Text="취소" Foreground="White"
-                                       HorizontalAlignment="Center"                                      
+                                       HorizontalAlignment="Center"   FontFamily="/Font/#NanumSquareRound Bold"                                    
                                        VerticalAlignment="Center"
                                        FontSize="13" />
                         </Border>
