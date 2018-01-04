@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewmodel="clr-namespace:DormitoryGUI.ViewModel"
-             xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DormitoryGUI.View"
              mc:Ignorable="d"
@@ -106,7 +105,7 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="Border"
                         Grid.ColumnSpan="2"
-                        CornerRadius="10"
+                        CornerRadius="15"
                         BorderThickness="1"
                         BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
                         Background="Transparent"></Border>
