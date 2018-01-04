@@ -97,9 +97,16 @@
     <Compile Include="View\CheckPunishmentTargetPage.xaml.cs">
       <DependentUpon>CheckPunishmentTargetPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CustomComboBox.xaml.cs">
-      <DependentUpon>CustomComboBox.xaml</DependentUpon>
+<<<<<<< HEAD
+    <Compile Include="View\CustomComboBox.xaml.cs" />
+=======
+    <Compile Include="View\PointComboBox.xaml.cs">
+      <DependentUpon>PointComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PointDialog.xaml.cs">
+      <DependentUpon>PointDialog.xaml</DependentUpon>
+    </Compile>
+>>>>>>> cfffc19315a9d65f1c635a66d378acb6471f64c4
     <Compile Include="View\CustomSlider.xaml.cs">
       <DependentUpon>CustomSlider.xaml</DependentUpon>
     </Compile>
@@ -108,6 +115,15 @@
     </Compile>
     <Compile Include="View\PermissionManagementPage.xaml.cs">
       <DependentUpon>PermissionManagementPage.xaml</DependentUpon>
+    </Compile>
+<<<<<<< HEAD
+    <Compile Include="View\PointDialog.xaml.cs">
+      <DependentUpon>PointDialog.xaml</DependentUpon>
+    </Compile>
+=======
+>>>>>>> cfffc19315a9d65f1c635a66d378acb6471f64c4
+    <Compile Include="View\PointManageDialog.xaml.cs">
+      <DependentUpon>PointManageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PunishmentListPage.xaml.cs">
       <DependentUpon>PunishmentListPage.xaml</DependentUpon>
@@ -125,10 +141,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CustomComboBox.xaml">
+<<<<<<< HEAD
+=======
+    <Page Include="View\PointComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\PointDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+>>>>>>> cfffc19315a9d65f1c635a66d378acb6471f64c4
     <Page Include="View\CustomSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,6 +191,24 @@
     <Page Include="View\PermissionManagementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+<<<<<<< HEAD
+    <Page Include="View\CustomComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PointDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PointManageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+=======
+    <Page Include="View\PointManageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+>>>>>>> cfffc19315a9d65f1c635a66d378acb6471f64c4
     </Page>
     <Page Include="View\PunishmentListPage.xaml">
       <SubType>Designer</SubType>

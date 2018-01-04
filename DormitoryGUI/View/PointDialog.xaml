@@ -39,7 +39,7 @@
                 <Button.Template>
                     <ControlTemplate>
                         <Border CornerRadius="5" Background="#675094">
-                            <TextBlock Text="확인" Foreground="White"
+                            <TextBlock Text="확인" Foreground="White"                                       
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontSize="13" />
@@ -53,8 +53,8 @@
                     <ControlTemplate>
                         <Border CornerRadius="5" Background="#675094">
                             <TextBlock Text="취소" Foreground="White"
-                                       HorizontalAlignment="Center"                                      
-                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"                                
+                                       VerticalAlignment="Center"                                       
                                        FontSize="13" />
                         </Border>
                     </ControlTemplate>

@@ -33,30 +33,62 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
 //            mainWindow.NavigatePage(new MainPage(mainWindow));
-                CustomDialog cd = new CustomDialog(3);
+//                CustomDialog cd = new CustomDialog(3);
 //                        PointManageDialog cd = new PointManageDialog();
-                        cd.ShowDialog();
-            //                        var requestDict = new Dictionary<string, object>
-            //                        {
-            //                            { "id", ID.Text },
-            //                            { "pw", Password.Password }
-            //                        };
+//                        cd.ShowDialog();
+                                    var requestDict = new Dictionary<string, object>
+                                    {
+                                        { "id", ID.Text },
+                                        { "pw", Password.Password }
+                                    };
 
-            //                        var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, "", requestDict);
+                                    var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, "", requestDict);
 
-            //                        if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
-            //                        {
-            //                            MessageBox.Show("로그인 실패");
-            //                            return;
-            //                        }
+                                    if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+                                    {
+                                        MessageBox.Show("로그인 실패");
+                                        return;
+                                    }
 
-            //                        JObject responseJSON = JObject.Parse(responseDict["body"].ToString());
+                                    JObject responseJSON = JObject.Parse(responseDict["body"].ToString());
 
-            //                        Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
-            //                        Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
+                                    Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
+                                    Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
 
-            //                        mainWindow.NavigatePage(new MainPage(mainWindow));
+                                    mainWindow.NavigatePage(new MainPage(mainWindow));
+=======
+            mainWindow.NavigatePage(new MainPage(mainWindow));
+
+            if (!ValidateInput())
+            {
+                return;
+            }
+
+            var requestDict = new Dictionary<string, object>
+            {
+                 { "id", ID.Text },
+                 { "pw", Password.Password }
+            };
+
+            var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, null, requestDict);
+
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+            {
+                MessageBox.Show("로그인 실패");
+                return;
+            }
+
+            JObject responseJSON = JObject.Parse(responseDict["body"].ToString());
+
+            Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
+            Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
+
+            MessageBox.Show(Info.mainPage.AccessToken);
+
+            mainWindow.NavigatePage(new MainPage(mainWindow));
+>>>>>>> cfffc19315a9d65f1c635a66d378acb6471f64c4
         }
 
         private void Password_KeyUp(object sender, KeyEventArgs e)
@@ -65,6 +97,11 @@ namespace DormitoryGUI
             {
                 LoginButton_Click(sender, null);
             }
-        }        
+        }
+        
+        private bool ValidateInput()
+        {
+            return string.IsNullOrWhiteSpace(ID.Text) && string.IsNullOrWhiteSpace(Password.Password);
+        }
     }
 }

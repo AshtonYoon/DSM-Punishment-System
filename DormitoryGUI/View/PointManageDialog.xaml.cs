@@ -33,5 +33,20 @@ namespace DormitoryGUI.View
         {
 
         }
+
+        private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Click_OK(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Click_Cancel(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

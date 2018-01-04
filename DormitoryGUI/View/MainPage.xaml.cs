@@ -59,6 +59,7 @@ namespace DormitoryGUI
 
             if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
             {
+                MessageBox.Show("학생 목록 조회 실패");
                 return;
             }
 
@@ -94,7 +95,7 @@ namespace DormitoryGUI
             {
                 HideAnimation(FirstGrid);
                 ShowAnimation(SecondGrid);
-            
+               
                 if ((bool) Good.IsChecked)
                     PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.GOOD;
 
