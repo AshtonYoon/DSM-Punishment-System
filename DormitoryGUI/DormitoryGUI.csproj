@@ -103,6 +103,9 @@
     <Compile Include="View\CustomSlider.xaml.cs">
       <DependentUpon>CustomSlider.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CustomSwitch.xaml.cs">
+      <DependentUpon>CustomSwitch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PermissionManagementPage.xaml.cs">
       <DependentUpon>PermissionManagementPage.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CustomSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomSwitch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,6 +204,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Font\NanumSquareB.ttf" />
+    <Resource Include="Font\NanumSquareEB.ttf" />
+    <Resource Include="Font\NanumSquareL.ttf" />
+    <Resource Include="Font\NanumSquareR.ttf" />
+    <Resource Include="Font\NanumSquareRoundB.ttf" />
+    <Resource Include="Font\NanumSquareRoundEB.ttf" />
+    <Resource Include="Font\NanumSquareRoundL.ttf" />
+    <Resource Include="Font\NanumSquareRoundR.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -254,9 +269,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\logo.png" />
+    <Resource Include="Image\send.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\send.png" />
+    <Resource Include="Image\educate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

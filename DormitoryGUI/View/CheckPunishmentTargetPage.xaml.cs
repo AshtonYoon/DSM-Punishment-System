@@ -73,8 +73,7 @@ namespace DormitoryGUI.View
                         name: student["name"].ToString(),
                         goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
                         badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
-                        currentStep: Info.ParseStatus(currentStep),
-                        isChecked: false
+                        currentStep: Info.ParseStatus(currentStep)
                     ));
                 }
             }

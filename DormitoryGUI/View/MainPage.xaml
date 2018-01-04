@@ -12,18 +12,6 @@
       d:DesignHeight="1080"
       Title="메인">
     <Page.Resources>
-        <ContextMenu x:Key="ListviewItemControlMenu">
-            <MenuItem Header="삭제"
-                      Click="MenuItem_Click" />
-            <MenuItem x:Name="SelectAllCommand"
-                      Header="전체 선택"
-                      Click="SelectAllCommand_Click" />
-            <MenuItem x:Name="DeselectAllCommand"
-                      Header="전체 해제"
-                      Click="DeselectAllCommand_Click" />
-            <Separator />
-            <MenuItem Header="선택 영역 반전" />
-        </ContextMenu>
         <viewmodel:StudentList x:Key="StudentListKey" />
         <viewmodel:StudentList x:Key="ResultListKey" />
         <!--Control colors.-->
@@ -82,6 +70,131 @@
                 </GradientStopCollection>
             </LinearGradientBrush.GradientStops>
         </LinearGradientBrush>
+        <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="White"
+                                BorderBrush="White"
+                                BorderThickness="0"
+                                CornerRadius="10"
+                                Height="30" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="DarkGray"
+                                BorderBrush="DarkGray"
+                                BorderThickness="0"
+                                CornerRadius="10"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <ControlTemplate x:Key="HorizontalScrollBarStyle" TargetType="{x:Type ScrollBar}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="18" />
+                    <ColumnDefinition Width="0.00001*" />
+                    <ColumnDefinition MaxWidth="18" />
+                </Grid.ColumnDefinitions>
+                
+                <Border Grid.ColumnSpan="3"
+                        CornerRadius="10"
+                        Background="DarkGray" />
+
+                <RepeatButton Grid.Column="0"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Width="18"
+                              Command="ScrollBar.LineLeftCommand"
+                              Content="M 4 0 L 4 8 L 0 4 Z" />  
+
+                <Track x:Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}"
+                                      Command="ScrollBar.PageLeftCommand" />
+                    </Track.DecreaseRepeatButton>
+                    
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource ScrollBarThumbStyle}" 
+                               Margin="0,1,0,1" />
+                    </Track.Thumb>
+                    
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}" 
+                                      Command="ScrollBar.PageRightCommand" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                
+                <RepeatButton Grid.Column="2"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Width="18" 
+                              Command="ScrollBar.LineRightCommand"
+                              Content="M 0 0 L 4 4 L 0 8 Z" />
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="VerticalScrollBarStyle" TargetType="{x:Type ScrollBar}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MaxHeight="18" />
+                    <RowDefinition Height="0.00001*" />
+                    <RowDefinition Height="18" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.RowSpan="3"
+                        CornerRadius="10"
+                        Background="DarkGray" />
+
+                <RepeatButton Grid.Row="0"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Height="18"
+                              Command="ScrollBar.LineUpCommand"
+                              Content="M 4 0 L 4 8 L 0 4 Z" />
+
+                
+
+                <RepeatButton Grid.Row="3"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Height="18" 
+                              Command="ScrollBar.LineDownCommand"
+                              Content="M 0 0 L 4 4 L 0 8 Z" />
+            </Grid>
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Style.Triggers>
+                <Trigger Property="Orientation"
+                         Value="Horizontal">
+                    <Setter Property="Width" Value="Auto" />
+                    <Setter Property="Height" Value="18" />
+                    <Setter Property="Template" Value="{StaticResource HorizontalScrollBarStyle}" />
+                </Trigger>
+                <Trigger Property="Orientation"
+                         Value="Vertical">
+                    <Setter Property="Width" Value="18" />
+                    <Setter Property="Height" Value="Auto" />
+                    <Setter Property="Template" Value="{StaticResource VerticalScrollBarStyle}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="{x:Static GridView.GridViewScrollViewerStyleKey}"
                TargetType="ScrollViewer">
             <Setter Property="Template">
@@ -101,7 +214,7 @@
                                               HorizontalScrollBarVisibility="Hidden"
                                               VerticalScrollBarVisibility="Hidden"
                                               Focusable="false">
-                                    <GridViewHeaderRowPresenter Margin="2,0,2,0"
+                                    <GridViewHeaderRowPresenter Margin="10"
                                                                 Columns="{Binding Path=TemplatedParent.View.Columns,
                                                                     RelativeSource={RelativeSource TemplatedParent}}"
                                                                 ColumnHeaderContainerStyle="{Binding
@@ -132,7 +245,6 @@
                                                         CanVerticallyScroll="False" />
                             </DockPanel>
                             <ScrollBar Name="PART_HorizontalScrollBar"
-                                       Background="Transparent"
                                        Orientation="Horizontal"
                                        Grid.Row="1"
                                        Maximum="{TemplateBinding ScrollableWidth}"
@@ -140,12 +252,14 @@
                                        Value="{TemplateBinding HorizontalOffset}"
                                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
                             <ScrollBar Name="PART_VerticalScrollBar"
-                                       Background="Transparent"
+                                       Orientation="Vertical"
                                        Grid.Column="1"
+                                       Margin="15"
                                        Maximum="{TemplateBinding ScrollableHeight}"
                                        ViewportSize="{TemplateBinding ViewportHeight}"
                                        Value="{TemplateBinding VerticalOffset}"
-                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}">
+                            </ScrollBar>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -304,8 +418,7 @@
                                 <SolidColorBrush Color="{StaticResource ControlLightColor}" />
                             </Border.Background>
                             <ScrollViewer
-                                Style="{DynamicResource
-                        {x:Static GridView.GridViewScrollViewerStyleKey}}">
+                                Style="{DynamicResource {x:Static GridView.GridViewScrollViewerStyleKey}}">
                                 <ItemsPresenter />
                             </ScrollViewer>
                         </Border>
@@ -321,6 +434,7 @@
                                         Property="Background">
                                     <Setter.Value>
                                         <SolidColorBrush Color="{DynamicResource DisabledBorderLightColor}" />
+
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -329,14 +443,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="{x:Type ListViewItem}"
-               TargetType="ListViewItem">
-            <Setter Property="SnapsToDevicePixels"
-                    Value="true" />
-            <Setter Property="OverridesDefaultStyle"
-                    Value="true" />
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Center" />
+        <Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -378,32 +489,371 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <ControlTemplate x:Key="ComboBoxToggleButton"
+                         TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                                              Storyboard.TargetName="Border">
+                                    <EasingColorKeyFrame KeyTime="00:00:00.15"
+                                                         Value="#22FFFFFF" />
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed" />
+                        <VisualState x:Name="Disabled"></VisualState>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckStates">
+                        <VisualState x:Name="Checked">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                                              Storyboard.TargetName="Border">
+                                    <EasingColorKeyFrame KeyTime="00:00:00.15"
+                                                         Value="#55FFFFFF" />
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked" />
+                        <VisualState x:Name="Indeterminate" />
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Border x:Name="Border"
+                        Grid.ColumnSpan="2"
+                        CornerRadius="10"
+                        BorderThickness="0"
+                        BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                        Background="Transparent"></Border>
+                <Border Grid.Column="0"
+                        CornerRadius="10,0,0,10"
+                        Margin="1"
+                        Background="Transparent"></Border>
+                <Path x:Name="Arrow"
+                      Grid.Column="1"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="M 0 0 L 4 4 L 8 0 Z">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
+                    </Path.Fill>
+                </Path>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ComboBoxTextBox"
+                         TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost"
+                    Focusable="False"
+                    Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ComboBox}"
+               TargetType="{x:Type ComboBox}">
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="SnapsToDevicePixels"
+                    Value="true" />
+            <Setter Property="OverridesDefaultStyle"
+                    Value="true" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                    Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+                    Value="Auto" />
+            <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="true" />
+            <Setter Property="MinWidth"
+                    Value="120" />
+            <Setter Property="MinHeight"
+                    Value="20" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver" />
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_EditableTextBox"
+                                                                          Storyboard.TargetProperty="(TextElement.Foreground).
+                      (SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0"
+                                                                     Value="{StaticResource DisabledForegroundColor}" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="EditStates">
+                                    <VisualState x:Name="Editable">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                           Storyboard.TargetName="PART_EditableTextBox">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{x:Static Visibility.Visible}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                           Storyboard.TargetName="ContentSite">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{x:Static Visibility.Hidden}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Uneditable" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ToggleButton x:Name="ToggleButton"
+                                          Template="{StaticResource ComboBoxToggleButton}"
+                                          Grid.Column="2"
+                                          Focusable="false"
+                                          ClickMode="Press"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <ContentPresenter x:Name="ContentSite"
+                                              IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="3, 3, 40, 3"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Right"></ContentPresenter>
+                            <TextBox x:Name="PART_EditableTextBox"
+                                     Style="{x:Null}"
+                                     Template="{StaticResource ComboBoxTextBox}"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Bottom"
+                                     Margin="0, 0, 0, 0"
+                                     Focusable="True"
+                                     Background="Transparent"
+                                     Visibility="Hidden"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}" />
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Slide">
+                                <Grid x:Name="DropDown"
+                                      SnapsToDevicePixels="True"
+                                      MinWidth="{TemplateBinding ActualWidth}"
+                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder"
+                                            BorderThickness="1"
+                                            CornerRadius="20">
+                                        <Border.BorderBrush>
+                                            <SolidColorBrush Color="#555" />
+                                        </Border.BorderBrush>
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
+                                        </Border.Background>
+                                    </Border>
+                                    <ScrollViewer Margin="4,6,4,6"
+                                                  SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems"
+                                     Value="false">
+                                <Setter TargetName="DropDownBorder"
+                                        Property="MinHeight"
+                                        Value="95" />
+                            </Trigger>
+                            <Trigger Property="IsGrouping"
+                                     Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll"
+                                        Value="false" />
+                            </Trigger>
+                            <Trigger SourceName="Popup"
+                                     Property="AllowsTransparency"
+                                     Value="true">
+                                <Setter TargetName="DropDownBorder"
+                                        Property="CornerRadius"
+                                        Value="4" />
+                                <Setter TargetName="DropDownBorder"
+                                        Property="Margin"
+                                        Value="0,2,0,0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ComboBoxItem}"
+               TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="Foreground"
+                    Value="#555" />
+            <Setter Property="SnapsToDevicePixels"
+                    Value="true" />
+            <Setter Property="OverridesDefaultStyle"
+                    Value="true" />
+            <Setter Property="HorizontalContentAlignment" 
+                    Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border x:Name="Border"
+                                Margin="0, 5"
+                                SnapsToDevicePixels="true"
+                                Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected" />
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                          Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="White" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedUnfocused">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                          Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="White" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RoundedCheckBoxStyle" TargetType="{x:Type CheckBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="Border"
+                                        Width="20"
+                                        Height="20"
+                                        CornerRadius="2"
+                                        BorderThickness="1">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="{DynamicResource BorderLightColor}"
+                                    Offset="0.0" />
+                                                    <GradientStop Color="{DynamicResource BorderDarkColor}"
+                                    Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="{DynamicResource ControlLightColor}" />
+                                                    <GradientStop Color="{DynamicResource ControlMediumColor}"
+                                    Offset="1.0" />
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+
+                                    </Border.Background>
+                                    <Grid>
+                                        <Path Visibility="Collapsed"
+                                              Width="7"
+                                              Height="7"
+                                              x:Name="CheckMark"
+                                              SnapsToDevicePixels="False"
+                                              StrokeThickness="2"
+                                              Data="M 0 0 L 7 7 M 0 7 L 7 0">
+                                            <Path.Stroke>
+                                                <SolidColorBrush Color="{DynamicResource GlyphColor}" />
+                                            </Path.Stroke>
+                                        </Path>
+                                        <Path Visibility="Collapsed"
+                                              Width="7"
+                                              Height="7"
+                                              x:Name="InderminateMark"
+                                              SnapsToDevicePixels="False"
+                                              StrokeThickness="2"
+                                              Data="M 0 7 L 7 0">
+                                            <Path.Stroke>
+                                                <SolidColorBrush Color="{DynamicResource GlyphColor}" />
+                                            </Path.Stroke>
+                                        </Path>
+                                    </Grid>
+                                </Border>
+                            </BulletDecorator.Bullet>
+                        </BulletDecorator>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*" />
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
+        <Image Grid.ColumnSpan="3"
+               Source="/image/wallpaper.png"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               Stretch="Fill"
+               RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1.1"
+                                    ScaleY="1.1" />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
         <Grid Grid.Column="1"
-              Background="#333333">
+              Margin="30, 15">
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*" />
+                <RowDefinition Height="7.5*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+            <Rectangle Grid.RowSpan="2"
+                       Fill="#675094"
+                       RadiusX="9"
+                       RadiusY="9">
+            </Rectangle>
+
             <Grid Grid.Row="0">
                 <ListView x:Name="ResultList"
                           Grid.Row="1"
                           Background="#555555"
-                          Margin="10"
+                          Margin="15"
                           BorderThickness="0"
                           SizeChanged="ResultList_SizeChanged"
-                          ItemsSource="{Binding Source={StaticResource ResultListKey}}"
-                          SelectionChanged="ResultList_SelectionChanged"
-                          MouseRightButtonUp="ResultList_MouseRightButtonUp"
-                          KeyUp="ResultList_KeyUp">
+                          ItemsSource="{Binding Source={StaticResource ResultListKey}}">
+
+                    <ListView.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="9" />
+                        </Style>
+                    </ListView.Resources>
+
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn>
+                            <!--<GridViewColumn>
                                 <GridViewColumn.Header>
                                     <CheckBox VerticalAlignment="Center"
                                               BorderThickness="1.2"
@@ -420,32 +870,50 @@
                                                   IsChecked="{Binding IsChecked}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
+                            </GridViewColumn>-->
+                            <GridViewColumn Header="학번">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=ClassNumber}" 
+                                                   FontSize="15"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="학번"
-                                            DisplayMemberBinding="{Binding Path=ClassNumber}" />
-                            <GridViewColumn Header="이름"
-                                            DisplayMemberBinding="{Binding Path=Name}" />
+
+                            <GridViewColumn Header="이름">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Name}" 
+                                                   FontSize="15"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
             <Grid x:Name="PointProcedure"
                   Grid.Row="1"
-                  Background="#333333"
-                  Margin="10, 0, 10, 5">
+                  Background="#695094"
+                  Margin="20, 0, 20, 10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*" />
-                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="67" />
+                    <ColumnDefinition Width="83.4"/>
                 </Grid.ColumnDefinitions>
-                <Grid x:Name="FirstGrid"
+                <view:CustomSwitch Grid.Column="0"
+                                   Width="225"
+                                   Height="75"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                <!--<Grid x:Name="FirstGrid"
                       Margin="10,0,0,0.4">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Content="유형을 선택해주세요"
-                           Foreground="White"
-                           Margin="-5, 0, 0, -2" />
                     <StackPanel x:Name="ScoreCategory"
                                 Grid.Row="1"
                                 Orientation="Horizontal"
@@ -495,137 +963,29 @@
                            Margin="0, 0, 0, -2" />
                     <view:CustomSlider x:Name="PunishmentSlider"
                                        Grid.Row="1" />
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="12*" />
-                        <RowDefinition Height="13*" />
-                    </Grid.RowDefinitions>
-                    <Button x:Name="ApplyPointBackButton"
-                            Width="21"
-                            Height="21"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            BorderBrush="White"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Click="ApplyPointBackButton_Click"
-                            Grid.Row="0" Margin="6,-1,6,2">
-                        <Grid RenderTransformOrigin="0.5,0.5"
-                              VerticalAlignment="Bottom"
-                              HorizontalAlignment="Center"
-                              Width="15"
-                              Height="15">
-                            <Rectangle Fill="#FFF4F4F5"
-                                       Height="1.364"
-                                       Width="12"
-                                       VerticalAlignment="Center"
-                                       RenderTransformOrigin="0.5,0.5" />
-                            <Rectangle Fill="#FFF4F4F5"
-                                       Height="1"
-                                       Width="9"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Right"
-                                       RenderTransformOrigin="0.5 0.5"
-                                       Margin="0,4,6,0">
-                                <Rectangle.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform />
-                                        <SkewTransform />
-                                        <RotateTransform Angle="130.386" />
-                                        <TranslateTransform />
-                                    </TransformGroup>
-                                </Rectangle.RenderTransform>
-                            </Rectangle>
-                            <Rectangle Fill="#FFF4F4F5"
-                                       Height="1"
-                                       Width="8"
-                                       VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Right"
-                                       RenderTransformOrigin="0.5 0.5"
-                                       Margin="0,0,7,4">
-                                <Rectangle.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform />
-                                        <SkewTransform />
-                                        <RotateTransform Angle="-131.977" />
-                                        <TranslateTransform />
-                                    </TransformGroup>
-                                </Rectangle.RenderTransform>
-                            </Rectangle>
-                        </Grid>
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius"
-                                        Value="12.5" />
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                    <Button x:Name="ApplyPointButton"
-                            Width="21"
-                            Height="21"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            BorderBrush="White"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Center"
-                            Click="ApplyPointButton_Click" Margin="6,1,6,1" Grid.Row="1">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius"
-                                        Value="12.5" />
-                            </Style>
-                        </Button.Resources>
-                        <!--Arrow-->
-                        <Grid RenderTransformOrigin="0.5,0.5"
-                              VerticalAlignment="Bottom"
-                              HorizontalAlignment="Center"
-                              Width="15"
-                              Height="15" Grid.Row="1">
-                            <Rectangle Fill="#FFF4F4F5"
-                                       Height="1.364"
-                                       Width="12"
-                                       VerticalAlignment="Center"
-                                       RenderTransformOrigin="0.5,0.5" />
-                            <Rectangle Fill="#FFF4F4F5"
-                                       Height="1.364"
-                                       Width="8.5"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Right"
-                                       RenderTransformOrigin="0.5 0.5"
-                                       Margin="0,4.249,0,0">
-                                <Rectangle.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform />
-                                        <SkewTransform />
-                                        <RotateTransform Angle="45" />
-                                        <TranslateTransform />
-                                    </TransformGroup>
-                                </Rectangle.RenderTransform>
-                            </Rectangle>
-                            <Rectangle Fill="#FFF4F4F5"
-                                       Height="1.364"
-                                       Width="8.5"
-                                       VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Right"
-                                       RenderTransformOrigin="0.5 0.5"
-                                       Margin="0,0,0,4.249">
-                                <Rectangle.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform />
-                                        <SkewTransform />
-                                        <RotateTransform Angle="-45" />
-                                        <TranslateTransform />
-                                    </TransformGroup>
-                                </Rectangle.RenderTransform>
-                            </Rectangle>
-                        </Grid>
-                    </Button>
-
-                </Grid>
+                </Grid>-->
+                <Button x:Name="ApplyPointButton"
+                        Grid.Column="1"
+                        Background="White"
+                        BorderThickness="1"
+                        Margin="20, 0, 27, 0"
+                        BorderBrush="White"
+                        Click="ApplyPointButton_Click" Grid.ColumnSpan="2" >
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius"
+                                        Value="15" />
+                        </Style>
+                    </Button.Resources>
+                    <Label Content="다음" 
+                           Foreground="#675094"
+                           FontFamily="/Font/#NanumSquareRound Bold"
+                           FontSize="20"/>
+                </Button>
             </Grid>
         </Grid>
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0"
+              Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="19" />
                 <RowDefinition />
@@ -634,19 +994,12 @@
 
                 <TextBox x:Name="CurrentDate"
                          HorizontalAlignment="Right"
-                         Foreground="Black"
+                         Foreground="White"
                          Background="Transparent"
                          BorderBrush="Transparent"
                          Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay,  StringFormat='yyyy. MM. dd'}"
                          IsEnabled="False"
                          Margin="0, 0, 5, 0" />
-                <TextBox x:Name="TeachereName"
-                         Foreground="Black"
-                         Background="Transparent"
-                         BorderBrush="Transparent"
-                         Text="조건웅"
-                         IsEnabled="False"
-                         Visibility="Hidden" />
             </Grid>
             <Grid Grid.Row="1">
                 <Grid>
@@ -655,6 +1008,7 @@
                         <ColumnDefinition Width="1.5*" />
                         <ColumnDefinition Width="7.5*" />
                     </Grid.ColumnDefinitions>
+
                     <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,0,0">
                         <!--<view:SideMenuButton x:Name="UploadExcel"
                                              Margin="0, 15"
@@ -669,84 +1023,120 @@
                                 </ToolTip>
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>-->
+                        <view:SideMenuButton x:Name="CheckTarget"
+                                             Margin="0, 30"
+                                             ButtonBackground="#675094"
+                                             ImageSource="/Image/educate.png">
+                            <view:SideMenuButton.ToolTip>
+                                <ToolTip BorderThickness="0">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold">다벌점 교육 대상자 조회</TextBlock>
+                                        <TextBlock>다벌점 교육 대상자를 조회할 수 있습니다.</TextBlock>
+                                    </StackPanel>
+                                </ToolTip>
+                            </view:SideMenuButton.ToolTip>
+                        </view:SideMenuButton>
+
+                        <Label Content="다벌점 교육 대상자 관리"
+                               Foreground="#ffffff"
+                               FontSize="18"
+                               FontFamily="/Font/#NanumSquareRound Bold"
+                               HorizontalAlignment="Center" />
+
                         <view:SideMenuButton x:Name="DownloadExcel"
                                              Margin="0, 30"
-                                             ButtonBackground="#1f7244"
+                                             ButtonBackground="#675094"
                                              ImageSource="/Image/download.png"
                                              Click="DownloadExcel_Click">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
-                                        <TextBlock FontWeight="Bold">다운로드</TextBlock>
+                                        <TextBlock FontWeight="Bold">엑셀파일 다운로드</TextBlock>
                                         <TextBlock>추출한 명단을 엑셀파일로 내보냅니다.</TextBlock>
                                     </StackPanel>
                                 </ToolTip>
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>
 
+                        <Label Content="엑셀파일 다운로드"
+                               Foreground="#ffffff" 
+                               FontSize="18"
+                               FontFamily="/Font/#NanumSquareRound Bold"
+                               HorizontalAlignment="Center" />
+
                         <view:SideMenuButton x:Name="PunishmentList"
                                              Margin="0,30"
-                                             ButtonBackground="#90dfaa"
+                                             ButtonBackground="#675094"
                                              ImageSource="/Image/analytics.png">
                             <view:SideMenuButton.ToolTip>
                                 <ToolTip BorderThickness="0">
                                     <StackPanel>
-                                        <TextBlock FontWeight="Bold">상벌점 항목관리</TextBlock>
+                                        <TextBlock FontWeight="Bold">상벌점 항목 관리</TextBlock>
                                         <TextBlock>상점 및 벌점 항목을 추가, 수정, 삭제할 수 있습니다.</TextBlock>
                                     </StackPanel>
                                 </ToolTip>
                             </view:SideMenuButton.ToolTip>
                         </view:SideMenuButton>
-                        <view:SideMenuButton x:Name="CheckTarget"
-                                             Margin="0, 30"
-                                             ButtonBackground="#eeeeee"
-                                             ImageSource="/Image/tick.png">
-                            <view:SideMenuButton.ToolTip>
-                                <ToolTip BorderThickness="0">
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold">다벌점자 교육 대상자 조회</TextBlock>
-                                        <TextBlock>다벌점자 교육 대상자를 조회할 수 있습니다.</TextBlock>
-                                    </StackPanel>
-                                </ToolTip>
-                            </view:SideMenuButton.ToolTip>
-                        </view:SideMenuButton>
+
+                        <Label Content="상벌점 항목 관리"
+                               Foreground="#ffffff"
+                               FontFamily="/Font/#NanumSquareRound Bold"
+                               FontSize="18"
+                               HorizontalAlignment="Center" />
+
+
                     </StackPanel>
-                    <Grid Grid.Column="2" Margin="0.2,0,0,-0.2">
+
+                    <Grid Grid.Column="2" 
+                          Margin="0.2,0,0,-0.2">
+
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="8*" />
-                            <RowDefinition Height=".5*" />
+                            <RowDefinition Height="153*" />
+                            <RowDefinition Height="110*" />
+                            <RowDefinition Height="607*"/>
+                            <RowDefinition Height="130*" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
+
+                        <Grid Grid.Row="0" Margin="0,0,-0.6,109.333" Grid.RowSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4.75*" />
+                                <ColumnDefinition Width="1.25*" />
+                            </Grid.ColumnDefinitions>
+
                             <TextBox x:Name="SearchCommand"
-                                     Height="30"
-                                     Padding="2"
+                                     Grid.Column="0"
+                                     Height="45"
+                                     Margin="100, 0, 20. 0"
+                                     Padding="12.5, 7.5, 0, 7.5"
                                      CaretBrush="Black"
                                      VerticalContentAlignment="Center"
                                      BorderBrush="{x:Static SystemColors.ControlDarkBrush}"
                                      BorderThickness="1"
-                                     Background="Transparent"
-                                     Margin="10,0,40,0"
+                                     Background="#ffffff"
+                                     FontSize="20"
                                      KeyUp="SearchCommand_KeyUp" TextChanged="SearchCommand_TextChanged">
                                 <TextBox.Resources>
                                     <Style TargetType="{x:Type Border}">
                                         <Setter Property="CornerRadius"
-                                                Value="10" />
+                                                Value="20" />
                                     </Style>
                                 </TextBox.Resources>
                             </TextBox>
-                            <Grid Width="30"
-                                  Height="30"
+
+                            <Grid Background="Transparent"
+                                  Grid.Column="0"
                                   HorizontalAlignment="Right"
-                                  Margin="0,0,5,0">
+                                  Width="45"
+                                  Height="45"
+                                  Margin="0, 0, 20, 0">
                                 <Image Source="/Image/magnifying-glass.png"
                                        RenderOptions.BitmapScalingMode="HighQuality"
-                                       Margin="7" />
+                                       Margin="12.5" />
                                 <Button x:Name="SearchButton"
                                         Click="SearchButton_Click"
                                         Cursor="Hand"
                                         Background="Transparent"
-                                        BorderBrush="{x:Static SystemColors.ControlDarkBrush}">
+                                        BorderBrush="{x:Static SystemColors.ControlLightBrush}">
                                     <Button.Resources>
                                         <Style TargetType="Button">
                                             <Setter Property="OverridesDefaultStyle"
@@ -757,8 +1147,7 @@
                                                         <Border Name="border"
                                                                 BorderThickness="1"
                                                                 Padding="4,2"
-                                                                BorderBrush="DarkGray"
-                                                                CornerRadius="10"
+                                                                CornerRadius="20"
                                                                 Background="{TemplateBinding Background}">
                                                             <ContentPresenter HorizontalAlignment="Center"
                                                                               VerticalAlignment="Center" />
@@ -792,90 +1181,154 @@
                                     </Button.Triggers>
                                 </Button>
                             </Grid>
+
+                            <ComboBox Grid.Column="1"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center"
+                                      Margin="0, 0, 0, 0"
+                                      FontSize="25"
+                                      SelectionChanged="ComboBox_SelectionChanged">
+                                <ComboBoxItem Content="전체" IsSelected="True" />
+                                <ComboBoxItem Content="1학년" />
+                                <ComboBoxItem Content="2학년" />
+                                <ComboBoxItem Content="3학년" />
+                            </ComboBox>
                         </Grid>
+
+                        <Rectangle Grid.Row="1" 
+                                   Grid.RowSpan="3" 
+                                   RadiusX="9"
+                                   RadiusY="9"
+                                   Fill="#ffffff"
+                                   Stroke="#675094"
+                                   StrokeThickness="7.5" Margin="0,0.2,-0.6,-0.2"/>
+
                         <ListView x:Name="SearchList"
                                   Grid.Row="1"
                                   Background="#555555"
-                                  Margin="10"
+                                  Margin="10,10.2,9.4,9.6"
                                   Opacity="0.7"
                                   BorderThickness="0"
                                   SizeChanged="SearchList_SizeChanged"
-                                  SelectionChanged="SearchList_SelectionChanged"
-                                  ItemsSource="{Binding Source={StaticResource StudentListKey}}">
+                                  SelectionMode="Multiple"
+                                  ItemsSource="{Binding Source={StaticResource StudentListKey}}" Grid.RowSpan="2">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="True">
-                                    <GridViewColumn>
-                                        <GridViewColumn.Header>
-                                            <CheckBox VerticalAlignment="Center"
-                                                      BorderThickness="1.2"
-                                                      Checked="CheckBox_Checked"
-                                                      Unchecked="CheckBox_Unchecked" />
-                                        </GridViewColumn.Header>
+                                    <GridViewColumn Header="학번">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ItemCheckBox"
-                                                          VerticalAlignment="Center"
-                                                          BorderBrush="#777777"
-                                                          IsChecked="{Binding IsChecked}" />
-                                                <!--<DataTemplate>
-                                                   <CheckBox Tag="{Binding ID}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />  
-                                               </DataTemplate>-->
+                                                <TextBlock Text="{Binding Path=ClassNumber}" 
+                                                   FontSize="15"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="학번"
-                                                    DisplayMemberBinding="{Binding Path=ClassNumber}" />
-                                    <GridViewColumn Header="이름"
-                                                    DisplayMemberBinding="{Binding Path=Name}" />
-                                    <GridViewColumn Header="상점"
-                                                    DisplayMemberBinding="{Binding Path=GoodPoint}" />
-                                    <GridViewColumn Header="벌점"
-                                                    DisplayMemberBinding="{Binding Path=BadPoint}" />
-                                    <GridViewColumn Header="단계"
-                                                    DisplayMemberBinding="{Binding Path=CurrentStep}" />
-                                    <GridViewColumn Header="상벌점 기록조회">
+
+                                    <GridViewColumn Header="이름">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="Log"
-                                                        Width="16"
-                                                        Height="16"
-                                                        BorderThickness="0"
-                                                        VerticalAlignment="Center"
-                                                        Cursor="Hand"
-                                                        Background="#90dfaa"
-                                                        Click="Log_Click">
-                                                    <Button.Resources>
-                                                        <Style TargetType="Border">
-                                                            <Setter Property="CornerRadius"
-                                                                    Value="8" />
-                                                        </Style>
-                                                    </Button.Resources>
-                                                </Button>
+                                                <TextBlock Text="{Binding Path=Name}" 
+                                                   FontSize="15"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Header="상점">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=GoodPoint}" 
+                                                   FontSize="15"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Header="벌점">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=BadPoint}" 
+                                                   FontSize="15"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn Header="단계">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=CurrentStep}" 
+                                                   FontSize="15"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <Button x:Name="AddButton"
-                                Grid.Row="2"
+
+                        <Grid Grid.Row="3" Margin="0,0.4,-0.6,-0.2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button x:Name="AddButton"
+                                Grid.Column="0"
                                 BorderBrush="Transparent"
                                 BorderThickness="0"
-                                Margin="10 2"
+                                Margin="75, 30, 30, 30"
                                 Cursor="Hand"
                                 Content="추가"
-                                Background="#90dfaa"
+                                Background="#675094"
                                 Foreground="White"
+                                FontSize="20"
+                                FontFamily="/Font/#NanumSquareRound Bold"
                                 Click="AddButton_Click">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius"
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius"
                                             Value="9" />
-                                </Style>
-                            </Button.Resources>
-                        </Button>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <Button x:Name="ShowLogButton"
+                                Grid.Column="1"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Margin="35, 30, 60, 30"
+                                Cursor="Hand"
+                                Content="기록 조회"
+                                Background="#675094"
+                                Foreground="White"
+                                FontSize="20"
+                                FontFamily="/Font/#NanumSquareRound Bold"
+                                Click="AddButton_Click">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius"
+                                            Value="9" />
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                            <CheckBox x:Name="SelectAllCheck"
+                                      Grid.Column="2" 
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="0, 0, 30, 0"
+                                      Checked="SelectAllCheck_Checked"
+                                      Unchecked="SelectAllCheck_Unchecked">
+                                <TextBlock Text="전체선택"
+                                           FontFamily="/Font/#NanumSquareRound Bold"
+                                           Margin="7.5, 0, 0, 0"/>
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                        </Grid>
                     </Grid>
-                    <Grid Grid.Column="2" Margin="0.2,0,0,-0.2" />
+                    <Grid Grid.Column="2" Margin="0,0,0,-0.2" />
                 </Grid>
             </Grid>
         </Grid>

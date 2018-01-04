@@ -87,14 +87,15 @@
                         VerticalAlignment="Center">
                 <TextBox x:Name="ID"
                          Margin="0,30,0,60"
-                         Padding="55,10,0,10"
+                         Padding="45,10,0,10"
                          Template="{StaticResource TextBoxBaseControlTemplate}"
                          CaretBrush="White"
                          Foreground="White"
                          Background="Transparent"
                          BorderBrush="{x:Static SystemColors.ControlLightBrush}"
                          Text="unko"
-                         FontSize="40" />
+                         FontSize="40" 
+                         FontFamily="/Font/#NanumSquare Light" />
 
                 <PasswordBox x:Name="Password"                              
                              Padding="45,15,0,15"
@@ -105,6 +106,7 @@
                              Background="Transparent"
                              BorderBrush="{x:Static SystemColors.ControlLightBrush}"
                              FontSize="30"
+                             FontFamily="/Font/#NanumSquare Light"
                              Password="unko" />
             </StackPanel>
             <Button Grid.Row="2"

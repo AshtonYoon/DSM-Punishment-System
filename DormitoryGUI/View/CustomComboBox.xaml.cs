@@ -69,27 +69,30 @@ namespace DormitoryGUI.View
 
             foreach (JObject rule in rules)
             {
+                int minPoint = rule["min_point"].Type == JTokenType.Null ? 0 : (int) rule["min_point"];
+                int maxPoint = rule["max_point"].Type == JTokenType.Null ? 0 : (int) rule["max_point"];
+
                 if (PunishmentType == 0)
                 {
-                    if (int.Parse(rule["min_point"].ToString()) > 0)
+                    if (minPoint > 0)
                     {
                         punishmentList.Add(new PunishmentListViewModel(
                         id: rule["id"].ToString(),
                         name: rule["name"].ToString(),
-                        minPoint: (int) rule["min_point"],
-                        maxPoint: (int) rule["max_point"]));
+                        minPoint: minPoint,
+                        maxPoint: maxPoint));
                     }
                 }
 
                 else if (PunishmentType == 1)
                 {
-                    if (int.Parse(rule["min_point"].ToString()) < 0)
+                    if (minPoint < 0)
                     {
                         punishmentList.Add(new PunishmentListViewModel(
                         id: rule["id"].ToString(),
                         name: rule["name"].ToString(),
-                        minPoint: (int) rule["min_point"],
-                        maxPoint: (int) rule["max_point"]));
+                        minPoint: minPoint,
+                        maxPoint: maxPoint));
                     }
                 }
             }

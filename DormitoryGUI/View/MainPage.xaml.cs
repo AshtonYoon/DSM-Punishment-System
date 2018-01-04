@@ -38,39 +38,12 @@ namespace DormitoryGUI
         private JArray studentList;
         private readonly MainWindow mainWindow;
 
-        private RoutedEventHandler UnCheckedEventHandler;
-        private RoutedEventHandler CheckedEventHandler;
-
         public MainPage(MainWindow mainWindow)
         {
             InitializeComponent();
 
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
             resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
-
-            UnCheckedEventHandler += new RoutedEventHandler((s, e) =>
-            {
-                var target = GetAncestorOfType<ListView>(s as CheckBox);
-                foreach (var element in target.Items)
-                {
-                    ((StudentListViewModel) element).IsChecked = false;
-                }
-                target.SelectedItems.Clear();
-
-                target.Items.Refresh();
-            });
-
-            CheckedEventHandler += new RoutedEventHandler((s, e) =>
-            {
-                var target = GetAncestorOfType<ListView>(s as CheckBox);
-                foreach (var element in target.Items)
-                {
-                    ((StudentListViewModel) element).IsChecked = true;
-                    target.SelectedItems.Add(element);
-                }
-
-                target.Items.Refresh();
-            });
 
             PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage(mainWindow)); };
             CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTargetPage(mainWindow)); };
@@ -99,8 +72,7 @@ namespace DormitoryGUI
                     name: student["name"].ToString(),
                     goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
                     badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                    currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
-                    isChecked: false
+                    currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()))
                 ));
             }
 
@@ -118,7 +90,7 @@ namespace DormitoryGUI
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            if (((bool) Good.IsChecked || (bool) Bad.IsChecked) && CurrentStep == Step.First)
+            /* if (((bool) Good.IsChecked || (bool) Bad.IsChecked) && CurrentStep == Step.First)
             {
                 HideAnimation(FirstGrid);
                 ShowAnimation(SecondGrid);
@@ -153,13 +125,12 @@ namespace DormitoryGUI
                 if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
                     MessageBoxResult.Yes)
                 {
-                    /** Request
-                        json = {
-	                        "id":city7320 (student ID)
-	                        "rule_id":50045
-	                        "point":12
-                        } 
-                    */
+                    // Request
+                    //    json = {
+	                //        "id":city7320 (student ID)
+	                //        "rule_id":50045
+	                //        "point":12
+                    //    }
 
                     PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
 
@@ -182,12 +153,12 @@ namespace DormitoryGUI
                             ? -1 * PunishmentSlider.SliderValue
                             : PunishmentSlider.SliderValue;
 
-                        /*JObject jsonBody = new JObject
-                        {
-                            { "id", student.ID },
-                            { "rule_id", item.ID },
-                            { "point", point },
-                        };*/
+                        //JObject jsonBody = new JObject
+                        // {
+                            // { "id", student.ID },
+                            // { "rule_id", item.ID },
+                            // { "point", point },
+                        // };
 
                         var requestDict = new Dictionary<string, object>
                         {
@@ -221,12 +192,12 @@ namespace DormitoryGUI
                     HideAnimation(ThirdGrid);
                     ShowAnimation(FirstGrid);
                 }
-            }
+            } */
         }
 
         private void ApplyPointBackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentStep == Step.Second)
+            /* if (CurrentStep == Step.Second)
             {
                 HideAnimation(SecondGrid);
                 ShowAnimation(FirstGrid);
@@ -241,7 +212,7 @@ namespace DormitoryGUI
 
                 HideAnimation(ThirdGrid);
                 ShowAnimation(SecondGrid);
-            }
+            } */
         }
 
         private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -253,13 +224,11 @@ namespace DormitoryGUI
 
             double[] columnRatio =
             {
-                0.05,
-                0.14,
-                0.14,
-                0.14,
-                0.14,
-                0.14,
-                0.25,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
+                0.2,
             };
 
             foreach (var element in gridView.Columns)
@@ -346,8 +315,7 @@ namespace DormitoryGUI
                         name: student["name"].ToString(),
                         goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
                         badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
-                        currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : (int) student["penalty_training_status"]),
-                        isChecked: false));
+                        currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : (int) student["penalty_training_status"])));
                 }
             }
         }
@@ -356,16 +324,6 @@ namespace DormitoryGUI
         {
             if (e.Key == Key.Enter)
                 SearchButton_Click(sender, null);
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckedEventHandler?.Invoke(sender, e);
-        }
-
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            UnCheckedEventHandler?.Invoke(sender, e);
         }
 
         private void ResultList_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -377,9 +335,8 @@ namespace DormitoryGUI
 
             double[] columnRatio =
             {
-                0.15,
-                0.425,
-                0.425
+                0.45,
+                0.55
             };
 
             foreach (var element in gridView.Columns)
@@ -388,24 +345,18 @@ namespace DormitoryGUI
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (StudentListViewModel element in SearchList.Items)
+            foreach (StudentListViewModel element in SearchList.SelectedItems)
             {
-                if (element.IsChecked)
-                {
-                    resultListCollection.Add(
-                        new StudentListViewModel(
-                            id: element.ID,
-                            isChecked: element.IsChecked,
-                            name: element.Name,
-                            classNumber: element.ClassNumber,
-                            goodPoint: element.GoodPoint,
-                            badPoint: element.BadPoint,
-                            currentStep: element.CurrentStep
-                        )
-                    );
-
-                    element.IsChecked = false;
-                }
+                resultListCollection.Add(
+                    new StudentListViewModel(
+                        id: element.ID,
+                        name: element.Name,
+                        classNumber: element.ClassNumber,
+                        goodPoint: element.GoodPoint,
+                        badPoint: element.BadPoint,
+                        currentStep: element.CurrentStep
+                    )
+                );
             }
 
             ResultList.ItemsSource = Deduplication(resultListCollection as IEnumerable<StudentListViewModel>);
@@ -423,43 +374,10 @@ namespace DormitoryGUI
             return (T) parent;
         }
 
-        private void ResultList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            AddSelectionByClick(ResultList, e);
-        }
-
-        private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            AddSelectionByClick(SearchList, e);
-        }
-
-        private void AddSelectionByClick(ListView listview, SelectionChangedEventArgs e)
-        {
-            var targets = e.AddedItems;
-            foreach (var element in targets)
-            {
-                ((StudentListViewModel) element).IsChecked = true;
-            }
-            listview.Items.Refresh();
-        }
-
         private IEnumerable<StudentListViewModel> Deduplication(IEnumerable<StudentListViewModel> source)
         {
             return source.GroupBy(x => x.ClassNumber)
                 .Select(y => y.First());
-        }
-
-        private void ResultList_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            ContextMenu menu = FindResource("ListviewItemControlMenu") as ContextMenu;
-
-            menu.PlacementTarget = sender as ListView;
-            menu.IsOpen = true;
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteSelectedItem();
         }
 
         private void ResultList_KeyUp(object sender, KeyEventArgs e)
@@ -472,9 +390,10 @@ namespace DormitoryGUI
         {
             // resultListCollection 중 IsChecked가 true 인 아이템 제거
 
-            resultListCollection
-                .Where(x => x.IsChecked).ToList()
-                .All(i => resultListCollection.Remove(i));
+            foreach (StudentListViewModel item in ResultList.SelectedItems)
+            {
+                resultListCollection.Remove(item);
+            }
 
             // 이후 이를 ResultList의 ItemSource에 대입하고 Refresh
 
@@ -482,34 +401,25 @@ namespace DormitoryGUI
             ResultList.Items.Refresh();
         }
 
-        private void SelectAllCommand_Click(object sender, RoutedEventArgs e)
+        private void GradeCombobox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            foreach (StudentListViewModel element in ResultList.Items)
+            string grade = (sender as ComboBoxItem).Content.ToString();
+            MessageBox.Show(grade);
+        }
+
+        private void SelectAllCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in listviewCollection)
             {
-                element.IsChecked = true;
-                ResultList.SelectedItems.Add(element);
+                SearchList.SelectedItems.Add(item);
             }
         }
 
-        private void ItemCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void SelectAllCheck_Unchecked(object sender, RoutedEventArgs e)
         {
-            var target = GetAncestorOfType<ListView>(sender as CheckBox);
-            var targetItem = GetAncestorOfType<ListViewItem>(sender as CheckBox);
-
-            target.SelectedItems.Add(targetItem);
-            target.Items.Refresh();
-        }
-
-        private void ItemCheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void DeselectAllCommand_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (StudentListViewModel element in ResultList.Items)
+            foreach (var item in listviewCollection)
             {
-                element.IsChecked = false;
-                ResultList.SelectedItems.Clear();
+                SearchList.SelectedItems.Remove(item);
             }
         }
 
@@ -632,6 +542,16 @@ namespace DormitoryGUI
 
         private void SearchCommand_TextChanged(object sender, TextChangedEventArgs e)
         {
+        }
+
+        private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
