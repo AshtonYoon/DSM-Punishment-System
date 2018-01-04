@@ -49,47 +49,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
-    </Reference>
-    <Reference Include="SciChart.Wpf.UI.Transitionz, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SciChart.Wpf.UI.Transitionz.1.0.5\lib\net45\SciChart.Wpf.UI.Transitionz.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Include="Model\DistinctStudentComparer.cs" />
     <Compile Include="Model\ExcelProcessing.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
@@ -100,17 +61,14 @@
     <Compile Include="View\PointComboBox.xaml.cs">
       <DependentUpon>PointComboBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PointDialog.xaml.cs">
-      <DependentUpon>PointDialog.xaml</DependentUpon>
+    <Compile Include="View\CustomDialog.xaml.cs">
+      <DependentUpon>CustomDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomSlider.xaml.cs">
       <DependentUpon>CustomSlider.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PermissionManagementPage.xaml.cs">
       <DependentUpon>PermissionManagementPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PointManageDialog.xaml.cs">
-      <DependentUpon>PointManageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PunishmentListPage.xaml.cs">
       <DependentUpon>PunishmentListPage.xaml</DependentUpon>
@@ -124,34 +82,6 @@
     <Compile Include="View\TimelineBlock.xaml.cs">
       <DependentUpon>TimelineBlock.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\CheckPunishmentTargetPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PointComboBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PointDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\CustomSlider.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -168,30 +98,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\PermissionManagementPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PointManageDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PunishmentListPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PunishmentLogPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SideMenuButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TimelineBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -221,32 +127,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\wallpaper1.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\magnifying-glass.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\excel.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\download.png" />
-    <Resource Include="Image\upload.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\analytics.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\key.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\tick.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\left-arrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\line-illustration.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -261,16 +157,50 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\login.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\wallpaper.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\send.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ReferencePath Include="E:\Develop\Project\DMS_C#\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\mscorlib.dll" />
+    <ReferencePath Include="E:\Develop\Project\DMS_C#\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll" />
+    <ReferencePath Include="E:\Develop\Project\DMS_C#\packages\NPOI.2.3.0\lib\net40\NPOI.dll" />
+    <ReferencePath Include="E:\Develop\Project\DMS_C#\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll" />
+    <ReferencePath Include="E:\Develop\Project\DMS_C#\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll" />
+    <ReferencePath Include="E:\Develop\Project\DMS_C#\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\PresentationFramework.dll" />
+    <ReferencePath Include="E:\Develop\Project\DMS_C#\packages\SciChart.Wpf.UI.Transitionz.1.0.5\lib\net45\SciChart.Wpf.UI.Transitionz.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Net.Http.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\WindowsBase.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PointComboBox.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CustomDialog.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\CustomSlider.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\LoginPage.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\MainPage.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\MainWindow.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PermissionManagementPage.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PunishmentListPage.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PunishmentLogPage.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\SideMenuButton.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\TimelineBlock.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\App.g.cs" />
+    <Compile Include="E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
 </Project>

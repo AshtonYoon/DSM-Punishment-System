@@ -5,8 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:tz="http://schemas.abtsoftware.co.uk/transitionz"
       mc:Ignorable="d"
-      d:DesignWidth="482"
-      d:DesignHeight="1360"
+      d:DesignWidth="1920"
+      d:DesignHeight="1080"
       Title="로그인">
     <Page.Resources>
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
@@ -81,6 +81,7 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Image Grid.Row="0" Source="/Image/logo.png"
+                   RenderOptions.BitmapScalingMode="HighQuality"
                    Height="130" />
             <StackPanel Grid.Row="1"
                         Orientation="Vertical"
@@ -116,7 +117,7 @@
                     Cursor="Hand"
                     VerticalAlignment="Top">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Image/send.png" />
+                    <ImageBrush ImageSource="/Image/send.png" RenderOptions.BitmapScalingMode="HighQuality" />
                 </Button.Background>
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}">

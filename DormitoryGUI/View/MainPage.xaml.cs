@@ -122,7 +122,7 @@ namespace DormitoryGUI
             {
                 HideAnimation(FirstGrid);
                 ShowAnimation(SecondGrid);
-
+            
                 if ((bool) Good.IsChecked)
                     PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.GOOD;
 

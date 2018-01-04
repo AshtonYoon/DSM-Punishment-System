@@ -429,6 +429,7 @@
                     </ListView.View>
                 </ListView>
             </Grid>
+            
             <Grid x:Name="PointProcedure"
                   Grid.Row="1"
                   Background="#333333"
