@@ -38,15 +38,12 @@ namespace DormitoryGUI
             try
             {
                 HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-
                 webRequest.Method = method;
 
                 if (!string.IsNullOrWhiteSpace(token))
                 {
-                    webRequest.Headers.Add("Authorization", "JWT " + token);
+                    webRequest.Headers.Add("Authorization", $"JWT {token}");
                 }
-
-                MessageBox.Show(token);
 
                 string bodyString;
 
@@ -67,7 +64,7 @@ namespace DormitoryGUI
 
                 byte[] bytesBody = Encoding.UTF8.GetBytes(bodyString);
 
-                if (method != "GET")
+                if (!method.Equals("GET"))
                 {
                     using (Stream stream = webRequest.GetRequestStream())
                     {
@@ -89,6 +86,7 @@ namespace DormitoryGUI
                 if (e is WebException)
                 {
                     responseDict["status"] = ((e as WebException).Response as HttpWebResponse)?.StatusCode;
+                    return responseDict;
                 }
             }
 

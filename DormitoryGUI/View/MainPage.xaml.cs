@@ -336,8 +336,9 @@ namespace DormitoryGUI
 
             double[] columnRatio =
             {
-                0.45,
-                0.55
+                0.33,
+                0.33,
+                0.33
             };
 
             foreach (var element in gridView.Columns)
@@ -551,6 +552,11 @@ namespace DormitoryGUI
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
