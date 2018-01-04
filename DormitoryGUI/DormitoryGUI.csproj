@@ -97,8 +97,8 @@
     <Compile Include="View\CheckPunishmentTargetPage.xaml.cs">
       <DependentUpon>CheckPunishmentTargetPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PointComboBox.xaml.cs">
-      <DependentUpon>PointComboBox.xaml</DependentUpon>
+    <Compile Include="View\CustomComboBox.xaml.cs">
+      <DependentUpon>CustomComboBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PointDialog.xaml.cs">
       <DependentUpon>PointDialog.xaml</DependentUpon>
@@ -121,6 +121,9 @@
     <Compile Include="View\PunishmentLogPage.xaml.cs">
       <DependentUpon>PunishmentLogPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PunishmentTargetDialog.xaml.cs">
+      <DependentUpon>PunishmentTargetDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SideMenuButton.xaml.cs">
       <DependentUpon>SideMenuButton.xaml</DependentUpon>
     </Compile>
@@ -131,7 +134,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PointComboBox.xaml">
+    <Page Include="View\CustomComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -188,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PunishmentLogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PunishmentTargetDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

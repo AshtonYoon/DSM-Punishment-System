@@ -33,5 +33,32 @@ namespace DormitoryGUI.View
         {
 
         }
+
+        private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var listView = sender as ListView;
+            var gridView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - 18;
+
+            double[] columnRatio =
+            {
+                0.5,
+                0.5
+            };
+
+            foreach (var element in gridView.Columns)
+                element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
+        }
+
+        private void Click_OK(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Click_Cancel(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
