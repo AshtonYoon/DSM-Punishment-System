@@ -24,6 +24,7 @@
 
         <local:CustomComboBox x:Name="PunishmentComboBox"
                               Grid.Row="1" Padding="15,10.10,15,10" />
+        
         <Label Grid.Row="2" FontSize="30" VerticalAlignment="Center" HorizontalContentAlignment="Right"
                Padding="0,0,2,0" Foreground="#898989">
             <TextBlock Text="   점" TextDecorations="UnderLine" />

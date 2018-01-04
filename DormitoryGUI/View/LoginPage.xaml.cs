@@ -46,7 +46,7 @@ namespace DormitoryGUI
                  { "pw", Password.Password }
             };
 
-            var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, null, requestDict);
+            var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, "", requestDict);
 
             if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
