@@ -33,30 +33,35 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-//            mainWindow.NavigatePage(new MainPage(mainWindow));
-                CustomDialog cd = new CustomDialog(3);
-//                        PointManageDialog cd = new PointManageDialog();
-                        cd.ShowDialog();
-            //                        var requestDict = new Dictionary<string, object>
-            //                        {
-            //                            { "id", ID.Text },
-            //                            { "pw", Password.Password }
-            //                        };
+            mainWindow.NavigatePage(new MainPage(mainWindow));
 
-            //                        var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, "", requestDict);
+            if (!ValidateInput())
+            {
+                return;
+            }
 
-            //                        if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
-            //                        {
-            //                            MessageBox.Show("로그인 실패");
-            //                            return;
-            //                        }
+            var requestDict = new Dictionary<string, object>
+            {
+                 { "id", ID.Text },
+                 { "pw", Password.Password }
+            };
 
-            //                        JObject responseJSON = JObject.Parse(responseDict["body"].ToString());
+            var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, null, requestDict);
 
-            //                        Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
-            //                        Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+            {
+                MessageBox.Show("로그인 실패");
+                return;
+            }
 
-            //                        mainWindow.NavigatePage(new MainPage(mainWindow));
+            JObject responseJSON = JObject.Parse(responseDict["body"].ToString());
+
+            Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
+            Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
+
+            MessageBox.Show(Info.mainPage.AccessToken);
+
+            mainWindow.NavigatePage(new MainPage(mainWindow));
         }
 
         private void Password_KeyUp(object sender, KeyEventArgs e)
@@ -65,6 +70,11 @@ namespace DormitoryGUI
             {
                 LoginButton_Click(sender, null);
             }
-        }        
+        }
+        
+        private bool ValidateInput()
+        {
+            return string.IsNullOrWhiteSpace(ID.Text) && string.IsNullOrWhiteSpace(Password.Password);
+        }
     }
 }

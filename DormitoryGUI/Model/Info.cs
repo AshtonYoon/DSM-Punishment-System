@@ -40,7 +40,13 @@ namespace DormitoryGUI
                 HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
 
                 webRequest.Method = method;
-                webRequest.Headers.Add("Authorization", "JWT " + token);
+
+                if (!string.IsNullOrWhiteSpace(token))
+                {
+                    webRequest.Headers.Add("Authorization", "JWT " + token);
+                }
+
+                MessageBox.Show(token);
 
                 string bodyString;
 
