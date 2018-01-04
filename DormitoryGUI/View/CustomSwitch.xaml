@@ -6,6 +6,22 @@
              xmlns:local="clr-namespace:DormitoryGUI.View"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="225">
+    <UserControl.Resources>
+        <Style x:Key="SwitchToggleStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="35" 
+                                Background="White" 
+                                BorderThickness="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -15,7 +31,9 @@
                 Background="#675094"
                 BorderBrush="White"
                 BorderThickness="5"
-                CornerRadius="35"/>
+                CornerRadius="35"
+                Panel.ZIndex="0"/>
+        
         <Label Grid.Column="0" 
                Margin="10, 0, 0, 0"
                HorizontalAlignment="Center" 
@@ -23,7 +41,9 @@
                Foreground="White"
                FontSize="20"
                FontFamily="/Font/#NanumSquareRound Bold"
-               Content="상점" />
+               Content="상점" 
+               Panel.ZIndex="1"/>
+        
         <Label Grid.Column="1" 
                Margin="0, 0, 10, 0"
                HorizontalAlignment="Center" 
@@ -31,15 +51,19 @@
                Foreground="White"
                FontSize="20"
                FontFamily="/Font/#NanumSquareRound Bold"
-               Content="벌점" />
+               Content="벌점" 
+               Panel.ZIndex="1"/>
 
-        <!--<Button>
-            <Border x:Name="SwitchToggle"
-                Grid.Column="0"
-                Margin="5 4"
-                Background="White"
-                BorderThickness="5"
-                CornerRadius="35"/>
-        </Button>-->
+        <Button x:Name="SwitchToggle"
+                Grid.Column="1"
+                Cursor="Hand"
+                Click="SwitchToggle_Click"
+                Foreground="#675094"
+                FontFamily="/Font/#NanumSquareRound Bold"
+                FontSize="20"
+                Style="{StaticResource SwitchToggleStyle}"
+                Panel.ZIndex="2">
+            벌점
+        </Button>
     </Grid>
 </UserControl>

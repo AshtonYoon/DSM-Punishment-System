@@ -33,20 +33,13 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.NavigatePage(new MainPage(mainWindow));
-
-            if (!ValidateInput())
-            {
-                return;
-            }
-
             var requestDict = new Dictionary<string, object>
             {
                  { "id", ID.Text },
                  { "pw", Password.Password }
             };
 
-            var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, null, requestDict);
+            var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, "", requestDict);
 
             if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
@@ -58,8 +51,6 @@ namespace DormitoryGUI
 
             Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
             Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
-
-            MessageBox.Show(Info.mainPage.AccessToken);
 
             mainWindow.NavigatePage(new MainPage(mainWindow));
         }
