@@ -57,7 +57,7 @@
                                 </Grid>
                             </BulletDecorator.Bullet>
                             <!--Text element-->
-                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
+                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="/Font/#NanumSquareRound Bold" FontSize="12">
                                 <ContentPresenter />
                             </TextBlock>
                         </BulletDecorator>
@@ -221,6 +221,7 @@
             <Setter Property="Foreground"
                     Value="#605794" />
             <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="GridViewColumnHeader">
