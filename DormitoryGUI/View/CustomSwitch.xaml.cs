@@ -21,7 +21,15 @@ namespace DormitoryGUI.View
     public partial class CustomSwitch : UserControl
     {
         private int pointType = (int)Info.POINT_TYPE.GOOD;
-        public int PointType { get => pointType; set => pointType = value; }
+        public int PointType
+        {
+            get => pointType;
+            set
+            {
+                pointType=value;
+                Update();
+            }
+        }
 
         public CustomSwitch()
         {
@@ -37,7 +45,7 @@ namespace DormitoryGUI.View
 
         private void SwitchToggle_Click(object sender, EventArgs e)
         {
-            pointType = (Convert.ToInt32(!Convert.ToBoolean(pointType)));
+            PointType = (Convert.ToInt32(!Convert.ToBoolean(pointType)));
             Update();
         }
     }

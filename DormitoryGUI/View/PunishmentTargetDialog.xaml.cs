@@ -26,8 +26,6 @@ namespace DormitoryGUI.View
 
         private JArray studentList;
 
-        private readonly MainWindow mainWindow;
-
         private string filter = "전체";
 
         public PunishmentTargetDialog()

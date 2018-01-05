@@ -38,6 +38,8 @@ namespace DormitoryGUI
         private JArray studentList;
         private readonly MainWindow mainWindow;
 
+        private string filter = "전체";
+
         public MainPage(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -45,8 +47,15 @@ namespace DormitoryGUI
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
             resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
 
-            PunishmentList.Click += (s, e) => { mainWindow.NavigatePage(new PunishmentListPage(mainWindow)); };
-            CheckTarget.Click += (s, e) => { mainWindow.NavigatePage(new CheckPunishmentTargetPage(mainWindow)); };
+            PunishmentList.Click += (s, e) => {
+                PointManageDialog pointManageDialog = new PointManageDialog();
+                pointManageDialog.ShowDialog();
+            };
+
+            CheckTarget.Click += (s, e) => {
+                PunishmentTargetDialog punishmentTargetDialog = new PunishmentTargetDialog();
+                punishmentTargetDialog.ShowDialog();
+            };
 
             Update();
 
@@ -55,6 +64,8 @@ namespace DormitoryGUI
 
         public void Update()
         {
+            listviewCollection.Clear();
+
             var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
             if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
@@ -67,6 +78,11 @@ namespace DormitoryGUI
 
             foreach (JObject student in studentList)
             {
+                if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
+                {
+                    continue;
+                }
+
                 listviewCollection.Add(new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
@@ -77,143 +93,66 @@ namespace DormitoryGUI
                 ));
             }
 
+            SearchList.ItemsSource = listviewCollection;
             SearchList.Items.Refresh(); 
         }
 
-        private enum Step
-        {
-            First,
-            Second,
-            Third,
-        }
-
-        private Step CurrentStep = Step.First;
-
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            /* if (((bool) Good.IsChecked || (bool) Bad.IsChecked) && CurrentStep == Step.First)
+            PointDialog pointDialog = new PointDialog(PointTypeSwitch.PointType);
+
+            if (!(bool)pointDialog.ShowDialog())
             {
-                HideAnimation(FirstGrid);
-                ShowAnimation(SecondGrid);
-            
-                if ((bool) Good.IsChecked)
-                    PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.GOOD;
-
-                else if ((bool) Bad.IsChecked)
-                    PunishmentComboBox.PunishmentType = (int) Info.POINT_TYPE.BAD;
-
-                CurrentStep = Step.Second;
-            }
-
-            if (PunishmentComboBox.SelectedItem != null && CurrentStep == Step.Second)
-            {
-                HideAnimation(SecondGrid);
-                ShowAnimation(ThirdGrid);
-
-                var target = ((PunishmentListViewModel) PunishmentComboBox.SelectedItem);
-
-                int minPoint = target.MinPoint < 0 ? -1 * target.MinPoint : target.MinPoint;
-
-                PunishmentSlider.SliderValue = minPoint;
-
-                CurrentStep = Step.Third;
-
                 return;
             }
 
-            if (CurrentStep == Step.Third)
+            MessageBox.Show(pointDialog.PunishmentID.ToString());
+            MessageBox.Show(pointDialog.PunishmentScore.ToString());
+
+            bool operationComplete = true;
+
+            foreach (StudentListViewModel student in resultListCollection)
             {
-                if (MessageBox.Show("점수를 부여하시겠습니까?", "알림", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
-                    MessageBoxResult.Yes)
+                var requestDict = new Dictionary<string, object>
                 {
-                    // Request
-                    //    json = {
-	                //        "id":city7320 (student ID)
-	                //        "rule_id":50045
-	                //        "point":12
-                    //    }
+                    { "id", student.ID },
+                    { "rule_id", pointDialog.PunishmentID },
+                    { "point", pointDialog.PunishmentScore },
+                };
 
-                    PunishmentListViewModel item = PunishmentComboBox.SelectedItem as PunishmentListViewModel;
+                var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, requestDict);
 
-                    int minPoint = item.MinPoint < 0 ? -1 * item.MinPoint : item.MinPoint;
-                    int maxPoint = item.MaxPoint < 0 ? -1 * item.MaxPoint : item.MaxPoint;
-
-                    if (PunishmentSlider.SliderValue < minPoint || PunishmentSlider.SliderValue > maxPoint)
-                    {
-                        // 부여하고자 하는 벌점이 최댓값, 최솟값을 넘지 않는지에 대해 검사
-
-                        MessageBox.Show("최댓값과 최솟값을 벗어날 수 없음");
-                        return;
-                    }
-
-                    bool operationComplete = true;
-
-                    foreach (StudentListViewModel student in ResultList.Items)
-                    {
-                        int point = item.MinPoint < 0
-                            ? -1 * PunishmentSlider.SliderValue
-                            : PunishmentSlider.SliderValue;
-
-                        //JObject jsonBody = new JObject
-                        // {
-                            // { "id", student.ID },
-                            // { "rule_id", item.ID },
-                            // { "point", point },
-                        // };
-
-                        var requestDict = new Dictionary<string, object>
-                        {
-                            {"id", student.ID},
-                            {"rule_id", item.ID},
-                            {"point", point}
-                        };
-
-                        var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT,
-                            Info.mainPage.AccessToken, requestDict);
-
-                        if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.Created)
-                        {
-                            operationComplete = false;
-                            MessageBox.Show("처리 실패");
-
-                            break;
-                        }
-                    }
-
-                    if (operationComplete)
-                    {
-                        MessageBox.Show("처리 완료");
-                    }
-
-                    listviewCollection.Clear();
-                    Update();
-
-                    CurrentStep = Step.First;
-
-                    HideAnimation(ThirdGrid);
-                    ShowAnimation(FirstGrid);
+                if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.Created)
+                {
+                    operationComplete = false;
+                    break;
                 }
-            } */
+            }
+
+            if (operationComplete)
+            {
+                MessageBox.Show("처리 완료");
+            }
+            else
+            {
+                MessageBox.Show("처리 실패");
+            }
+
+            resultListCollection.Clear();
+
+            ResultList.ItemsSource = resultListCollection;
+            ResultList.Items.Refresh();
+            
+            Update();
         }
 
-        private void ApplyPointBackButton_Click(object sender, RoutedEventArgs e)
+        private void DelButton_Click(object sender, RoutedEventArgs e)
         {
-            /* if (CurrentStep == Step.Second)
-            {
-                HideAnimation(SecondGrid);
-                ShowAnimation(FirstGrid);
+            var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
+            resultListCollection.Remove(target);
 
-                CurrentStep = Step.First;
-                return;
-            }
-
-            if (CurrentStep == Step.Third)
-            {
-                CurrentStep = Step.Second;
-
-                HideAnimation(ThirdGrid);
-                ShowAnimation(SecondGrid);
-            } */
+            ResultList.ItemsSource = resultListCollection;
+            ResultList.Items.Refresh();
         }
 
         private void SearchList_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -252,10 +191,10 @@ namespace DormitoryGUI
             Storyboard.SetTarget(FadeOutAnimation, target);
 
             ThicknessAnimation ShiftLeftAnimation =
-                new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration)
-                {
-                    EasingFunction = new QuadraticEase()
-                };
+            new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
 
             Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
 
@@ -359,6 +298,8 @@ namespace DormitoryGUI
                         currentStep: element.CurrentStep
                     )
                 );
+
+                SearchList.SelectedItems.Remove(element);
             }
 
             ResultList.ItemsSource = Deduplication(resultListCollection as IEnumerable<StudentListViewModel>);
@@ -405,8 +346,12 @@ namespace DormitoryGUI
 
         private void GradeCombobox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            string grade = (sender as ComboBoxItem).Content.ToString();
-            MessageBox.Show(grade);
+            filter = (sender as ComboBoxItem).Content.ToString();
+
+            if (listviewCollection != null)
+            {
+                Update();
+            }
         }
 
         private void SelectAllCheck_Checked(object sender, RoutedEventArgs e)

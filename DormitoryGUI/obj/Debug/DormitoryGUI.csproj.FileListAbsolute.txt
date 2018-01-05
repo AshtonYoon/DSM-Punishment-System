@@ -106,3 +106,4 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\Dorm
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PunishmentTargetDialog.g.cs
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomComboBox.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PunishmentTargetDialog.baml
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
