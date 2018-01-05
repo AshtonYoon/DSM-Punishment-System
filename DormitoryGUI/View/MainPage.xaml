@@ -883,7 +883,18 @@
                             </GridViewColumn>-->
                             <GridViewColumn Header="학번" DisplayMemberBinding="{Binding Path=ClassNumber}" />
                             <GridViewColumn Header="이름" DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="삭제"/>
+                            <GridViewColumn Header="삭제">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Width="20" 
+                                                Height="20" 
+                                                Background="Transparent"
+                                                BorderThickness="0">
+                                            <Image Source="/Image/delete.png" />
+                                        </Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

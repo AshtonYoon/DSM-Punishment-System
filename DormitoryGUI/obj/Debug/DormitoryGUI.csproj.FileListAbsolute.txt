@@ -13,7 +13,6 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\Dorm
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\bin\Debug\SciChart.Wpf.UI.Transitionz.xml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\LoginPage.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.g.cs
-E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PointComboBox.g.cs
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PointDialog.g.cs
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomSlider.g.cs
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomSwitch.g.cs
@@ -32,7 +31,6 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\Dorm
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\DormitoryGUI_MarkupCompile.lref
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\App.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.baml
-E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PointComboBox.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PointDialog.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomSlider.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomSwitch.baml
@@ -104,3 +102,7 @@ E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PunishmentTargetDialog.g.cs
 E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PunishmentTargetDialog.baml
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomComboBox.g.cs
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PunishmentTargetDialog.g.cs
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomComboBox.baml
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PunishmentTargetDialog.baml
