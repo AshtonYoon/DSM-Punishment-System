@@ -775,7 +775,7 @@
                         <ColumnDefinition Width="0.9*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="55,30,40,46" Click="Click_OK" Height="50"
+                    <Button Grid.Column="0" Margin="55,30,40,46" Click="EditButton_Click" Height="50"
                             Cursor="Hand" Width="130" FontFamily="/Font/#NanumSquareRound Bold">
                         <Button.Template>
                             <ControlTemplate>
@@ -790,7 +790,7 @@
                     </Button>
                     <Button Grid.Column="1" Margin="10,30,111,46"
                             Height="50" Width="130"
-                            Foreground="White" Cursor="Hand" Click="Click_Cancel">
+                            Foreground="White" Cursor="Hand" Click="DelButton_Click" >
                         <Button.Template>
                             <ControlTemplate>
                                 <Border CornerRadius="25" Background="#675094">

@@ -57,7 +57,7 @@
                                 </Grid>
                             </BulletDecorator.Bullet>
                             <!--Text element-->
-                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
+                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="/Font/#NanumSquareRound Bold" FontSize="12">
                                 <ContentPresenter />
                             </TextBlock>
                         </BulletDecorator>
@@ -530,26 +530,22 @@
             </ListView.View>
         </ListView>
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Vertical" Margin="30">
-            <RadioButton
-                Checked="RadioButton_Checked" Content="전체" Height="35" IsChecked="True" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="전체" Height="35" IsChecked="True" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton
-                Checked="RadioButton_Checked" Content="1단계 대상자 조회" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="1단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton x:Name="SecondTarget"
-                         Checked="RadioButton_Checked" Content="2단계 대상자 조회" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="2단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton
-                Checked="RadioButton_Checked" Content="3단계 대상자 조회" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="3단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>

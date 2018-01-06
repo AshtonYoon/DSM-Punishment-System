@@ -89,7 +89,8 @@ namespace DormitoryGUI
                     name: student["name"].ToString(),
                     goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
                     badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                    currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString()))
+                    currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
+                    isSelected: false
                 ));
             }
 
@@ -255,7 +256,8 @@ namespace DormitoryGUI
                         name: student["name"].ToString(),
                         goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
                         badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
-                        currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : (int) student["penalty_training_status"])));
+                        currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : (int) student["penalty_training_status"]),
+                        isSelected: false));
                 }
             }
         }
@@ -295,11 +297,10 @@ namespace DormitoryGUI
                         classNumber: element.ClassNumber,
                         goodPoint: element.GoodPoint,
                         badPoint: element.BadPoint,
-                        currentStep: element.CurrentStep
+                        currentStep: element.CurrentStep,
+                        isSelected: false
                     )
                 );
-
-                SearchList.SelectedItems.Remove(element);
             }
 
             ResultList.ItemsSource = Deduplication(resultListCollection as IEnumerable<StudentListViewModel>);
@@ -331,11 +332,12 @@ namespace DormitoryGUI
 
         private void DeleteSelectedItem()
         {
-            // resultListCollection 중 IsChecked가 true 인 아이템 제거
+            // ResultList의 Selected 된 아이템 제거
 
             foreach (StudentListViewModel item in ResultList.SelectedItems)
             {
-                resultListCollection.Remove(item);
+
+                resultListCollection.Remove(item );
             }
 
             // 이후 이를 ResultList의 ItemSource에 대입하고 Refresh
@@ -470,12 +472,20 @@ namespace DormitoryGUI
             }
         }
 
-        private void Log_Click(object sender, RoutedEventArgs e)
+        private void WatchLogButton_Click(object sender, RoutedEventArgs e)
         {
-            var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
+            if (SearchList.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("잘못된 접근입니다");
+                return;
+            }
 
-            mainWindow.NavigatePage(
-                new PunishmentLogPage(
+            var target = (StudentListViewModel) SearchList.SelectedItems[0];
+
+            mainWindow.NavigatePage
+            (
+                new PunishmentLogPage
+                (
                     mainWindow: mainWindow,
                     id: target.ID,
                     name: target.Name,
@@ -491,14 +501,16 @@ namespace DormitoryGUI
         {
         }
 
-        private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ComboBoxItem target = (sender as ComboBox).SelectedItem as ComboBoxItem;
 
+            filter = target.Content.ToString();
+
+            if (listviewCollection != null)
+            {
+                Update();
+            }
         }
 
         private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)

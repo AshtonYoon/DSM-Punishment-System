@@ -1264,7 +1264,7 @@
                                 Foreground="White"
                                 FontSize="32"
                                 FontFamily="/Font/#NanumSquareRound ExtraBold"
-                                Click="AddButton_Click">
+                                Click="WatchLogButton_Click">
                                 <Button.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius"

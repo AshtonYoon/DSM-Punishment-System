@@ -23,6 +23,7 @@ namespace DormitoryGUI.View
     public partial class PointManageDialog : Window
     {
         private PunishmentList listviewCollection;
+        private PunishmentListViewModel selectedItem;
 
         private int pointType = (int)Info.POINT_TYPE.GOOD;
         public int PointType
@@ -95,8 +96,9 @@ namespace DormitoryGUI.View
 
                 PointName.Text = target.Name;
                 PointScore.Text = target.MinPoint.ToString();
-
                 PointTypeSwitch.PointType = pointType;
+
+                selectedItem = target;
             }
         }
 
@@ -119,7 +121,7 @@ namespace DormitoryGUI.View
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            int point = int.Parse(PointScore.Text) * PointTypeSwitch.PointType == 0 ? 1 : -1;
+            int point = int.Parse(PointScore.Text) * (PointTypeSwitch.PointType == 0 ? 1 : -1);
 
             var requestDict = new Dictionary<string, object>
             {
@@ -128,17 +130,56 @@ namespace DormitoryGUI.View
                 { "max_point", point }
             };
 
-            var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+            var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+
+            MessageBox.Show((HttpStatusCode)responseDict["status"] == HttpStatusCode.Created ? "항목 추가 성공" : "항목 추가 실패");
+
+            Update();
         }
 
-        private void Click_OK(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedItem == null)
+            {
+                MessageBox.Show("항목이 선택되지 않음");
+                return;
+            }
+
+            int point = int.Parse(PointScore.Text) * (PointTypeSwitch.PointType == 0 ? 1 : -1);
+
+            var requestDict = new Dictionary<string, object>
+            {
+                { "rule_id", selectedItem.ID },
+                { "name", PointName.Text },
+                { "min_point", point },
+                { "max_point", point }
+            };
+
+            var responseDict = Info.GenerateRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+
+            MessageBox.Show((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK ? "항목 수정 성공" : "항목 수정 실패");
+
+            Update();
         }
 
-        private void Click_Cancel(object sender, RoutedEventArgs e)
+        private void DelButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (selectedItem == null)
+            {
+                MessageBox.Show("항목이 선택되지 않음");
+                return;
+            }
+
+            var requestDict = new Dictionary<string, object>
+            {
+                { "rule_id", selectedItem.ID }
+            };
+
+            var responseDict = Info.GenerateRequest("DELETE", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+
+            MessageBox.Show((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK ? "항목 삭제 성공" : "항목 삭제 실패");
+
+            Update();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -83,6 +84,8 @@ namespace DormitoryGUI
             }
             catch (Exception e)
             {
+                MessageBox.Show(e.Message);
+
                 if (e is WebException)
                 {
                     responseDict["status"] = ((e as WebException).Response as HttpWebResponse)?.StatusCode;
