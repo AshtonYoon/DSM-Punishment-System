@@ -326,6 +326,7 @@
                     Value="#605794" />
             <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold" />
             <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="GridViewColumnHeader">
