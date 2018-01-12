@@ -99,6 +99,107 @@
                 </GradientStopCollection>
             </LinearGradientBrush.GradientStops>
         </LinearGradientBrush>
+        <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="White"
+                                BorderBrush="White"
+                                BorderThickness="0"
+                                CornerRadius="10"
+                                Height="30" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="DarkGray"
+                                BorderBrush="DarkGray"
+                                BorderThickness="0"
+                                CornerRadius="10"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="18" />
+                    <ColumnDefinition Width="0.00001*" />
+                    <ColumnDefinition MaxWidth="18" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.ColumnSpan="3"
+                        CornerRadius="10"
+                        Background="DarkGray" />
+
+                <RepeatButton Grid.Column="0"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Width="18"
+                              Command="ScrollBar.LineLeftCommand"
+                              Content="M 4 0 L 4 8 L 0 4 Z" />
+
+                <Track x:Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}"
+                                      Command="ScrollBar.PageLeftCommand" />
+                    </Track.DecreaseRepeatButton>
+
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource ScrollBarThumbStyle}" 
+                               Margin="0,1,0,1" />
+                    </Track.Thumb>
+
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}" 
+                                      Command="ScrollBar.PageRightCommand" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+
+                <RepeatButton Grid.Column="2"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Width="18" 
+                              Command="ScrollBar.LineRightCommand"
+                              Content="M 0 0 L 4 4 L 0 8 Z" />
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MaxHeight="18" />
+                    <RowDefinition Height="0.00001*" />
+                    <RowDefinition Height="18" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.RowSpan="3"
+                        CornerRadius="10"
+                        Background="DarkGray" />
+
+                <RepeatButton Grid.Row="0"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Height="18"
+                              Command="ScrollBar.LineUpCommand"
+                              Content="M 4 0 L 4 8 L 0 4 Z" />
+
+                <RepeatButton Grid.Row="3"
+                              Style="{StaticResource ScrollBarPageButtonStyle}"
+                              Height="18" 
+                              Command="ScrollBar.LineDownCommand"
+                              Content="M 0 0 L 4 4 L 0 8 Z" />
+            </Grid>
+        </ControlTemplate>
         <Style x:Key="{x:Static GridView.GridViewScrollViewerStyleKey}"
                TargetType="ScrollViewer">
             <Setter Property="Template">
@@ -155,14 +256,16 @@
                                        Maximum="{TemplateBinding ScrollableWidth}"
                                        ViewportSize="{TemplateBinding ViewportWidth}"
                                        Value="{TemplateBinding HorizontalOffset}"
-                                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+                                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                       Template="{StaticResource HorizontalScrollBar}"/>
                             <ScrollBar Name="PART_VerticalScrollBar"
                                        Background="Transparent"
                                        Grid.Column="1"
                                        Maximum="{TemplateBinding ScrollableHeight}"
                                        ViewportSize="{TemplateBinding ViewportHeight}"
                                        Value="{TemplateBinding VerticalOffset}"
-                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                                       Template="{StaticResource VerticalScrollBar}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -214,12 +317,14 @@
         </Style>
         <Style x:Key="{x:Type GridViewColumnHeader}"
                TargetType="GridViewColumnHeader">
+            <Setter Property="Height" Value="50" />
             <Setter Property="HorizontalContentAlignment"
-                    Value="Left" />
+                    Value="Center" />
             <Setter Property="VerticalContentAlignment"
                     Value="Center" />
             <Setter Property="Foreground"
                     Value="#605794" />
+            <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold" />
             <Setter Property="FontSize" Value="25" />
             <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold"/>
             <Setter Property="Template">
@@ -350,12 +455,17 @@
         </Style>
         <Style x:Key="{x:Type ListViewItem}"
                TargetType="ListViewItem">
+            <Setter Property="Height" Value="50" />
             <Setter Property="SnapsToDevicePixels"
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
                     Value="true" />
             <Setter Property="HorizontalContentAlignment"
                     Value="Center" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+            <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold" />
+            <Setter Property="FontSize" Value="25" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -397,6 +507,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
     </Window.Resources>
     <Grid Margin="30">
         <Grid.ColumnDefinitions>
@@ -420,26 +531,22 @@
             </ListView.View>
         </ListView>
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Vertical" Margin="30">
-            <RadioButton
-                Checked="RadioButton_Checked" Content="전체" Height="35" IsChecked="True" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="전체" Height="35" IsChecked="True" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton
-                Checked="RadioButton_Checked" Content="1단계 대상자 조회" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="1단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton x:Name="SecondTarget"
-                         Checked="RadioButton_Checked" Content="2단계 대상자 조회" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="2단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton
-                Checked="RadioButton_Checked" Content="3단계 대상자 조회" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Content="3단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>

@@ -133,7 +133,7 @@
         <Style x:Key="{x:Type ComboBox}"
                TargetType="{x:Type ComboBox}">
             <Setter Property="Foreground"
-                    Value="White" />
+                    Value="DarkGray" />
             <Setter Property="SnapsToDevicePixels"
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
@@ -204,7 +204,7 @@
                                      Style="{x:Null}"
                                      Template="{StaticResource ComboBoxTextBox}"
                                      HorizontalAlignment="Left"
-                                     VerticalAlignment="Bottom"
+                                     VerticalAlignment="Center"
                                      Margin="3,3,23,3"
                                      Focusable="True"
                                      Background="Transparent"
@@ -289,7 +289,7 @@
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
                                                 <EasingColorKeyFrame KeyTime="0"
-                                                                     Value="{StaticResource SelectedBackgroundColor}" />
+                                                                     Value="White" />
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -298,7 +298,7 @@
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
                                                 <EasingColorKeyFrame KeyTime="0"
-                                                                     Value="{StaticResource SelectedUnfocusedColor}" />
+                                                                     Value="White" />
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
