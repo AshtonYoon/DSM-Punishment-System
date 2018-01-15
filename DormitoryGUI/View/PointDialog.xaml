@@ -3,15 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"                                                                                                                                                                                                                                                                                                                  
-        WindowStyle="None"
         xmlns:local="clr-namespace:DormitoryGUI.View"
         xmlns:viewmodel="clr-namespace:DormitoryGUI.ViewModel"
         xmlns:dormitoryGui="clr-namespace:DormitoryGUI"
         mc:Ignorable="d"
-        Height="300" Width="300"
+        Height="360" Width="360"
         WindowStartupLocation="CenterScreen"
-        Background="White"
-        Title="CustomDialog">
+        WindowStyle="None"
+        Background="White">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -73,7 +72,7 @@
                             <TextBlock Text="확인" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       FontSize="13" />
+                                       FontSize="20" />
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
@@ -86,7 +85,7 @@
                             <TextBlock Text="취소" Foreground="White"
                                        HorizontalAlignment="Center"   FontFamily="/Font/#NanumSquareRound Bold"                                    
                                        VerticalAlignment="Center"
-                                       FontSize="13" />
+                                       FontSize="20" />
                         </Border>
                     </ControlTemplate>
                 </Button.Template>

@@ -204,8 +204,8 @@
                                               Content="{TemplateBinding SelectionBoxItem}"
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                              Margin="12.5,4,23,3"
-                                              VerticalAlignment="Stretch"
+                                              Margin="15, 0"
+                                              VerticalAlignment="Center"
                                               HorizontalAlignment="Left" />
                             <TextBox x:Name="PART_EditableTextBox"
                                      Style="{x:Null}"
@@ -236,8 +236,7 @@
                                             <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
                                         </Border.Background>
                                     </Border>
-                                    <ScrollViewer Margin="4,6,4,6"
-                                                  SnapsToDevicePixels="True">
+                                    <ScrollViewer SnapsToDevicePixels="True">
                                         <StackPanel IsItemsHost="True"
                                                     KeyboardNavigation.DirectionalNavigation="Contained" />
                                     </ScrollViewer>
@@ -281,6 +280,12 @@
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
                     Value="true" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="Margin"
+                    Value="20, 15" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
@@ -560,8 +565,10 @@
                     Value="Center" />
             <Setter Property="Foreground"
                     Value="#675094" />
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold" />
+            <Setter Property="FontFamily" 
+                    Value="/Font/#NanumSquareRound ExtraBold"/>
+            <Setter Property="FontSize" 
+                    Value="22"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="GridViewColumnHeader">
@@ -582,7 +589,7 @@
                                                   Margin="0,0,0,1"
                                                   RecognizesAccessKey="True"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  HorizontalAlignment="Left"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
                             <Thumb x:Name="PART_HeaderGripper"
@@ -696,11 +703,11 @@
             <Setter Property="OverridesDefaultStyle"
                     Value="true" />
             <Setter Property="HorizontalContentAlignment"
-                    Value="Left" />
+                    Value="Center" />
             <Setter Property="VerticalContentAlignment"
                     Value="Center" />
             <Setter Property="Foreground" Value="#000" />
-            <Setter Property="FontFamily" Value="/Font/#NanumSquare Round" />
+            <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -751,25 +758,39 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Grid Column="0">
+            
+            <Grid Grid.Column="0" Margin="0, 0, 20, 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.6*" />
-                    <RowDefinition Height="0.6*" />
-                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="5.5*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <Label Foreground="#675094" Content="상벌점 항목 관리" FontSize="25" Grid.Row="0"
-                       FontFamily="/Font/#NanumSquareRound Bold" />
-                <ComboBox Grid.Row="1" FontFamily="/Font/#NanumSquareRound Bold"
-                          Margin="30,3,0, 0" Width="90" Height="25" HorizontalAlignment="Left"
+
+                <Label Grid.Row="0" 
+                       Content="상벌점 항목 관리" 
+                       Foreground="#675094"
+                       FontFamily="/Font/#NanumSquareRound Bold"
+                       FontSize="25"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center"/>
+
+                <ComboBox Grid.Row="1" Margin="150, 15, 150, 35"
+                          FontFamily="/Font/#NanumSquareRound Bold"
+                          HorizontalAlignment="Stretch"
                           SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem Content="상점" IsSelected="True" FontFamily="/Font/#NanumSquareRound Bold" />
                     <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
                 </ComboBox>
+                <Border Grid.Row="2" 
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        CornerRadius="10"/>
                 <ListView x:Name="PointList"
                           Grid.Row="2"
-                          Background="#FFF" Margin="30,0"
+                          Background="#FFF"
                           BorderThickness="0" FontFamily="/Font/#NanumSquareRound Bold"
+                          Margin="12"
                           SizeChanged="SearchList_SizeChanged"
                           SelectionChanged="SearchList_SelectionChanged"
                           ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}">
@@ -790,11 +811,11 @@
                 </ListView>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.9*" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="55,30,40,46" Click="EditButton_Click" Height="50"
-                            Cursor="Hand" Width="130" FontFamily="/Font/#NanumSquareRound Bold">
+                    <Button Grid.Column="0" Click="EditButton_Click" Margin="30, 35"
+                            Cursor="Hand" FontFamily="/Font/#NanumSquareRound Bold">
                         <Button.Template>
                             <ControlTemplate>
                                 <Border CornerRadius="25" Background="#675094">
@@ -806,8 +827,7 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button Grid.Column="1" Margin="10,30,111,46"
-                            Height="50" Width="130"
+                    <Button Grid.Column="1"  Margin="30, 35"
                             Foreground="White" Cursor="Hand" Click="DelButton_Click">
                         <Button.Template>
                             <ControlTemplate>
@@ -830,7 +850,7 @@
                         <RowDefinition Height="3*" />
                         <RowDefinition Height="2*" />
                     </Grid.RowDefinitions>
-                    <local:CustomSwitch x:Name="PointTypeSwitch" Height="75" Width="200" Grid.Row="0" VerticalAlignment="Top" />
+                    <local:CustomSwitch x:Name="PointTypeSwitch" Margin="75, 25" />
                     <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" Margin="15">
                         <TextBox x:Name="PointName" Height="55" Background="Transparent" Foreground="White"
                                  VerticalContentAlignment="Center" Padding="40,0,40,0"
