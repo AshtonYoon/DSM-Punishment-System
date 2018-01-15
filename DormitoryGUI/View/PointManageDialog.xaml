@@ -106,9 +106,9 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="Border"
                         Grid.ColumnSpan="2"
-                        CornerRadius="10"
+                        CornerRadius="20"
                         BorderThickness="1"
-                        BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                        BorderBrush="Black"
                         Background="Transparent" />
                 <Border Grid.Column="0"
                         CornerRadius="10,0,0,10"
@@ -563,7 +563,7 @@
                                                   Margin="0,0,0,1"
                                                   RecognizesAccessKey="True"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  HorizontalAlignment="Left"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
                             <Thumb x:Name="PART_HeaderGripper"
@@ -677,10 +677,10 @@
             <Setter Property="OverridesDefaultStyle"
                     Value="true" />
             <Setter Property="HorizontalContentAlignment"
-                    Value="Center" />
+                    Value="Left" />
             <Setter Property="VerticalContentAlignment"
                     Value="Center" />
-            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="Foreground" Value="#000" />
             <Setter Property="FontFamily" Value="/Font/#NanumSquare Round" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="Template">
@@ -738,15 +738,18 @@
                     <RowDefinition Height="6.5*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <ComboBox Grid.Row="0" FontFamily="/Font/#NanumSquareRound Bold"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                          FontSize="25"
-                          Margin="40, 0, 40, 0"
-                          Padding="2"
-                          SelectionChanged="ComboBox_SelectionChanged">
-                    <ComboBoxItem Content="상점" FontFamily="/Font/#NanumSquareRound Bold" IsSelected="True" />
-                    <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
-                </ComboBox>
+                <Grid Row="0">
+                    
+                    <ComboBox Grid.Row="0" FontFamily="/Font/#NanumSquareRound Bold"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                              FontSize="25"
+                              Margin="30,47,303,10"
+                              Padding="2"
+                              SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBoxItem Content="상점" FontFamily="/Font/#NanumSquareRound Bold" IsSelected="True" />
+                        <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
+                    </ComboBox>
+                </Grid>
                 <ListView x:Name="PointList"
                           Grid.Row="1"
                           Background="#FFF"

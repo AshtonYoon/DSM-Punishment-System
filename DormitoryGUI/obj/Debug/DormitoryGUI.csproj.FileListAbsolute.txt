@@ -108,3 +108,5 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\Dorm
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PunishmentLogDialog.g.cs
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\PunishmentLogDialog.baml
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PunishmentLogDialog.g.cs
+E:\Develop\Project\DMS_C#\DormitoryGUI\obj\Debug\View\PunishmentLogDialog.baml
