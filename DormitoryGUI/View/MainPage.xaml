@@ -1253,5 +1253,11 @@
                 </Grid>
             </Grid>
         </Grid>
+        <Border x:Name="OpacityBox"
+                Grid.Column="0"
+                Grid.ColumnSpan="2" 
+                Background="Black"
+                Visibility="Hidden"
+                Opacity="0.5"/>
     </Grid>
 </Page>

@@ -198,7 +198,7 @@
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                               TextElement.FontFamily="/Font/#NanumSquareRound Bold"
-                                              Margin="15, 0"
+                                              Margin="20, 0"
                                               VerticalAlignment="Center"
                                               HorizontalAlignment="Left" />
                             <TextBox x:Name="PART_EditableTextBox"
@@ -231,7 +231,7 @@
                                             <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
                                         </Border.Background>
                                     </Border>
-                                    <ScrollViewer Margin="4,6,4,6"
+                                    <ScrollViewer Margin="0, 5" 
                                                   SnapsToDevicePixels="True">
                                         <StackPanel IsItemsHost="True"
                                                     KeyboardNavigation.DirectionalNavigation="Contained" />
@@ -259,7 +259,7 @@
                                         Value="30" />
                                 <Setter TargetName="DropDownBorder"
                                         Property="Margin"
-                                        Value="0,2,0,0" />
+                                        Value="0, 1.5, 0, 0" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -281,14 +281,13 @@
             <Setter Property="VerticalAlignment" 
                     Value="Center"/>
             <Setter Property="Margin" 
-                    Value="15, 10" />
+                    Value="20, 15" />
             <Setter Property="TextElement.FontFamily" 
                     Value="/Font/#NanumSquareRound Bold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border x:Name="Border"
-                                Margin="3, 3, 3, 3"
                                 SnapsToDevicePixels="true"
                                 Background="Transparent">
                             <VisualStateManager.VisualStateGroups>

@@ -49,12 +49,12 @@ namespace DormitoryGUI
 
             PunishmentList.Click += (s, e) => {
                 PointManageDialog pointManageDialog = new PointManageDialog();
-                pointManageDialog.ShowDialog();
+                ShowModal(pointManageDialog);
             };
 
             CheckTarget.Click += (s, e) => {
                 PunishmentTargetDialog punishmentTargetDialog = new PunishmentTargetDialog();
-                punishmentTargetDialog.ShowDialog();
+                ShowModal(punishmentTargetDialog);
             };
 
             Update();
@@ -102,7 +102,7 @@ namespace DormitoryGUI
         {
             PointDialog pointDialog = new PointDialog(PointTypeSwitch.PointType);
 
-            if (!(bool)pointDialog.ShowDialog())
+            if (!(bool)ShowModal(pointDialog))
             {
                 return;
             }
@@ -343,6 +343,17 @@ namespace DormitoryGUI
             ResultList.Items.Refresh();
         }
 
+        private bool? ShowModal(Window modal)
+        {
+            OpacityBox.Visibility = Visibility.Visible;
+
+            var result = modal.ShowDialog();
+
+            OpacityBox.Visibility = Visibility.Hidden;
+
+            return result;
+        }
+
         private void GradeCombobox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             filter = (sender as ComboBoxItem).Content.ToString();
@@ -368,12 +379,7 @@ namespace DormitoryGUI
                 SearchList.SelectedItems.Remove(item);
             }
         }
-
-        private void Permission_Click(object sender, RoutedEventArgs e)
-        {
-            mainWindow.NavigatePage(new PermissionManagementPage(mainWindow));
-        }
-
+        
         private void DownloadExcel_Click(object sender, RoutedEventArgs e)
         {
             var saveFileDialog = new SaveFileDialog()
@@ -489,7 +495,7 @@ namespace DormitoryGUI
                     currentStep: target.CurrentStep
                 );
 
-            punishmentLogDialog.ShowDialog();
+            ShowModal(punishmentLogDialog);
         }
 
         private void SearchCommand_TextChanged(object sender, TextChangedEventArgs e)
