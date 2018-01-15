@@ -9,7 +9,7 @@
       xmlns:view="clr-namespace:DormitoryGUI.View"
       mc:Ignorable="d"
       d:DesignWidth="1920"
-      d:DesignHeight="1080"
+      d:DesignHeight="1065"
       Title="메인">
     <Page.Resources>
         <viewmodel:StudentList x:Key="StudentListKey" />
@@ -72,9 +72,9 @@
         </LinearGradientBrush>
         <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
@@ -88,11 +88,10 @@
             </Setter>
         </Style>
         <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
-            <Setter Property="Background" Value="White" />
             <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -824,8 +823,8 @@
                RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleX="1.1"
-                                    ScaleY="1.1" />
+                    <ScaleTransform ScaleX="1.0"
+                                    ScaleY="1.0" />
                     <SkewTransform />
                     <RotateTransform />
                     <TranslateTransform />
@@ -907,79 +906,21 @@
                   Background="#695094"
                   Margin="20, 0, 20, 10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="67" />
-                    <ColumnDefinition Width="83.4"/>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <view:CustomSwitch x:Name="PointTypeSwitch" 
                                    Grid.Column="0"
-                                   Width="225"
-                                   Height="75"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
-                <!--<Grid x:Name="FirstGrid"
-                      Margin="10,0,0,0.4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <StackPanel x:Name="ScoreCategory"
-                                Grid.Row="1"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left">
-                        <RadioButton x:Name="Good"
-                                     Content="상점"
-                                     Foreground="White"
-                                     VerticalAlignment="Center"
-                                     BorderBrush="White" />
-                        <RadioButton x:Name="Bad"
-                                     Content="벌점"
-                                     Foreground="White"
-                                     Margin="20,0,0,0"
-                                     VerticalAlignment="Center"
-                                     BorderBrush="White" />
-                    </StackPanel>
-                </Grid>
-                <Grid x:Name="SecondGrid"
-                      Opacity="0"
-                      Margin="40, 0, 0, 0"
-                      Panel.ZIndex="-1"
-                      Visibility="Hidden">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Content="항목을 선택해주세요"
-                           Foreground="White"
-                           VerticalAlignment="Top"
-                           Margin="0, 0, 0, -2" />
-                    <view:CustomComboBox x:Name="PunishmentComboBox"
-                                         Grid.Row="1" />
-                </Grid>
-                <Grid x:Name="ThirdGrid"
-                      Opacity="0"
-                      Margin="40, 0, 0, 0"
-                      Panel.ZIndex="-2"
-                      Visibility="Hidden">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Content="점수를 선택해주세요"
-                           Foreground="White"
-                           VerticalAlignment="Top"
-                           Margin="0, 0, 0, -2" />
-                    <view:CustomSlider x:Name="PunishmentSlider"
-                                       Grid.Row="1" />
-                </Grid>-->
+                                   Margin="20, 10"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"/>
                 <Button x:Name="ApplyPointButton"
                         Grid.Column="1"
                         Background="White"
                         BorderThickness="1"
                         Margin="20, 10, 27, 5"
                         BorderBrush="White"
-                        Click="ApplyPointButton_Click" Grid.ColumnSpan="2" >
+                        Click="ApplyPointButton_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius"
@@ -1182,7 +1123,7 @@
                                       Margin="0, 10, 0, 0"
                                       FontSize="25"
                                       SelectionChanged="ComboBox_SelectionChanged">
-                                <ComboBoxItem Content="전체" IsSelected="True" />
+                                <ComboBoxItem Content="전체" IsSelected="True" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                 <ComboBoxItem Content="1학년" />
                                 <ComboBoxItem Content="2학년" />
                                 <ComboBoxItem Content="3학년" />
@@ -1276,14 +1217,14 @@
                                       Grid.Column="2" 
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      Margin="0, 0, 50, 0"
+                                      Margin="0, 0, 20, 0"
                                       Checked="SelectAllCheck_Checked"
                                       Unchecked="SelectAllCheck_Unchecked">
                                 <TextBlock Text="전체선택"
                                            FontFamily="/Font/#NanumSquareRound Bold"
                                            Margin="7.5, 0, 0, 0"/>
                                 <CheckBox.LayoutTransform>
-                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                    <ScaleTransform ScaleX="1.75" ScaleY="1.75"/>
                                 </CheckBox.LayoutTransform>
                             </CheckBox>
                         </Grid>

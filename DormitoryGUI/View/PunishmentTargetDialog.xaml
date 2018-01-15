@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DormitoryGUI.View"
         xmlns:viewModel="clr-namespace:DormitoryGUI.ViewModel"
         mc:Ignorable="d"
-        Title="PunishmentTargetDialog" Height="700" Width="1000">
+        Title="다벌점 교육 대상자 조회" Height="600" Width="800">
     <Window.Resources>
         <viewModel:PunishmentList x:Key="PunishmentGoodListKey" />
         <viewModel:PunishmentList x:Key="PunishmentBadListKey" />
@@ -511,8 +511,8 @@
     </Window.Resources>
     <Grid Margin="30">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <ListView x:Name="StudentList"
                   Margin="10"

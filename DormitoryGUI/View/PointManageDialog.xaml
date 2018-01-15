@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:DormitoryGUI.ViewModel"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="PointManageDialog" Height="700" Width="1000">
+        Title="상벌점 항목 관리" Height="700" Width="1000">
     <Window.Resources>
         <viewModel:PunishmentList x:Key="PunishmentListKey" />
         <!--Control colors.-->
@@ -318,16 +318,16 @@
         <!--Control colors.-->
         <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Setter Property="IsTabStop" Value="false"/>
             <Setter Property="Focusable" Value="false"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
                         <Border Background="White"
-                                BorderBrush="White"
-                                BorderThickness="0"
-                                CornerRadius="10"
+                                BorderBrush="LightGray"
+                                BorderThickness="1"
+                                CornerRadius="5"
                                 Height="30" />
                     </ControlTemplate>
                 </Setter.Value>
@@ -376,7 +376,7 @@
 
                     <Track.Thumb>
                         <Thumb Style="{StaticResource ScrollBarThumbStyle}" 
-                               Margin="0,1,0,1" />
+                               Margin="0,0,0,0" />
                     </Track.Thumb>
 
                     <Track.IncreaseRepeatButton>
@@ -734,23 +734,23 @@
             </Grid.ColumnDefinitions>
             <Grid Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="6.5*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <Label Foreground="#675094" Content="상벌점 항목 관리" FontSize="25" Grid.Row="0"
-                       FontFamily="/Font/#NanumSquareRound Bold" />
-                <ComboBox Grid.Row="1" FontFamily="/Font/#NanumSquareRound Bold"
-                          Margin="30,3,0,5" Width="90" Height="25" HorizontalAlignment="Left"
+                <ComboBox Grid.Row="0" FontFamily="/Font/#NanumSquareRound Bold"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                          FontSize="25"
+                          Margin="40, 0, 40, 0"
+                          Padding="2"
                           SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem Content="상점" FontFamily="/Font/#NanumSquareRound Bold" IsSelected="True" />
                     <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
                 </ComboBox>
                 <ListView x:Name="PointList"
-                          Grid.Row="2"
+                          Grid.Row="1"
                           Background="#FFF"
-                          Margin="30,0"
+                          Margin="40,0"
                           BorderThickness="0" FontFamily="/Font/#NanumSquareRound Bold"
                           SizeChanged="SearchList_SizeChanged"
                           SelectionChanged="SearchList_SelectionChanged"
@@ -770,12 +770,13 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="2"
+                      Margin="40, 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.9*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="55,30,40,46" Click="EditButton_Click" Height="50"
+                    <Button Grid.Column="0" Margin="0" Click="EditButton_Click" Height="50"
                             Cursor="Hand" Width="130" FontFamily="/Font/#NanumSquareRound Bold">
                         <Button.Template>
                             <ControlTemplate>
@@ -788,7 +789,7 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button Grid.Column="1" Margin="10,30,111,46"
+                    <Button Grid.Column="1" Margin="0"
                             Height="50" Width="130"
                             Foreground="White" Cursor="Hand" Click="DelButton_Click" >
                         <Button.Template>
@@ -815,7 +816,9 @@
                     <local:CustomSwitch x:Name="PointTypeSwitch" Height="75" Width="200" Grid.Row="0" VerticalAlignment="Top" />
                     <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" Margin="15">
                         <TextBox x:Name="PointName" Height="55" Background="Transparent" Foreground="White"
-                                 VerticalContentAlignment="Center" Padding="20,0,0,0"
+                                 VerticalContentAlignment="Center" Padding="40,0,40,0"
+                                 FontFamily="/Font/#NanumSquareRound Bold"
+                                 Text="항목명"
                                  FontSize="25">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">

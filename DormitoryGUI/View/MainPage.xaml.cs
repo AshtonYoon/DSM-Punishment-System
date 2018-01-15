@@ -107,9 +107,6 @@ namespace DormitoryGUI
                 return;
             }
 
-            MessageBox.Show(pointDialog.PunishmentID.ToString());
-            MessageBox.Show(pointDialog.PunishmentScore.ToString());
-
             bool operationComplete = true;
 
             foreach (StudentListViewModel student in resultListCollection)
@@ -176,7 +173,7 @@ namespace DormitoryGUI
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
         }
 
-        private void HideAnimation(Panel target)
+        /* private void HideAnimation(Panel target)
         {
             var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
 
@@ -236,7 +233,7 @@ namespace DormitoryGUI
 
             target.Visibility = Visibility.Visible;
             HideStoryBoard.Begin();
-        }
+        } */
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -312,6 +309,7 @@ namespace DormitoryGUI
         private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
         {
             var parent = VisualTreeHelper.GetParent(child);
+
             if (parent != null && !(parent is T))
                 return GetAncestorOfType<T>((FrameworkElement) parent);
 
@@ -336,8 +334,7 @@ namespace DormitoryGUI
 
             foreach (StudentListViewModel item in ResultList.SelectedItems)
             {
-
-                resultListCollection.Remove(item );
+                resultListCollection.Remove(item);
             }
 
             // 이후 이를 ResultList의 ItemSource에 대입하고 Refresh
@@ -482,19 +479,17 @@ namespace DormitoryGUI
 
             var target = (StudentListViewModel) SearchList.SelectedItems[0];
 
-            mainWindow.NavigatePage
-            (
-                new PunishmentLogPage
-                (
-                    mainWindow: mainWindow,
+            var punishmentLogDialog =
+                new PunishmentLogDialog (
                     id: target.ID,
                     name: target.Name,
                     classNumber: target.ClassNumber,
                     goodPoint: target.GoodPoint,
                     badPoint: target.BadPoint,
                     currentStep: target.CurrentStep
-                )
-            );
+                );
+
+            punishmentLogDialog.ShowDialog();
         }
 
         private void SearchCommand_TextChanged(object sender, TextChangedEventArgs e)
@@ -515,7 +510,6 @@ namespace DormitoryGUI
 
         private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
 }

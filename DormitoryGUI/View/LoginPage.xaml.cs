@@ -33,8 +33,6 @@ namespace DormitoryGUI
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-//            PunishmentTargetDialog dialog = new PunishmentTargetDialog();
-//            dialog.ShowDialog();
             var requestDict = new Dictionary<string, object>
             {
                  { "id", ID.Text },
