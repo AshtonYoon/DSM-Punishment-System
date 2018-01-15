@@ -761,15 +761,14 @@
                 <Label Foreground="#675094" Content="상벌점 항목 관리" FontSize="25" Grid.Row="0"
                        FontFamily="/Font/#NanumSquareRound Bold" />
                 <ComboBox Grid.Row="1" FontFamily="/Font/#NanumSquareRound Bold"
-                          Margin="30,3,0,3" Width="90" Height="25" HorizontalAlignment="Left"
+                          Margin="30,3,0, 0" Width="90" Height="25" HorizontalAlignment="Left"
                           SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBoxItem Content="상점" IsSelected="True" FontFamily="/Font/#NanumSquareRound Bold" />
                     <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
                 </ComboBox>
                 <ListView x:Name="PointList"
                           Grid.Row="2"
-                          Background="#FFF"
-Margin="30,0"
+                          Background="#FFF" Margin="30,0"
                           BorderThickness="0" FontFamily="/Font/#NanumSquareRound Bold"
                           SizeChanged="SearchList_SizeChanged"
                           SelectionChanged="SearchList_SelectionChanged"
@@ -799,7 +798,7 @@ Margin="30,0"
                         <Button.Template>
                             <ControlTemplate>
                                 <Border CornerRadius="25" Background="#675094">
-                                    <TextBlock Text="확인" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
+                                    <TextBlock Text="수정" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                FontSize="24" />
