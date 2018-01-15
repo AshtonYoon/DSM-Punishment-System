@@ -203,9 +203,9 @@
                             <TextBox x:Name="PART_EditableTextBox"
                                      Style="{x:Null}"
                                      Template="{StaticResource ComboBoxTextBox}"
-                                     HorizontalAlignment="Left"
+                                     HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Margin="3,3,23,3"
+                                     Margin="3"
                                      Focusable="True"
                                      Background="Transparent"
                                      Visibility="Hidden"
@@ -221,6 +221,7 @@
                                       MinWidth="{TemplateBinding ActualWidth}"
                                       MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                     <Border x:Name="DropDownBorder"
+                                            CornerRadius="15"
                                             BorderThickness="1">
                                         <Border.BorderBrush>
                                             <SolidColorBrush Color="#555" />
@@ -314,6 +315,7 @@
     <Grid>
         <ComboBox x:Name="comboBox"
                   ItemsSource="{Binding Source={StaticResource PunishmentListKey}}"
-                  DisplayMemberPath="Name" SelectionChanged="comboBox_SelectionChanged" />
+                  DisplayMemberPath="Name" SelectionChanged="comboBox_SelectionChanged" >
+        </ComboBox>
     </Grid>
 </UserControl>

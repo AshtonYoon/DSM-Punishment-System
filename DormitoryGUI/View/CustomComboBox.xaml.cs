@@ -78,11 +78,16 @@ namespace DormitoryGUI.View
                     continue;
                 }
 
-                punishmentList.Add(new PunishmentListViewModel(
-                id: rule["id"].ToString(),
-                name: rule["name"].ToString(),
-                minPoint: Math.Abs(minPoint),
-                maxPoint: Math.Abs(minPoint)));
+                punishmentList.Add
+                (
+                    new PunishmentListViewModel
+                    (
+                        id: rule["id"].ToString(),
+                        name: rule["name"].ToString(),
+                        minPoint: Math.Abs(minPoint),
+                        maxPoint: Math.Abs(minPoint)
+                    )
+                );
             }
         }
 

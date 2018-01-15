@@ -8,8 +8,8 @@
         Width="1920"
         Height="1080"
         Title="MainWindow"
-        WindowState="Maximized"
-        WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
+        WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>

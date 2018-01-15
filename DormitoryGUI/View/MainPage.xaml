@@ -592,6 +592,7 @@
                     Value="120" />
             <Setter Property="MinHeight"
                     Value="20" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -603,8 +604,7 @@
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_EditableTextBox"
-                                                                          Storyboard.TargetProperty="(TextElement.Foreground).
-                      (SolidColorBrush.Color)">
+                                                                          Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
                                                 <EasingColorKeyFrame KeyTime="0"
                                                                      Value="{StaticResource DisabledForegroundColor}" />
                                             </ColorAnimationUsingKeyFrames>
@@ -641,9 +641,9 @@
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                               TextElement.FontFamily="/Font/#NanumSquareRound Bold"
-                                              Margin="3, 3, 40, 3"
+                                              Margin="3, 3, 0, 3"
                                               VerticalAlignment="Stretch"
-                                              HorizontalAlignment="Right"></ContentPresenter>
+                                              HorizontalAlignment="Center"></ContentPresenter>
                             
                             <TextBox x:Name="PART_EditableTextBox"
                                      Style="{x:Null}"
@@ -721,15 +721,19 @@
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
                     Value="true" />
-            <Setter Property="HorizontalContentAlignment" 
-                    Value="Center" />
+            <Setter Property="HorizontalAlignment" 
+                    Value="Center"/>
+            <Setter Property="VerticalAlignment" 
+                    Value="Center"/>
+            <Setter Property="Margin" 
+                    Value="0, 10" />
             <Setter Property="TextElement.FontFamily" 
                     Value="/Font/#NanumSquareRound Bold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border x:Name="Border"
-                                Margin="3, 3, 40, 3"
+                                Margin="3, 3, 3, 3"
                                 SnapsToDevicePixels="true"
                                 Background="Transparent">
                             <VisualStateManager.VisualStateGroups>
@@ -1187,9 +1191,9 @@
                         <Grid Grid.Row="3" 
                               Margin="9">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4*" />
-                                <ColumnDefinition Width="4*" />
                                 <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
 
                             <Button x:Name="AddButton"
@@ -1232,9 +1236,9 @@
                             </Button>
                             <CheckBox x:Name="SelectAllCheck"
                                       Grid.Column="2" 
-                                      HorizontalAlignment="Center"
+                                      HorizontalAlignment="Left"
                                       VerticalAlignment="Center"
-                                      Margin="0, 0, 20, 0"
+                                      Margin="0, 0, 0, 0"
                                       Checked="SelectAllCheck_Checked"
                                       Unchecked="SelectAllCheck_Unchecked">
                                 <TextBlock Text="전체선택"

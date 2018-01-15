@@ -36,8 +36,14 @@
             </local:CustomComboBox.Style>
         </local:CustomComboBox>
 
-        <Label Grid.Row="2" FontSize="30" VerticalAlignment="Center" HorizontalContentAlignment="Right" FontFamily="/Font/#NanumSquareRound Bold"
-               Padding="0,0,2,0" Foreground="#898989">
+        <Label Grid.Row="2" 
+               VerticalAlignment="Center" 
+               HorizontalContentAlignment="Right" 
+               FontFamily="/Font/#NanumSquareRound Bold" 
+               FontSize="30" 
+               Margin="15"
+               Padding="0,0,2,0" 
+               Foreground="#898989">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
