@@ -69,7 +69,7 @@
         </LinearGradientBrush>
         <ControlTemplate x:Key="ComboBoxToggleButton"
                          TargetType="{x:Type ToggleButton}">
-            <Grid>
+            <Grid Cursor="Hand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="20" />
@@ -105,7 +105,7 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="Border"
                         Grid.ColumnSpan="2"
-                        CornerRadius="15"
+                        CornerRadius="22"
                         BorderThickness="1"
                         BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
                         Background="Transparent"></Border>
@@ -197,15 +197,16 @@
                                               Content="{TemplateBinding SelectionBoxItem}"
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                              Margin="3,3,23,3"
-                                              VerticalAlignment="Stretch"
-                                              HorizontalAlignment="Left"></ContentPresenter>
+                                              TextElement.FontFamily="/Font/#NanumSquareRound Bold"
+                                              Margin="15, 0"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left" />
                             <TextBox x:Name="PART_EditableTextBox"
                                      Style="{x:Null}"
                                      Template="{StaticResource ComboBoxTextBox}"
-                                     HorizontalAlignment="Center"
+                                     HorizontalAlignment="Left"
                                      VerticalAlignment="Center"
-                                     Margin="3"
+                                     Margin="15, 10"
                                      Focusable="True"
                                      Background="Transparent"
                                      Visibility="Hidden"
@@ -221,7 +222,7 @@
                                       MinWidth="{TemplateBinding ActualWidth}"
                                       MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                     <Border x:Name="DropDownBorder"
-                                            CornerRadius="15"
+                                            CornerRadius="30"
                                             BorderThickness="1">
                                         <Border.BorderBrush>
                                             <SolidColorBrush Color="#555" />
@@ -255,7 +256,7 @@
                                      Value="true">
                                 <Setter TargetName="DropDownBorder"
                                         Property="CornerRadius"
-                                        Value="4" />
+                                        Value="30" />
                                 <Setter TargetName="DropDownBorder"
                                         Property="Margin"
                                         Value="0,2,0,0" />
@@ -272,14 +273,22 @@
             <Setter Property="Foreground"
                     Value="#555" />
             <Setter Property="SnapsToDevicePixels"
-                    Value="true" />
+                    Value="True" />
             <Setter Property="OverridesDefaultStyle"
-                    Value="true" />
+                    Value="True" />
+            <Setter Property="HorizontalAlignment" 
+                    Value="Left"/>
+            <Setter Property="VerticalAlignment" 
+                    Value="Center"/>
+            <Setter Property="Margin" 
+                    Value="15, 10" />
+            <Setter Property="TextElement.FontFamily" 
+                    Value="/Font/#NanumSquareRound Bold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border x:Name="Border"
-                                Padding="2"
+                                Margin="3, 3, 3, 3"
                                 SnapsToDevicePixels="true"
                                 Background="Transparent">
                             <VisualStateManager.VisualStateGroups>
@@ -289,8 +298,7 @@
                                         <Storyboard>
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                <EasingColorKeyFrame KeyTime="0"
-                                                                     Value="White" />
+                                                <EasingColorKeyFrame KeyTime="0" Value="White" />
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -298,8 +306,7 @@
                                         <Storyboard>
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                <EasingColorKeyFrame KeyTime="0"
-                                                                     Value="White" />
+                                                <EasingColorKeyFrame KeyTime="0" Value="White" />
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -315,7 +322,19 @@
     <Grid>
         <ComboBox x:Name="comboBox"
                   ItemsSource="{Binding Source={StaticResource PunishmentListKey}}"
-                  DisplayMemberPath="Name" SelectionChanged="comboBox_SelectionChanged" >
+                  SelectionChanged="comboBox_SelectionChanged" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=Name}"/>
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="("/>
+                        <TextBlock Text="{Binding Path=MinPoint}"/>
+                        <TextBlock Text="점"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
     </Grid>
 </UserControl>

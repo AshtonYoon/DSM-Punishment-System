@@ -641,10 +641,10 @@
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                               TextElement.FontFamily="/Font/#NanumSquareRound Bold"
-                                              Margin="3, 3, 0, 3"
+                                              Margin="0, 3"
                                               VerticalAlignment="Stretch"
-                                              HorizontalAlignment="Center"></ContentPresenter>
-                            
+                                              HorizontalAlignment="Center" />
+
                             <TextBox x:Name="PART_EditableTextBox"
                                      Style="{x:Null}"
                                      Template="{StaticResource ComboBoxTextBox}"
