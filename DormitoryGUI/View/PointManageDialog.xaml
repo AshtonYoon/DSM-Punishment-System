@@ -106,7 +106,7 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="Border"
                         Grid.ColumnSpan="2"
-                        CornerRadius="20"
+                        CornerRadius="13"
                         BorderThickness="1"
                         BorderBrush="Black"
                         Background="Transparent" />
@@ -135,6 +135,8 @@
                TargetType="{x:Type ComboBox}">
             <Setter Property="Foreground"
                     Value="#000" />
+            <Setter Property="FontSize"
+                    Value="15"></Setter>
             <Setter Property="SnapsToDevicePixels"
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
@@ -145,6 +147,8 @@
                     Value="Auto" />
             <Setter Property="ScrollViewer.CanContentScroll"
                     Value="true" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
             <Setter Property="MinWidth"
                     Value="40" />
             <Setter Property="MinHeight"
@@ -749,26 +753,23 @@
             </Grid.ColumnDefinitions>
             <Grid Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1.5*" />
-                    <RowDefinition Height="6.5*" />
+                    <RowDefinition Height="0.6*" />
+                    <RowDefinition Height="0.6*" />
+                    <RowDefinition Height="6*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <Grid Row="0">
-                    
-                    <ComboBox Grid.Row="0" FontFamily="/Font/#NanumSquareRound Bold"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                              FontSize="25"
-                              Margin="30,47,303,10"
-                              Padding="2"
-                              SelectionChanged="ComboBox_SelectionChanged">
-                        <ComboBoxItem Content="상점" FontFamily="/Font/#NanumSquareRound Bold" IsSelected="True" />
-                        <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
-                    </ComboBox>
-                </Grid>
+                <Label Foreground="#675094" Content="상벌점 항목 관리" FontSize="25" Grid.Row="0"
+                       FontFamily="/Font/#NanumSquareRound Bold" />
+                <ComboBox Grid.Row="1" FontFamily="/Font/#NanumSquareRound Bold"
+                          Margin="30,3,0,3" Width="90" Height="25" HorizontalAlignment="Left"
+                          SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem Content="상점" IsSelected="True" FontFamily="/Font/#NanumSquareRound Bold" />
+                    <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
+                </ComboBox>
                 <ListView x:Name="PointList"
-                          Grid.Row="1"
+                          Grid.Row="2"
                           Background="#FFF"
-                          Margin="40,0"
+Margin="30,0"
                           BorderThickness="0" FontFamily="/Font/#NanumSquareRound Bold"
                           SizeChanged="SearchList_SizeChanged"
                           SelectionChanged="SearchList_SelectionChanged"
@@ -788,18 +789,17 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Grid Grid.Row="2"
-                      Margin="40, 0">
+                <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.9*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="0" Click="EditButton_Click" Height="50"
+                    <Button Grid.Column="0" Margin="55,30,40,46" Click="EditButton_Click" Height="50"
                             Cursor="Hand" Width="130" FontFamily="/Font/#NanumSquareRound Bold">
                         <Button.Template>
                             <ControlTemplate>
                                 <Border CornerRadius="25" Background="#675094">
-                                    <TextBlock Text="수정" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
+                                    <TextBlock Text="확인" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                FontSize="24" />
@@ -807,9 +807,9 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button Grid.Column="1" Margin="0"
+                    <Button Grid.Column="1" Margin="10,30,111,46"
                             Height="50" Width="130"
-                            Foreground="White" Cursor="Hand" Click="DelButton_Click" >
+                            Foreground="White" Cursor="Hand" Click="DelButton_Click">
                         <Button.Template>
                             <ControlTemplate>
                                 <Border CornerRadius="25" Background="#675094">
