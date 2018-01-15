@@ -275,7 +275,7 @@
             <Setter Property="Cursor"
                     Value="Hand" />
             <Setter Property="Foreground"
-                    Value="#555" />
+                    Value="Black" />
             <Setter Property="SnapsToDevicePixels"
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
@@ -301,7 +301,7 @@
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
                                                 <EasingColorKeyFrame KeyTime="0"
-                                                                     Value="{StaticResource SelectedBackgroundColor}" />
+                                                                     Value="White" />
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -310,7 +310,7 @@
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
                                                 <EasingColorKeyFrame KeyTime="0"
-                                                                     Value="{StaticResource SelectedUnfocusedColor}" />
+                                                                     Value="White" />
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>

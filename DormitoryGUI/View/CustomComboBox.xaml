@@ -133,7 +133,7 @@
         <Style x:Key="{x:Type ComboBox}"
                TargetType="{x:Type ComboBox}">
             <Setter Property="Foreground"
-                    Value="DarkGray" />
+                    Value="Black" />
             <Setter Property="SnapsToDevicePixels"
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
@@ -271,7 +271,7 @@
             <Setter Property="Cursor"
                     Value="Hand" />
             <Setter Property="Foreground"
-                    Value="#555" />
+                    Value="Black" />
             <Setter Property="SnapsToDevicePixels"
                     Value="True" />
             <Setter Property="OverridesDefaultStyle"
@@ -327,10 +327,10 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Path=Name}"/>
                         <TextBlock Text=" "/>
-                        <TextBlock Text="("/>
-                        <TextBlock Text="{Binding Path=MinPoint}"/>
-                        <TextBlock Text="점"/>
-                        <TextBlock Text=")"/>
+                        <TextBlock Foreground="DarkGray" Text="("/>
+                        <TextBlock Foreground="DarkGray" Text="{Binding Path=MinPoint}"/>
+                        <TextBlock Foreground="DarkGray" Text="점"/>
+                        <TextBlock Foreground="DarkGray" Text=")"/>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>

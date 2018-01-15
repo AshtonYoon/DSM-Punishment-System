@@ -322,7 +322,7 @@
         </Style>
         <Style x:Key="{x:Type GridViewColumnHeader}"
                TargetType="GridViewColumnHeader">
-            <Setter Property="Height" Value="50" />
+            <Setter Property="Height" Value="65" />
             <Setter Property="HorizontalContentAlignment"
                     Value="Center" />
             <Setter Property="VerticalContentAlignment"
@@ -462,12 +462,12 @@
             </Setter>
         </Style>
         <Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}">
-            <Setter Property="Height" Value="45" />
+            <Setter Property="Height" Value="65" />
             <Setter Property="SnapsToDevicePixels" Value="true" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="Foreground" Value="Black" />
             <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold" />
             <Setter Property="FontSize" Value="22" />
             <Setter Property="Template">
@@ -716,7 +716,7 @@
             <Setter Property="Cursor"
                     Value="Hand" />
             <Setter Property="Foreground"
-                    Value="#555" />
+                    Value="Black" />
             <Setter Property="SnapsToDevicePixels"
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
