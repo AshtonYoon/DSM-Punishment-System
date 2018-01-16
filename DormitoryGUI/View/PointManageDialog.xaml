@@ -106,7 +106,7 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="Border"
                         Grid.ColumnSpan="2"
-                        CornerRadius="25"
+                        CornerRadius="20"
                         BorderThickness="1"
                         BorderBrush="Black"
                         Background="Transparent" />
@@ -136,7 +136,7 @@
             <Setter Property="Foreground"
                     Value="#000" />
             <Setter Property="FontSize"
-                    Value="15"></Setter>
+                    Value="15" />
             <Setter Property="SnapsToDevicePixels"
                     Value="true" />
             <Setter Property="OverridesDefaultStyle"
@@ -148,7 +148,7 @@
             <Setter Property="ScrollViewer.CanContentScroll"
                     Value="true" />
             <Setter Property="VerticalContentAlignment"
-                    Value="Center"/>
+                    Value="Center" />
             <Setter Property="MinWidth"
                     Value="40" />
             <Setter Property="MinHeight"
@@ -326,10 +326,10 @@
         <viewModel:PunishmentList x:Key="PunishmentBadListKey" />
         <!--Control colors.-->
         <Style x:Key="ScrollBarThumbStyle" TargetType="{x:Type Thumb}">
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="True"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="IsTabStop" Value="false" />
+            <Setter Property="Focusable" Value="false" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
@@ -337,24 +337,24 @@
                                 BorderBrush="LightGray"
                                 BorderThickness="1"
                                 Cursor="Hand"
-                                CornerRadius="5"/>
+                                CornerRadius="5" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
             <Setter Property="Background" Value="White" />
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="IsTabStop" Value="false" />
+            <Setter Property="Focusable" Value="false" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
                         <Border Background="DarkGray"
                                 BorderBrush="DarkGray"
                                 BorderThickness="0"
-                                CornerRadius="10"/>
+                                CornerRadius="10" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -384,19 +384,19 @@
                     </Track.DecreaseRepeatButton>
 
                     <Track.Thumb>
-                        <Thumb Style="{StaticResource ScrollBarThumbStyle}" 
+                        <Thumb Style="{StaticResource ScrollBarThumbStyle}"
                                Margin="0,0,0,0" />
                     </Track.Thumb>
 
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}" 
+                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}"
                                       Command="ScrollBar.PageRightCommand" />
                     </Track.IncreaseRepeatButton>
                 </Track>
 
                 <RepeatButton Grid.Column="2"
                               Style="{StaticResource ScrollBarPageButtonStyle}"
-                              Width="18" 
+                              Width="18"
                               Command="ScrollBar.LineRightCommand"
                               Content="M 0 0 L 4 4 L 0 8 Z" />
             </Grid>
@@ -425,12 +425,12 @@
                     </Track.DecreaseRepeatButton>
 
                     <Track.Thumb>
-                        <Thumb Style="{StaticResource ScrollBarThumbStyle}" 
+                        <Thumb Style="{StaticResource ScrollBarThumbStyle}"
                                Margin="0,1,0,1" />
                     </Track.Thumb>
 
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}" 
+                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}"
                                       Command="ScrollBar.PageDownCommand" />
                     </Track.IncreaseRepeatButton>
                 </Track>
@@ -498,15 +498,15 @@
                                        ViewportSize="{TemplateBinding ViewportWidth}"
                                        Value="{TemplateBinding HorizontalOffset}"
                                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                                       Template="{StaticResource HorizontalScrollBar}"/>
+                                       Template="{StaticResource HorizontalScrollBar}" />
                             <ScrollBar Name="PART_VerticalScrollBar"
                                        Background="Transparent"
                                        Grid.Column="1"
                                        Maximum="{TemplateBinding ScrollableHeight}"
                                        ViewportSize="{TemplateBinding ViewportHeight}"
                                        Value="{TemplateBinding VerticalOffset}"
-                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
-                                       Template="{StaticResource VerticalScrollBar}"/>
+                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                       Template="{StaticResource VerticalScrollBar}" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -565,10 +565,10 @@
                     Value="Center" />
             <Setter Property="Foreground"
                     Value="#675094" />
-            <Setter Property="FontFamily" 
-                    Value="/Font/#NanumSquareRound ExtraBold"/>
-            <Setter Property="FontSize" 
-                    Value="22"/>
+            <Setter Property="FontFamily"
+                    Value="/Font/#NanumSquareRound ExtraBold" />
+            <Setter Property="FontSize"
+                    Value="22" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="GridViewColumnHeader">
@@ -752,155 +752,168 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid Margin="20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            
-            <Grid Grid.Column="0" Margin="0, 0, 20, 0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="1.5*" />
-                    <RowDefinition Height="5.5*" />
-                    <RowDefinition Height="2*" />
-                </Grid.RowDefinitions>
+    <Grid Background="#00FFFFFF" >
+        <Grid Margin="10" Background="Transparent">
+            <Grid Margin="20" Background="#FFF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" 
-                       Content="상벌점 항목 관리" 
-                       Foreground="#675094"
-                       FontFamily="/Font/#NanumSquareRound Bold"
-                       FontSize="25"
-                       HorizontalContentAlignment="Center"
-                       VerticalContentAlignment="Center"/>
-
-                <ComboBox Grid.Row="1" Margin="150, 15, 150, 35"
-                          FontFamily="/Font/#NanumSquareRound Bold"
-                          HorizontalAlignment="Stretch"
-                          SelectionChanged="ComboBox_SelectionChanged">
-                    <ComboBoxItem Content="상점" IsSelected="True" FontFamily="/Font/#NanumSquareRound Bold" />
-                    <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
-                </ComboBox>
-                <Border Grid.Row="2" 
-                        BorderBrush="DarkGray"
-                        BorderThickness="1"
-                        CornerRadius="10"/>
-                <ListView x:Name="PointList"
-                          Grid.Row="2"
-                          Background="#FFF"
-                          BorderThickness="0" FontFamily="/Font/#NanumSquareRound Bold"
-                          Margin="12"
-                          SizeChanged="SearchList_SizeChanged"
-                          SelectionChanged="SearchList_SelectionChanged"
-                          ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}">
-                    <ListView.View>
-                        <GridView AllowsColumnReorder="True">
-                            <GridViewColumn Header="항목"
-                                            DisplayMemberBinding="{Binding Path=Name}">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock x:Name="Txt" Text="항목" Foreground="Purple" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="점수"
-                                            DisplayMemberBinding="{Binding Path=MinPoint}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Click="EditButton_Click" Margin="30, 35"
-                            Cursor="Hand" FontFamily="/Font/#NanumSquareRound Bold">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Border CornerRadius="25" Background="#675094">
-                                    <TextBlock Text="수정" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="24" />
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                    <Button Grid.Column="1"  Margin="30, 35"
-                            Foreground="White" Cursor="Hand" Click="DelButton_Click">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Border CornerRadius="25" Background="#675094">
-                                    <TextBlock Text="삭제" Foreground="White" FontFamily="/Font/#NanumSquareRound Bold"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="24" />
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                </Grid>
-            </Grid>
-            <Border Background="#675094" Grid.Column="1" CornerRadius="10">
-                <Grid Margin="30">
+                <Grid Grid.Column="0" Margin="0, 0, 20, 0">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
                         <RowDefinition Height="1.5*" />
-                        <RowDefinition Height="0.5*" />
-                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="5.5*" />
                         <RowDefinition Height="2*" />
                     </Grid.RowDefinitions>
-                    <local:CustomSwitch x:Name="PointTypeSwitch" Margin="75, 25" />
-                    <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" Margin="15">
-                        <TextBox x:Name="PointName" Height="55" Background="Transparent" Foreground="White"
-                                 VerticalContentAlignment="Center" Padding="40,0,40,0"
-                                 FontFamily="/Font/#NanumSquareRound Bold"
-                                 Text="항목명"
-                                 FontSize="25">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="30" />
-                                </Style>
-                            </TextBox.Resources>
-                            <TextBox.CaretBrush>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <LinearGradientBrush.GradientStops>
-                                        <GradientStop Color="White" Offset="0" />
-                                        <GradientStop Color="White" Offset="1" />
-                                    </LinearGradientBrush.GradientStops>
-                                </LinearGradientBrush>
-                            </TextBox.CaretBrush>
-                        </TextBox>
-                        <Label FontSize="40" Background="#00FFFFFF" BorderBrush="#00000000" Foreground="White"
-                               HorizontalAlignment="Right" Margin="0,40,0,0" FontFamily="/Font/#NanumSquareRound Bold">
-                            <TextBlock TextDecorations="UnderLine"><InlineUIContainer>
-                                    <TextBox x:Name="PointScore" Background="#0fff" HorizontalAlignment="Right" Width="50" Margin="0,0,0,-10"
-                                        Foreground="White" BorderThickness="0" HorizontalContentAlignment="Right" FontFamily="/Font/#NanumSquareRound Bold">
-                                        <TextBox.CaretBrush>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                <GradientStop Color="White" Offset="0" />
-                                                <GradientStop Color="White" Offset="1" />
-                                            </LinearGradientBrush>
-                                        </TextBox.CaretBrush>
-                                    </TextBox>
-                                </InlineUIContainer><Run Text="점"/></TextBlock>
-                        </Label>
-                    </StackPanel>
-                    <Button Grid.Row="3" Width="140" Height="50" VerticalAlignment="Top" Margin="20" Cursor="Hand" Click="AddButton_Click">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Border CornerRadius="5" Background="#FFF">
-                                    <TextBlock Text="추가" Foreground="#675094"
-                                               HorizontalAlignment="Center" FontFamily="/Font/#NanumSquareRound Bold"
-                                               VerticalAlignment="Center"
-                                               FontSize="26" />
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                </Grid>
-            </Border>
 
+                    <Label Grid.Row="0"
+                           Content="상벌점 항목 관리"
+                           Foreground="#675094"
+                           FontFamily="/Font/#NanumSquareRound Bold"
+                           FontSize="25"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center" />
+
+                    <ComboBox Grid.Row="1" Margin="150, 15, 150, 35"
+                              FontFamily="/Font/#NanumSquareRound Bold"
+                              HorizontalAlignment="Stretch"
+                              SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBoxItem Content="상점" IsSelected="True" FontFamily="/Font/#NanumSquareRound Bold" />
+                        <ComboBoxItem Content="벌점" FontFamily="/Font/#NanumSquareRound Bold" />
+                    </ComboBox>
+                    <Border Grid.Row="2"
+                            BorderBrush="DarkGray"
+                            BorderThickness="1"
+                            CornerRadius="10" />
+                    <ListView x:Name="PointList"
+                              Grid.Row="2"
+                              Background="#FFF"
+                              BorderThickness="0" FontFamily="/Font/#NanumSquareRound Bold"
+                              Margin="12"
+                              SizeChanged="SearchList_SizeChanged"
+                              SelectionChanged="SearchList_SelectionChanged"
+                              ItemsSource="{Binding Source={StaticResource PunishmentBadListKey}}">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True">
+                                <GridViewColumn Header="항목"
+                                                DisplayMemberBinding="{Binding Path=Name}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock x:Name="Txt" Text="항목" Foreground="Purple" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="점수"
+                                                DisplayMemberBinding="{Binding Path=MinPoint}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Click="EditButton_Click" Margin="30, 35"
+                                Cursor="Hand" FontFamily="/Font/#NanumSquareRound Bold">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border CornerRadius="25" Background="#675094">
+                                        <TextBlock Text="수정" Foreground="White"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="24" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Grid.Column="1" Margin="30, 35"
+                                Foreground="White" Cursor="Hand" Click="DelButton_Click">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border CornerRadius="25" Background="#675094">
+                                        <TextBlock Text="삭제" Foreground="White"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="24" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Border Background="#675094" Grid.Column="1" CornerRadius="10">
+                    <Grid Margin="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.5*" />
+                            <RowDefinition Height="0.5*" />
+                            <RowDefinition Height="3*" />
+                            <RowDefinition Height="2*" />
+                        </Grid.RowDefinitions>
+                        <local:CustomSwitch x:Name="PointTypeSwitch" Margin="75, 25" />
+                        <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" Margin="15">
+                            <TextBox x:Name="PointName" Height="55" Background="Transparent" Foreground="White"
+                                     VerticalContentAlignment="Center" Padding="40,0,40,0"
+                                     FontFamily="/Font/#NanumSquareRound Bold"
+                                     Text="항목명"
+                                     FontSize="25">
+                                <TextBox.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="30" />
+                                    </Style>
+                                </TextBox.Resources>
+                                <TextBox.CaretBrush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Color="White" Offset="0" />
+                                            <GradientStop Color="White" Offset="1" />
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </TextBox.CaretBrush>
+                            </TextBox>
+                            <Label FontSize="40" Background="#00FFFFFF" BorderBrush="#00000000" Foreground="White"
+                                   HorizontalAlignment="Right" Margin="0,40,0,0"
+                                   FontFamily="/Font/#NanumSquareRound Bold">
+                                <TextBlock TextDecorations="UnderLine">
+                                    <InlineUIContainer>
+                                        <TextBox x:Name="PointScore" Background="#0fff" HorizontalAlignment="Right"
+                                                 Width="50" Margin="0,0,0,-10"
+                                                 Foreground="White" BorderThickness="0"
+                                                 HorizontalContentAlignment="Right"
+                                                 FontFamily="/Font/#NanumSquareRound Bold">
+                                            <TextBox.CaretBrush>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Color="White" Offset="0" />
+                                                    <GradientStop Color="White" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </TextBox.CaretBrush>
+                                        </TextBox>
+                                    </InlineUIContainer>
+                                    <Run Text="점" />
+                                </TextBlock>
+                            </Label>
+                        </StackPanel>
+                        <Button Grid.Row="3" Width="140" Height="50" VerticalAlignment="Top" Margin="20" Cursor="Hand"
+                                Click="AddButton_Click">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border CornerRadius="5" Background="#FFF">
+                                        <TextBlock Text="추가" Foreground="#675094"
+                                                   HorizontalAlignment="Center"
+                                                   FontFamily="/Font/#NanumSquareRound Bold"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="26" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </Border>
+
+            </Grid>
         </Grid>
     </Grid>
 </Window>

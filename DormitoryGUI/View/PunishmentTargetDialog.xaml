@@ -57,7 +57,7 @@
                                 </Grid>
                             </BulletDecorator.Bullet>
                             <!--Text element-->
-                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="/Font/#NanumSquareRound Bold" FontSize="12">
+                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="/Font/#NanumSquareRound Bold" FontSize="15">
                                 <ContentPresenter />
                             </TextBlock>
                         </BulletDecorator>
