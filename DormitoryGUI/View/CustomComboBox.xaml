@@ -72,7 +72,7 @@
             <Grid Cursor="Hand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
@@ -274,6 +274,7 @@
                     Value="Black" />
             <Setter Property="SnapsToDevicePixels"
                     Value="True" />
+            <Setter Property="FontSize" Value="20"></Setter>
             <Setter Property="OverridesDefaultStyle"
                     Value="True" />
             <Setter Property="HorizontalAlignment" 

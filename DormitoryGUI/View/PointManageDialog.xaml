@@ -106,7 +106,7 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="Border"
                         Grid.ColumnSpan="2"
-                        CornerRadius="13"
+                        CornerRadius="25"
                         BorderThickness="1"
                         BorderBrush="Black"
                         Background="Transparent" />

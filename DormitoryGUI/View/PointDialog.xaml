@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:DormitoryGUI.ViewModel"
         xmlns:dormitoryGui="clr-namespace:DormitoryGUI"
         mc:Ignorable="d"
-        Height="360" Width="360"
+        Height="400" Width="400"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Background="White">
@@ -21,16 +21,16 @@
         </Grid.RowDefinitions>
         
         <Label Grid.Row="0" Content="상점" x:Name="PointType" FontFamily="/Font/#NanumSquareRound Bold"
-               FontSize="20" Foreground="#675094" />
+               FontSize="35" Foreground="#675094" />
 
-        <local:CustomComboBox x:Name="PunishmentComboBox" Grid.Row="1">
+        <local:CustomComboBox x:Name="PunishmentComboBox" Grid.Row="1" Margin="10,15,10,15">
             <local:CustomComboBox.Style>
                 <Style TargetType="{x:Type local:CustomComboBox}">
                     <Setter Property="Padding" Value="0" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                     <Setter Property="FontFamily" Value="/Font/#NanumSquareRound Bold" />
-                    <Setter Property="FontSize" Value="25" />
+                    <Setter Property="FontSize" Value="20" />
                 </Style>
             </local:CustomComboBox.Style>
         </local:CustomComboBox>
@@ -46,14 +46,16 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="ScoreText" 
                            Grid.Column="0" 
-                           TextDecorations="UnderLine" 
+                           TextDecorations="UnderLine"      
+                           FontSize="40"
                            FontFamily="/Font/#NanumSquareRound Bold" />
                 <TextBlock Grid.Column="1" 
                            Text="점" 
+                           FontSize="40"
                            TextDecorations="UnderLine" 
                            FontFamily="/Font/#NanumSquareRound Bold" />
             </Grid>
