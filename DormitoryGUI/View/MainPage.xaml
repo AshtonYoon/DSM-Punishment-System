@@ -146,7 +146,7 @@
             </Grid>
         </ControlTemplate>
         <ControlTemplate x:Key="VerticalScrollBarStyle" TargetType="{x:Type ScrollBar}">
-            <Grid>
+            <Grid Margin="4, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition MaxHeight="18" />
                     <RowDefinition Height="0.00001*" />
@@ -154,12 +154,11 @@
                 </Grid.RowDefinitions>
 
                 <Border Grid.RowSpan="3"
-                        CornerRadius="10"
+                        CornerRadius="5"
                         Background="DarkGray" />
 
                 <RepeatButton Grid.Row="0"
                               Style="{StaticResource ScrollBarPageButtonStyle}"
-                              Width="18"
                               Command="ScrollBar.LineUpCommand"
                               Content="M 4 0 L 4 8 L 0 4 Z" />
 
@@ -182,7 +181,6 @@
 
                 <RepeatButton Grid.Row="2"
                               Style="{StaticResource ScrollBarPageButtonStyle}"
-                              Width="18" 
                               Command="ScrollBar.LineDownCommand"
                               Content="M 0 0 L 4 4 L 0 8 Z" />
             </Grid>

@@ -334,8 +334,8 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
                         <Border Background="White"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
+                                BorderBrush="White"
+                                BorderThickness="0"
                                 Cursor="Hand"
                                 CornerRadius="5" />
                     </ControlTemplate>
@@ -351,8 +351,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border Background="DarkGray"
-                                BorderBrush="DarkGray"
+                        <Border Background="Transparent"
+                                BorderBrush="Transparent"
                                 BorderThickness="0"
                                 CornerRadius="10" />
                     </ControlTemplate>
@@ -368,7 +368,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Grid.ColumnSpan="3"
-                        CornerRadius="10"
+                        CornerRadius="5"
                         Background="DarkGray" />
 
                 <RepeatButton Grid.Column="0"
@@ -402,15 +402,15 @@
             </Grid>
         </ControlTemplate>
         <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
-            <Grid>
+            <Grid Margin="4, 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="4*" />
-                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3.75*" />
+                    <RowDefinition Height="2.5*" />
+                    <RowDefinition Height="3.75*" />
                 </Grid.RowDefinitions>
 
                 <Border Grid.RowSpan="3"
-                        CornerRadius="10"
+                        CornerRadius="4"
                         Background="DarkGray" />
 
                 <RepeatButton Grid.Row="0"
@@ -426,7 +426,7 @@
 
                     <Track.Thumb>
                         <Thumb Style="{StaticResource ScrollBarThumbStyle}"
-                               Margin="0,1,0,1" />
+                               Margin="0,1" />
                     </Track.Thumb>
 
                     <Track.IncreaseRepeatButton>
