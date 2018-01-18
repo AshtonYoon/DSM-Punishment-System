@@ -67,6 +67,7 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\Dorm
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\bin\Debug\Newtonsoft.Json.xml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\bin\Debug\NPOI.xml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\bin\Debug\SciChart.Wpf.UI.Transitionz.xml
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\LoginPage.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.g.cs
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System2\DormitoryGUI\obj\Debug\View\CustomComboBox.g.cs
