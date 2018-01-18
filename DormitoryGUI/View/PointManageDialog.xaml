@@ -853,7 +853,7 @@
                             <RowDefinition Height="3*" />
                             <RowDefinition Height="2*" />
                         </Grid.RowDefinitions>
-                        <local:CustomSwitch x:Name="PointTypeSwitch" Margin="75, 25" />
+                        <local:CustomSwitch x:Name="PointTypeSwitch" Margin="105,25" />
                         <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" Margin="15">
                             <TextBox x:Name="PointName" Height="55" Background="Transparent" Foreground="White"
                                      VerticalContentAlignment="Center" Padding="40,0,40,0"

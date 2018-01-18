@@ -106,7 +106,7 @@
                 <Border x:Name="Border"
                         Grid.ColumnSpan="2"
                         CornerRadius="22"
-                        BorderThickness="1"
+                        BorderThickness="1.5"
                         BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
                         Background="Transparent"></Border>
                 <Border Grid.Column="0"
@@ -117,7 +117,7 @@
                       Grid.Column="1"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Data="M 0 0 L 4 4 L 8 0 Z" Margin="4,11,6,13" Stretch="Fill" Width="10" Height="5.281">
+                      Data="M 0 0 L 4 4 L 8 0 Z" Margin="4,11,6,10" Stretch="Fill" Width="15" Height="7.5">
                     <Path.Fill>
                         <SolidColorBrush Color="Black" />
                     </Path.Fill>

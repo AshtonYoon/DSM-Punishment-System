@@ -932,7 +932,7 @@
                 </Grid.ColumnDefinitions>
                 <view:CustomSwitch x:Name="PointTypeSwitch" 
                                    Grid.Column="0"
-                                   Margin="20, 10"
+                                   Margin="40,15,67,15"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch"/>
                 <Button x:Name="ApplyPointButton"
