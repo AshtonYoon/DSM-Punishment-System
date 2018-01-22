@@ -857,12 +857,12 @@
                         <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" Margin="15">
                             <TextBox x:Name="PointName" Height="55" Background="Transparent" Foreground="White"
                                      VerticalContentAlignment="Center" Padding="40,0,40,0"
-                                     FontFamily="/Font/#NanumSquareRound Bold"
+                                     FontFamily="/Font/#NanumSquareRound Bold"                                    
                                      Text="항목명"
-                                     FontSize="25">
+                                     FontSize="25" Margin="30,0">
                                 <TextBox.Resources>
                                     <Style TargetType="{x:Type Border}">
-                                        <Setter Property="CornerRadius" Value="30" />
+                                        <Setter Property="CornerRadius" Value="28" />
                                     </Style>
                                 </TextBox.Resources>
                                 <TextBox.CaretBrush>
