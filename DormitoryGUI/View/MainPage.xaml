@@ -117,7 +117,6 @@
 
                 <RepeatButton Grid.Column="0"
                               Style="{StaticResource ScrollBarPageButtonStyle}"
-                              Width="18"
                               Command="ScrollBar.LineLeftCommand"
                               Content="M 4 0 L 4 8 L 0 4 Z" />
 
@@ -129,7 +128,7 @@
 
                     <Track.Thumb>
                         <Thumb Style="{StaticResource ScrollBarThumbStyle}" 
-                               Margin="0,1,0,1" />
+                               Margin="0, 1" />
                     </Track.Thumb>
 
                     <Track.IncreaseRepeatButton>
@@ -139,14 +138,13 @@
                 </Track>
 
                 <RepeatButton Grid.Column="2"
-                              Style="{StaticResource ScrollBarPageButtonStyle}"
-                              Width="18" 
+                              Style="{StaticResource ScrollBarPageButtonStyle}" 
                               Command="ScrollBar.LineRightCommand"
                               Content="M 0 0 L 4 4 L 0 8 Z" />
             </Grid>
         </ControlTemplate>
         <ControlTemplate x:Key="VerticalScrollBarStyle" TargetType="{x:Type ScrollBar}">
-            <Grid Margin="4, 0">
+            <Grid Margin="12.5, 6">
                 <Grid.RowDefinitions>
                     <RowDefinition MaxHeight="18" />
                     <RowDefinition Height="0.00001*" />
@@ -170,7 +168,7 @@
 
                     <Track.Thumb>
                         <Thumb Style="{StaticResource ScrollBarThumbStyle}" 
-                               Margin="0,1,0,1" />
+                               Margin="0,1" />
                     </Track.Thumb>
 
                     <Track.IncreaseRepeatButton>
@@ -197,7 +195,7 @@
                 </Trigger>
                 <Trigger Property="Orientation"
                          Value="Vertical">
-                    <Setter Property="Width" Value="18" />
+                    <Setter Property="Width" Value="40" />
                     <Setter Property="Height" Value="Auto" />
                     <Setter Property="Template" Value="{StaticResource VerticalScrollBarStyle}" />
                 </Trigger>
@@ -261,8 +259,8 @@
                                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
                             <ScrollBar Name="PART_VerticalScrollBar"
                                        Orientation="Vertical"
+                                       Margin="0, 55, 0, 0"
                                        Grid.Column="1"
-                                       Margin="15"
                                        Maximum="{TemplateBinding ScrollableHeight}"
                                        ViewportSize="{TemplateBinding ViewportHeight}"
                                        Value="{TemplateBinding VerticalOffset}"
@@ -680,7 +678,7 @@
                                     </ScrollViewer>
                                 </Grid>
                             </Popup>
-                            
+
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="HasItems"
@@ -1058,7 +1056,7 @@
                             <TextBox x:Name="SearchCommand"
                                      Grid.Column="0"
                                      Height="50"
-                                     Margin="99,0,20.4,45"
+                                     Margin="99,0,20,45"
                                      Padding="12.5, 15, 0, 0"
                                      CaretBrush="Black"
                                      VerticalContentAlignment="Top"
@@ -1158,15 +1156,14 @@
                         <ListView x:Name="SearchList"
                                   Grid.Row="2"
                                   Background="#ffffff"
-                                  Margin="9"
-                                  BorderThickness="1"
+                                  Margin="9,9,9,0"
                                   SizeChanged="SearchList_SizeChanged"
                                   SelectionMode="Multiple"
-                                  ItemsSource="{Binding Source={StaticResource StudentListKey}}" Grid.RowSpan="2" Height="740" VerticalAlignment="Top">
+                                  ItemsSource="{Binding Source={StaticResource StudentListKey}}" VerticalAlignment="Stretch">
                             <ListView.Resources>
                                 <Style TargetType="{x:Type Border}">
-                                    <Setter Property="BorderThickness" Value="0" />
-                                    <Setter Property="CornerRadius" Value="9, 9, 0, 0" />
+                                    <Setter Property="BorderThickness" Value="1" />
+                                    <Setter Property="CornerRadius" Value="9. 9, 0, 0" />
                                 </Style>
                             </ListView.Resources>
                             <ListView.View>
@@ -1183,9 +1180,9 @@
                         <Border Grid.Row="3"
                                 Background="#ffffff"
                                 BorderBrush="White"
-                                Margin="9"
+                                Margin="9, 0, 9, 9"
                                 CornerRadius="0, 0, 9, 9"/>
-                        
+
                         <Grid Grid.Row="3" 
                               Margin="9">
                             <Grid.ColumnDefinitions>
