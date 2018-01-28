@@ -5,81 +5,100 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DormitoryGUI.View"
              mc:Ignorable="d"
-             Width="570"
-             Height="120"
+             Width="300"
+             Height="400"
              HorizontalAlignment="Left">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="0"
-                   Fill="#CCCCCC"
-                   Width="5"
-                   Height="80"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"/>
-        <Ellipse x:Name="TintCircle"
-                 Grid.Column="0"
-                 Width="40"
-                 Height="40"
-                 StrokeThickness="10"
-                 Fill="Transparent"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Bottom">
-            <Ellipse.Stroke>
-                <SolidColorBrush Color="#FFFF5656" />
-            </Ellipse.Stroke>
-        </Ellipse>
-        <Ellipse Grid.Column="0" 
-                 Width="40"
-                 Height="40"
-                 StrokeThickness="5"
-                 Fill="Transparent"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Bottom"
-                 Opacity="0.4">
-            <Ellipse.Stroke>
-                <SolidColorBrush Color="White" />
-            </Ellipse.Stroke>
-        </Ellipse>
-        <StackPanel Grid.Column="1"
-                    VerticalAlignment="Bottom">
-            <Label x:Name="CreateTime"
-                   Content="2017-08-05"
-                   Foreground="#555555"
-                   Margin="20,0,0,-5"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+
+            <Ellipse x:Name="TintCircle"
+                     Grid.Column="0"
+                     Margin="5, 15"
+                     StrokeThickness="10"
+                     Fill="Transparent">
+                <Ellipse.Stroke>
+                    <SolidColorBrush Color="#D46A6A" />
+                </Ellipse.Stroke>
+            </Ellipse>
+
+            <Rectangle Grid.Column="1"
+                       Margin="0, 35, 4, 35"
+                       Fill="#CCCCCC"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1"
+                    Margin="25, 0, 10, 0"
+                    VerticalAlignment="Center">
             <Border x:Name="ContentBorder"
                     Grid.Column="1"
-                    Background="#FFEDCDC7"
-                    CornerRadius="20, 20, 20, 0"
-                    Margin="5, 0, 5, 10">
-            <Border.BitmapEffect>
-                <DropShadowBitmapEffect Opacity="0.2"/>
-            </Border.BitmapEffect>
-                <Grid Height="70">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label x:Name="PointValue"
-                           Grid.Column="0"
-                           Content="7"
-                           FontWeight="Bold" 
-                           VerticalAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontSize="40"/>
+                    Background="#FF7F7F"
+                    CornerRadius="20"
+                    Margin="0, 0, 0, 30">
+                <Border.BitmapEffect>
+                    <DropShadowBitmapEffect Opacity="0.2"/>
+                </Border.BitmapEffect>
+                <Grid Height="250">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
                     <Label x:Name="PointCause" 
-                           Grid.Column="1"
-                           UseLayoutRounding="True"
-                           Content="이것은 내용입니다. 이것은 내용입니다"
-                           VerticalAlignment="Center"
+                           Grid.Row="0"
+                           Content="벌점 사유"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Bottom"
+                           FontFamily="/Font/#NanumSquareRound ExtraBold"
+                           FontSize="30"
+                           Foreground="White" />
+                    
+                    <Label x:Name="PointValue"
+                           Grid.Row="1"
+                           Content="n점"
+                           HorizontalContentAlignment="Center"
                            VerticalContentAlignment="Center"
-                           HorizontalAlignment="Left"
-                           FontSize="15" />
+                           FontFamily="/Font/#NanumSquareRound ExtraBold"
+                           FontSize="24"
+                           Foreground="White" />
+
+                    <Button x:Name="RemoveButton"
+                            Grid.Row="2"
+                            Content="삭제"
+                            Margin="25, 0, 25, 30"
+                            Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="2"
+                            Cursor="Hand"
+                            FontFamily="/Font/#NanumSquareRound Bold"
+                            FontSize="20"
+                            Foreground="White">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="30" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </Grid>
-        </Border>
+            </Border>
+
+            <Label x:Name="CreateTime"
+                   Content="2017-1-10 22:45:00"
+                   Margin="0, -15, 0, 0"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   FontFamily="/Font/#NanumSquareRound Bold"
+                   FontSize="18"
+                   Foreground="#444" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -20,11 +20,11 @@ namespace DormitoryGUI.View
     /// </summary>
     public partial class TimelineBlock : UserControl
     {
-        private readonly Color GoodTintColor = Color.FromRgb(61, 182, 61);
-        private readonly Color GoodBackgroundColor = Color.FromRgb(199, 237, 199);
+        private readonly Color GoodTintColor = Color.FromRgb(131, 169, 255);
+        private readonly Color GoodBackgroundColor = Color.FromRgb(131, 169, 255);
         
-        private readonly Color BadTintColor = Color.FromRgb(255, 86, 86);
-        private readonly Color BadBackgroundColor = Color.FromRgb(237, 205, 199);
+        private readonly Color BadTintColor = Color.FromRgb(255, 127, 127);
+        private readonly Color BadBackgroundColor = Color.FromRgb(255, 127, 127);
 
         public TimelineBlock(bool isGood, string createTime, string pointValue, string pointCause)
         {
@@ -43,7 +43,7 @@ namespace DormitoryGUI.View
 
             CreateTime.Content = createTime;
 
-            PointValue.Content = pointValue;
+            PointValue.Content = string.Format("{0}점", pointValue);
             PointCause.Content = pointCause;
         }
     }
