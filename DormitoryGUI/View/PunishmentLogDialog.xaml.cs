@@ -56,16 +56,39 @@ namespace DormitoryGUI.View
             {
                 JObject log = (JObject)logs[i];
 
-                Timeline.Children.Add
-                (
+                TimelineBlock timelineBlock =
                     new TimelineBlock
                     (
-                        isGood: (int) log["point"] > 0,
-                        createTime: DateTime.Parse(log["time"].ToString()).ToLongDateString() + " " + DateTime.Parse(log["time"].ToString()).ToLongTimeString(),
-                        pointValue: Math.Abs((int) log["point"]).ToString(),
+                        isGood: (int)log["point"] > 0,
+                        createTime: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"),
+                        pointValue: Math.Abs((int)log["point"]).ToString(),
                         pointCause: log["reason"].ToString()
-                    )
-                );
+                    );
+
+                timelineBlock.RemoveButton.Click +=
+
+                (sender, e) =>
+                {
+                    var requestDict = new Dictionary<string, object>
+                    {
+                        { "student_id", studentID },
+                        { "point_id", log["id"].ToString() }
+                    };
+
+                    responseDict = Info.GenerateRequest("DELETE", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, requestDict);
+
+                    if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+                    {
+                        MessageBox.Show("상벌점 내역 삭제 실패");
+                        return;
+                    }
+
+                    MessageBox.Show("상벌점 내역 삭제 성공");
+
+                    SetLogData(id);
+                };
+
+                Timeline.Children.Add(timelineBlock);
             }
         }
     }

@@ -1,0 +1,33 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>3739c3df-f69b-412d-8863-25408e52738b</ProjectGuid>
+    <OutputType>msi</OutputType>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>DormitoryGUISetup.aip</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <IsWindowsApplication>True</IsWindowsApplication>
+    <AssemblyName>DormitoryGUISetup</AssemblyName>
+    <Name>DormitoryGUISetup</Name>
+    <RootNamespace>DormitoryGUISetup</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DefaultBuild' " />
+  <ItemGroup>
+    <Compile Include="DormitoryGUISetup.aip">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DormitoryGUI\DormitoryGUI.csproj">
+      <Name>DormitoryGUI</Name>
+      <Project>{e3340599-f643-4ac2-9094-2bb6c350ebe0}</Project>
+      <Private>True</Private>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;DocumentationOutput;LocalizedResourcesOutput;SymbolsOutput</OutputsToImport>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Condition="'$(AdvancedInstallerMSBuildTargets)' != ''" Project="$(AdvancedInstallerMSBuildTargets)\AdvInstExtTasks.Targets" />
+  <Import Condition="'$(AdvancedInstallerMSBuildTargets)' == ''" Project="$(MSBuildExtensionsPath32)\Caphyon\Advanced Installer\AdvInstExtTasks.Targets" />
+</Project>
