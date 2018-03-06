@@ -96,6 +96,7 @@
     <Compile Include="Model\DistinctStudentComparer.cs" />
     <Compile Include="Model\ExcelProcessing.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="ViewModel\PunishLogListViewModel.cs" />
     <Compile Include="ViewModel\PunishmentListViewModel.cs" />
     <Compile Include="View\CheckPunishmentTargetPage.xaml.cs">
       <DependentUpon>CheckPunishmentTargetPage.xaml</DependentUpon>

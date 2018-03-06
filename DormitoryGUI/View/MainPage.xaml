@@ -147,7 +147,7 @@
             <Grid Margin="12.5, 6">
                 <Grid.RowDefinitions>
                     <RowDefinition MaxHeight="18" />
-                    <RowDefinition Height="0.00001*" />
+                    <RowDefinition Height="*" />
                     <RowDefinition MaxHeight="18" />
                 </Grid.RowDefinitions>
 
@@ -160,7 +160,7 @@
                               Command="ScrollBar.LineUpCommand"
                               Content="M 4 0 L 4 8 L 0 4 Z" />
 
-                <Track x:Name="PART_Track" Grid.Row="1" IsDirectionReversed="False">
+                <Track x:Name="PART_Track" Grid.Row="1" IsDirectionReversed="True">
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}"
                                       Command="ScrollBar.PageUpCommand" />
@@ -172,7 +172,7 @@
                     </Track.Thumb>
 
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}" 
+                        <RepeatButton Style="{StaticResource ScrollBarPageButtonStyle}"
                                       Command="ScrollBar.PageDownCommand" />
                     </Track.IncreaseRepeatButton>
                 </Track>
@@ -407,6 +407,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="{x:Type ListView}"
                TargetType="ListView">
             <Setter Property="SnapsToDevicePixels"
@@ -457,6 +458,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}">
             <Setter Property="Height" Value="65" />
             <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -506,8 +508,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <ControlTemplate x:Key="ComboBoxToggleButton"
-                         TargetType="{x:Type ToggleButton}">
+        
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -563,6 +565,7 @@
                 </Path>
             </Grid>
         </ControlTemplate>
+        
         <ControlTemplate x:Key="ComboBoxTextBox"
                          TargetType="{x:Type TextBox}">
             <Border x:Name="PART_ContentHost"
@@ -707,6 +710,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="{x:Type ComboBoxItem}"
                TargetType="{x:Type ComboBoxItem}">
             <Setter Property="Cursor"
@@ -729,7 +733,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border x:Name="Border"
-                                Margin="3, 3, 3, 3"
+                                Margin="3"
                                 SnapsToDevicePixels="true"
                                 Background="Transparent">
                             <VisualStateManager.VisualStateGroups>
@@ -759,6 +763,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="RoundedCheckBoxStyle" TargetType="{x:Type CheckBox}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -771,26 +776,21 @@
                                         CornerRadius="2"
                                         BorderThickness="1">
                                     <Border.BorderBrush>
-                                        <LinearGradientBrush StartPoint="0,0"
-                                     EndPoint="0,1">
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                             <LinearGradientBrush.GradientStops>
                                                 <GradientStopCollection>
-                                                    <GradientStop Color="{DynamicResource BorderLightColor}"
-                                    Offset="0.0" />
-                                                    <GradientStop Color="{DynamicResource BorderDarkColor}"
-                                    Offset="1.0" />
+                                                    <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
+                                                    <GradientStop Color="{DynamicResource BorderDarkColor}"  Offset="1.0" />
                                                 </GradientStopCollection>
                                             </LinearGradientBrush.GradientStops>
                                         </LinearGradientBrush>
                                     </Border.BorderBrush>
                                     <Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0"
-                                     EndPoint="0,1">
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                             <LinearGradientBrush.GradientStops>
                                                 <GradientStopCollection>
                                                     <GradientStop Color="{DynamicResource ControlLightColor}" />
-                                                    <GradientStop Color="{DynamicResource ControlMediumColor}"
-                                    Offset="1.0" />
+                                                    <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1.0" />
                                                 </GradientStopCollection>
                                             </LinearGradientBrush.GradientStops>
                                         </LinearGradientBrush>
@@ -827,7 +827,41 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="BorderedRadioButtonStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <BulletDecorator Background="Transparent" Cursor="Hand">
+                            <BulletDecorator.Bullet>
+                                <Grid Height="16" Width="16">
+                                    <!--Define size of the Bullet-->
+                                    <!--The two borders-->
+                                    <Border Name="RadioOuter" Background="Transparent" BorderBrush="White"
+                                            BorderThickness="2" CornerRadius="50" />
+                                    <Border CornerRadius="50" Margin="4" Name="RadioMark" Background="White"
+                                            Visibility="Hidden" />
+                                </Grid>
+                            </BulletDecorator.Bullet>
+                            <!--Text element-->
+                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="/Font/#NanumSquareRound Bold" FontSize="15">
+                                <ContentPresenter />
+                            </TextBlock>
+                        </BulletDecorator>
+                        <!--If item is checked, trigger the visibility of the mark-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <!--If item is checked, trigger the visibility of the mark and change the color of the selected bullet into a darker gray for better highlighting-->
+                                <Setter TargetName="RadioMark" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="RadioOuter" Property="BorderBrush" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
+    
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*" />
@@ -879,35 +913,17 @@
 
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <!--<GridViewColumn>
-                                <GridViewColumn.Header>
-                                    <CheckBox VerticalAlignment="Center"
-                                              BorderThickness="1.2"
-                                              Checked="CheckBox_Checked"
-                                              Unchecked="CheckBox_Unchecked" />
-                                </GridViewColumn.Header>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <CheckBox x:Name="ItemCheckBox"
-                                                  VerticalAlignment="Center"
-                                                  BorderBrush="#777777"
-                                                  Checked="ItemCheckBox_Checked"
-                                                  Unchecked="ItemCheckBox_Unchecked"
-                                                  IsChecked="{Binding IsChecked}" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>-->
                             <GridViewColumn Header="학번" DisplayMemberBinding="{Binding Path=ClassNumber}" />
                             <GridViewColumn Header="이름" DisplayMemberBinding="{Binding Path=Name}"/>
                             <GridViewColumn Header="삭제">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button x:Name="DelButton"
-                                                Width="20" 
-                                                Height="20" 
-                                                Background="Transparent"
-                                                BorderThickness="0"
-                                                Click="DelButton_Click">
+                                                  Width="20" 
+                                                  Height="20" 
+                                                  Background="Transparent"
+                                                  BorderThickness="0"
+                                                  Click="DelButton_Click">
                                             <Image Source="/Image/delete.png" />
                                         </Button>
                                     </DataTemplate>
@@ -926,16 +942,59 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <view:CustomSwitch x:Name="PointTypeSwitch" 
+
+                <Border Grid.Column="0"
+                        Margin="15, 10"
+                        BorderBrush="White"
+                        BorderThickness="2"
+                        CornerRadius="15"/>
+
+                <Grid Grid.Column="0"
+                      Margin="36, 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <RadioButton x:Name="GoodPunishCheck" 
                                    Grid.Column="0"
-                                   Margin="40,15,67,15"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"/>
+                                   IsChecked="True"
+                                   GroupName="Type"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource BorderedRadioButtonStyle}">
+                        <TextBlock Text="상점"
+                                   Margin="5, 0, 0, 0"
+                                   FontFamily="/Font/#NanumSquareRound Bold"
+                                   Foreground="White" />
+
+                        <RadioButton.LayoutTransform>
+                            <ScaleTransform ScaleX="1.75" ScaleY="1.75"/>
+                        </RadioButton.LayoutTransform>
+                    </RadioButton>
+
+                    <RadioButton x:Name="BadPunishCheck" 
+                                   Grid.Column="1"
+                                   GroupName="Type"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource BorderedRadioButtonStyle}">
+                        <TextBlock Text="벌점"
+                                   Margin="5, 0, 0, 0"
+                                   FontFamily="/Font/#NanumSquareRound Bold" 
+                                   Foreground="White"/>
+
+                        <RadioButton.LayoutTransform>
+                            <ScaleTransform ScaleX="1.75" ScaleY="1.75"/>
+                        </RadioButton.LayoutTransform>
+                    </RadioButton>
+                </Grid>
+                
                 <Button x:Name="ApplyPointButton"
                         Grid.Column="1"
                         Background="White"
                         BorderThickness="1"
-                        Margin="20, 10, 27, 5"
+                        Margin="20, 10"
                         BorderBrush="White"
                         Click="ApplyPointButton_Click">
                     <Button.Resources>
@@ -944,6 +1003,7 @@
                                         Value="15" />
                         </Style>
                     </Button.Resources>
+                    
                     <Label Content="다음" 
                            Foreground="#675094"
                            FontFamily="/Font/#NanumSquareRound Bold"
@@ -1159,7 +1219,8 @@
                                   Margin="9,9,9,0"
                                   SizeChanged="SearchList_SizeChanged"
                                   SelectionMode="Multiple"
-                                  ItemsSource="{Binding Source={StaticResource StudentListKey}}" VerticalAlignment="Stretch">
+                                  ItemsSource="{Binding Source={StaticResource StudentListKey}}" 
+                                  VerticalAlignment="Stretch">
                             <ListView.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="BorderThickness" Value="1" />

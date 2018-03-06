@@ -83,7 +83,7 @@ namespace DormitoryGUI
                     continue;
                 }
 
-                listviewCollection.Add(new ViewModel.StudentListViewModel(
+                StudentListViewModel item = new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
                     name: student["name"].ToString(),
@@ -91,16 +91,28 @@ namespace DormitoryGUI
                     badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
                     currentStep: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
                     isSelected: false
-                ));
+                );
+
+                JArray logs = student["point_histories"] as JArray;
+
+                foreach(JObject log in logs)
+                {
+                    item.PunishLogs.Add(new PunishLogListViewModel(
+                        score: (int) log["point"],
+                        reason: log["reason"].ToString(),
+                        time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd")
+                    ));
+                }
+
+                listviewCollection.Add(item);
             }
 
-            SearchList.ItemsSource = listviewCollection;
             SearchList.Items.Refresh(); 
         }
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            PointDialog pointDialog = new PointDialog(PointTypeSwitch.PointType);
+            PointDialog pointDialog = new PointDialog((bool) GoodPunishCheck.IsChecked ? (int) Info.POINT_TYPE.GOOD : (int)Info.POINT_TYPE.BAD);
 
             if (!(bool)ShowModal(pointDialog))
             {
@@ -409,43 +421,26 @@ namespace DormitoryGUI
 
                 foreach (StudentListViewModel item in items)
                 {
-                    var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}?id={item.ID}", Info.mainPage.AccessToken, "");
-
-                    if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
-                    {
-                        MessageBox.Show("상벌점 내역 조회 실패");
-                        return;
-                    }
-
-                    JArray logs = JArray.Parse(responseDict["body"].ToString());
-
                     StringBuilder goodLogsBuilder = new StringBuilder();
                     StringBuilder badLogsBuilder = new StringBuilder();
 
-                    if (logs != null)
+                    foreach (PunishLogListViewModel log in item.PunishLogs)
                     {
-                        foreach (JObject log in logs)
+                        if (log.Score > 0)
                         {
-                            if ((int) log["point"] > 0)
-                            {
-                                goodLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], log["point"]);
-                            }
-                            else
-                            {
-                                badLogsBuilder.AppendFormat("{0} ({1}점)\n", log["reason"], (int) log["point"] * -1);
-                            }
+                            goodLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, -log.Score);
+                        }
+                        else
+                        {
+                            badLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, -log.Score);
                         }
                     }
 
                     int goodLogsCount = goodLogsBuilder.ToString().Length;
-                    string goodLogsString = (goodLogsCount > 0)
-                        ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1)
-                        : string.Empty;
+                    string goodLogsString = (goodLogsCount > 0) ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1) : string.Empty;
 
                     int badLogsCount = badLogsBuilder.ToString().Length;
-                    string badLogsString = (badLogsCount > 0)
-                        ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1)
-                        : string.Empty;
+                    string badLogsString = (badLogsCount > 0) ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1) : string.Empty;
 
                     dataTable.Rows.Add(
                         new object[]

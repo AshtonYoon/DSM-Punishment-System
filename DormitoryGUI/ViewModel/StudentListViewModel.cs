@@ -22,6 +22,8 @@ namespace DormitoryGUI.ViewModel
         private string currentStep;
         private bool isSelected;
 
+        private PunishLogList punishLogs;
+        
         public string ID { get => id; set => id = value; }
         public string ClassNumber { get => classNumber; set => classNumber = value; }
         public string Name { get => name; set => name = value; }
@@ -29,6 +31,8 @@ namespace DormitoryGUI.ViewModel
         public int BadPoint { get => badPoint; set => badPoint = value; }
         public string CurrentStep { get => currentStep; set => currentStep = value; }
         public bool IsSelected { get => isSelected; set => isSelected = value; }
+
+        public PunishLogList PunishLogs { get => punishLogs; set => punishLogs = value; }
 
         public StudentListViewModel(string id, string classNumber, string name, int goodPoint, int badPoint, string currentStep, bool isSelected)
         {
@@ -39,6 +43,7 @@ namespace DormitoryGUI.ViewModel
             this.badPoint = badPoint;
             this.currentStep = currentStep;
             this.isSelected = isSelected;
+            this.punishLogs = new PunishLogList();
         }
     }
 }

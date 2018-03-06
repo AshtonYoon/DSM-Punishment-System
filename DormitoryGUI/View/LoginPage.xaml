@@ -94,7 +94,7 @@
                          Foreground="White"
                          Background="Transparent"
                          BorderBrush="{x:Static SystemColors.ControlLightBrush}"
-                         Text="unko"
+                         Text="dsmadmin"
                          FontSize="40" 
                          FontFamily="/Font/#NanumSquare Light" />
 
@@ -108,7 +108,7 @@
                              BorderBrush="{x:Static SystemColors.ControlLightBrush}"
                              FontSize="30"
                              FontFamily="/Font/#NanumSquare Light"
-                             Password="unko" />
+                             Password="dsmadmin" />
             </StackPanel>
             <Button Grid.Row="2"
                     x:Name="LoginButton"

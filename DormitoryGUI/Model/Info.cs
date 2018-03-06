@@ -20,7 +20,7 @@ namespace DormitoryGUI
         // 새로운 상벌점 서버를 위한 PATH 수정 
         public class Server
         {
-            private const string SERVER_URL = "http://dsm2015.cafe24.com:3001/";
+            private const string SERVER_URL = "http://dsm2015.cafe24.com/";
             public const string AUTH = SERVER_URL + "admin/auth";
             public const string REFRESH = SERVER_URL + "admin/refresh";
             public const string MANAGING_POINT = SERVER_URL + "admin/managing/point";

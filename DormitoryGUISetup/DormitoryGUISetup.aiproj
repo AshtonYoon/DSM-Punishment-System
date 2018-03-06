@@ -25,7 +25,7 @@
       <Name>DormitoryGUI</Name>
       <Project>{e3340599-f643-4ac2-9094-2bb6c350ebe0}</Project>
       <Private>True</Private>
-      <OutputsToImport>PrimaryOutput;References;ContentOutput;DocumentationOutput;LocalizedResourcesOutput;SymbolsOutput</OutputsToImport>
+      <OutputsToImport>PrimaryOutput;References;SymbolsOutput</OutputsToImport>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="'$(AdvancedInstallerMSBuildTargets)' != ''" Project="$(AdvancedInstallerMSBuildTargets)\AdvInstExtTasks.Targets" />

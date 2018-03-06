@@ -88,6 +88,7 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\Dormi
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI_MarkupCompile.cache
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI_MarkupCompile.lref
+E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\App.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\View\CustomComboBox.baml
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\View\PointDialog.baml
@@ -109,4 +110,3 @@ E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\Dormi
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.CoreCompileInputs.cache
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
-E:\Projects\ide\visual-studio\csharp_study\wpf_study\DSM-Punishment-System\DormitoryGUI\obj\Debug\App.baml

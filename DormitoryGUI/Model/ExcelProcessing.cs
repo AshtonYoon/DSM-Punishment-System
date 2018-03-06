@@ -200,7 +200,7 @@ namespace DormitoryGUI.Model
 
                     HeaderStyle.SetFont(HeaderFont);
 
-                    int[] ColumnWidths = new int[] { 9, 12, 8, 8, 30, 30, 14 };
+                    int[] ColumnWidths = new int[] { 9, 12, 8, 8, 45, 45, 14 };
                     
                     // 엑셀의 헤더 부분(DataTable의 Columns 기록) 정의 및 출력
 

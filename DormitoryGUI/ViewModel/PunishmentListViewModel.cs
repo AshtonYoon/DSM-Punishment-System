@@ -22,9 +22,9 @@ namespace DormitoryGUI.ViewModel
         public PunishmentListViewModel(string id, string name, int minPoint, int maxPoint)
         {
             this.id = id;
-            this.name = name;            
+            this.name = name;
             this.minPoint = minPoint;
-            this.maxPoint = maxPoint;            
+            this.maxPoint = maxPoint;
         }
     }
 
