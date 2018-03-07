@@ -42,14 +42,14 @@ namespace DormitoryGUI.View
 
             if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
-                return;
+                return; 
             }
 
             studentList = JArray.Parse(responseDict["body"].ToString());
 
             foreach (JObject student in studentList)
             {
-                int currentStep = student["penalty_training_status"].Type == JTokenType.Null ? 0 : (int)student["penalty_training_status"];
+                int currentStep = student["bad_point_status"].Type == JTokenType.Null ? 0 : (int)student["bad_point_status"];
 
                 if (filter != "전체" && Info.ParseStatus(currentStep).Equals(filter))
                 {

@@ -96,8 +96,7 @@ namespace DormitoryGUI.View
 
                 PointName.Text = target.Name;
                 PointScore.Text = target.MinPoint.ToString();
-                PointTypeSwitch.PointType = pointType;
-
+//                PointTypeSwitch.PointType = pointType;
                 selectedItem = target;
             }
         }
@@ -121,7 +120,7 @@ namespace DormitoryGUI.View
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            int point = int.Parse(PointScore.Text) * (PointTypeSwitch.PointType == 0 ? 1 : -1);
+            int point = int.Parse(PointScore.Text) * (GoodPunishCheck.IsChecked == true ? 1 : -1);
 
             var requestDict = new Dictionary<string, object>
             {
@@ -145,7 +144,7 @@ namespace DormitoryGUI.View
                 return;
             }
 
-            int point = int.Parse(PointScore.Text) * (PointTypeSwitch.PointType == 0 ? 1 : -1);
+            int point = int.Parse(PointScore.Text) * (GoodPunishCheck.IsChecked == true ? 1 : -1);
 
             var requestDict = new Dictionary<string, object>
             {

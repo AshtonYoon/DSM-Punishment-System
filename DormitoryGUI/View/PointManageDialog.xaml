@@ -751,6 +751,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="BorderedRadioButtonStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <BulletDecorator Background="Transparent" Cursor="Hand">
+                            <BulletDecorator.Bullet>
+                                <Grid Height="16" Width="16">
+                                    <!--Define size of the Bullet-->
+                                    <!--The two borders-->
+                                    <Border Name="RadioOuter" Background="Transparent" BorderBrush="White"
+                                            BorderThickness="2" CornerRadius="50" />
+                                    <Border CornerRadius="50" Margin="4" Name="RadioMark" Background="White"
+                                            Visibility="Hidden" />
+                                </Grid>
+                            </BulletDecorator.Bullet>
+                            <!--Text element-->
+                            <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="/Font/#NanumSquareRound Bold" FontSize="15">
+                                <ContentPresenter />
+                            </TextBlock>
+                        </BulletDecorator>
+                        <!--If item is checked, trigger the visibility of the mark-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <!--If item is checked, trigger the visibility of the mark and change the color of the selected bullet into a darker gray for better highlighting-->
+                                <Setter TargetName="RadioMark" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="RadioOuter" Property="BorderBrush" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid Background="#00FFFFFF" >
         <Grid Margin="10" Background="Transparent">
@@ -853,7 +885,46 @@
                             <RowDefinition Height="3*" />
                             <RowDefinition Height="2*" />
                         </Grid.RowDefinitions>
-                        <local:CustomSwitch x:Name="PointTypeSwitch" Margin="105,25" />
+                        <Grid Grid.Column="0"
+                      Margin="36, 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <RadioButton x:Name="GoodPunishCheck" 
+                                   Grid.Column="0"
+                                   IsChecked="True"
+                                   GroupName="Type"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource BorderedRadioButtonStyle}">
+                                <TextBlock Text="상점"
+                                   Margin="5, 0, 0, 0"
+                                   FontFamily="/Font/#NanumSquareRound Bold"
+                                   Foreground="White" />
+
+                                <RadioButton.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.75" ScaleY="1.75"/>
+                                </RadioButton.LayoutTransform>
+                            </RadioButton>
+
+                            <RadioButton x:Name="BadPunishCheck" 
+                                   Grid.Column="1"
+                                   GroupName="Type"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource BorderedRadioButtonStyle}">
+                                <TextBlock Text="벌점"
+                                   Margin="5, 0, 0, 0"
+                                   FontFamily="/Font/#NanumSquareRound Bold" 
+                                   Foreground="White"/>
+
+                                <RadioButton.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.75" ScaleY="1.75"/>
+                                </RadioButton.LayoutTransform>
+                            </RadioButton>
+                        </Grid>
                         <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center" Margin="15">
                             <TextBox x:Name="PointName" Height="55" Background="Transparent" Foreground="White"
                                      VerticalContentAlignment="Center" Padding="40,0,40,0"
