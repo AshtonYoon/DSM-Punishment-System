@@ -27,7 +27,7 @@ namespace DormitoryGUI
             public const string MANAGING_STUDENT = SERVER_URL + "admin/managing/student";
             public const string MANAGING_RULE = SERVER_URL + "admin/managing/rule";
         }
-        
+            
         // 상벌점 유형 { 0: 상점, 1: 벌점 }
         public enum POINT_TYPE { GOOD = 0, BAD };
 
@@ -122,7 +122,7 @@ namespace DormitoryGUI
                 case 3:
                     return "3단계";
                 default:
-                    return "엥";
+                    return " ";
             }
         }
     }
