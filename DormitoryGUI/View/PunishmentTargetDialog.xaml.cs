@@ -80,9 +80,10 @@ namespace DormitoryGUI.View
 
             double[] columnRatio =
             {
-                0.3,
-                0.4,
-                0.3
+                0.25,
+                0.25,
+                0.25,
+                0.25
             };
 
             foreach (var element in gridView.Columns)
@@ -92,6 +93,11 @@ namespace DormitoryGUI.View
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
                
+        }
+
+        private void Offset_Click(object sender, RoutedEventArgs e)
+        {
+//            throw new NotImplementedException();
         }
     }
 }

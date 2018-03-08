@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:DormitoryGUI.View"
         xmlns:viewModel="clr-namespace:DormitoryGUI.ViewModel"
         mc:Ignorable="d"
-        Title="다벌점 교육 대상자 조회" Height="600" Width="800">
+        Title="다벌점 교육 대상자 조회" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <viewModel:PunishmentList x:Key="PunishmentGoodListKey" />
         <viewModel:PunishmentList x:Key="PunishmentBadListKey" />
@@ -18,7 +19,7 @@
         <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
         <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
         <Color x:Key="DisabledForegroundColor">#FF888888</Color>
-        <Color x:Key="SelectedBackgroundColor">#FFCEFFD1</Color>
+        <Color x:Key="SelectedBackgroundColor">#FFC5CBF9</Color>
         <Color x:Key="SelectedUnfocusedColor">#FFDDDDDD</Color>
         <Color x:Key="ControlLightColor">White</Color>
         <Color x:Key="ControlMediumColor">#FF7381F9</Color>
@@ -516,17 +517,39 @@
         </Grid.ColumnDefinitions>
         <ListView x:Name="StudentList"
                   Margin="10"
+                  FontSize="10"
                   BorderThickness="0"
                   SizeChanged="StudentList_OnSizeChanged"
                   ItemsSource="{Binding Source={StaticResource StudentListKey}}">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <GridViewColumn Header="학번"
-                                    DisplayMemberBinding="{Binding Path=ClassNumber}" />
+                                    DisplayMemberBinding="{Binding Path=ClassNumber}"/>
                     <GridViewColumn Header="이름"
                                     DisplayMemberBinding="{Binding Path=Name}" />
                     <GridViewColumn Header="단계"
                                     DisplayMemberBinding="{Binding Path=CurrentStep}" />
+                    <GridViewColumn Header="상쇄">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="Offset"
+                                        Width="16"
+                                        Height="16"
+                                        BorderThickness="0"
+                                        VerticalAlignment="Center"
+                                        Cursor="Hand"
+                                        Background="#5e4a8a"
+                                        Click="Offset_Click">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius"
+                                                    Value="8" />
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

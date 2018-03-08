@@ -60,7 +60,7 @@ namespace DormitoryGUI.View
                     new TimelineBlock
                     (
                         isGood: (int)log["point"] > 0,
-                        createTime: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd HH:mm:ss"),
+                        createTime: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
                         pointValue: Math.Abs((int)log["point"]).ToString(),
                         pointCause: log["reason"].ToString()
                     );
