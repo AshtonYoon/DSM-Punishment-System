@@ -26,6 +26,7 @@ namespace DormitoryGUI
             public const string MANAGING_POINT = SERVER_URL + "admin/managing/point";
             public const string MANAGING_STUDENT = SERVER_URL + "admin/managing/student";
             public const string MANAGING_RULE = SERVER_URL + "admin/managing/rule";
+            public const string MANAGING_PENALTY = SERVER_URL + "admin/managing/student/penalty";
         }
             
         // 상벌점 유형 { 0: 상점, 1: 벌점 }
@@ -111,7 +112,7 @@ namespace DormitoryGUI
 
         public static string ParseStatus(int status)
         {
-            switch(status % 2 + status / 2)
+            switch(status)
             {
                 case 0:
                     return "";

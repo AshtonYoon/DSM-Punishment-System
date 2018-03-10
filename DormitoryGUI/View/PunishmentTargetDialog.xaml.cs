@@ -40,35 +40,46 @@ namespace DormitoryGUI.View
         {
             var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
-            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+            if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
             {
-                return; 
+                return;
             }
 
             studentList = JArray.Parse(responseDict["body"].ToString());
 
             foreach (JObject student in studentList)
             {
-                int currentStep = student["bad_point_status"].Type == JTokenType.Null ? 0 : (int)student["bad_point_status"];
+                int currentStep = student["bad_point_status"].Type == JTokenType.Null
+                    ? 0
+                    : (int) student["bad_point_status"];
 
                 if (filter != "전체" && Info.ParseStatus(currentStep).Equals(filter))
                 {
                     continue;
                 }
 
-                if (currentStep % 2 == 1)
+                if (currentStep >= 1)
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int)student["good_point"],
-                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int)student["bad_point"],
+                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
+                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
                         currentStep: Info.ParseStatus(currentStep),
                         isSelected: false
                     ));
                 }
             }
+        }
+
+        private T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
+        {
+            var parent = VisualTreeHelper.GetParent(child);
+            if (parent != null && !(parent is T))
+                return GetAncestorOfType<T>((FrameworkElement) parent);
+
+            return (T) parent;
         }
 
         private void StudentList_OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -92,12 +103,25 @@ namespace DormitoryGUI.View
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-               
         }
 
         private void Offset_Click(object sender, RoutedEventArgs e)
         {
-//            throw new NotImplementedException();
+            var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
+            var requestDict = new Dictionary<string, object>
+            {
+                {"id", target.ID},
+                {"status", false}
+            };
+            var responseDict = Info.GenerateRequest("PATCH", Info.Server.MANAGING_PENALTY, Info.mainPage.AccessToken,
+                requestDict);
+
+            MessageBox.Show((HttpStatusCode) responseDict["status"] == HttpStatusCode.OK
+                ? "상쇄했습니다."
+                : responseDict["status"].ToString());
+//            MessageBox.Show(target.ID);
+            listviewCollection.Clear();
+            Update();
         }
     }
 }

@@ -49,12 +49,19 @@ namespace DormitoryGUI
 
             PunishmentList.Click += (s, e) => {
                 PointManageDialog pointManageDialog = new PointManageDialog();
-                ShowModal(pointManageDialog);
+                ShowModal(pointManageDialog);               
             };
 
             CheckTarget.Click += (s, e) => {
                 PunishmentTargetDialog punishmentTargetDialog = new PunishmentTargetDialog();
                 ShowModal(punishmentTargetDialog);
+
+                resultListCollection.Clear();
+
+                ResultList.ItemsSource = resultListCollection;
+                ResultList.Items.Refresh();
+
+                Update();
             };
 
             Update();
@@ -491,6 +498,13 @@ namespace DormitoryGUI
                 );
 
             ShowModal(punishmentLogDialog);
+
+            resultListCollection.Clear();
+
+            ResultList.ItemsSource = resultListCollection;
+            ResultList.Items.Refresh();
+
+            Update();
         }
 
         private void SearchCommand_TextChanged(object sender, TextChangedEventArgs e)
