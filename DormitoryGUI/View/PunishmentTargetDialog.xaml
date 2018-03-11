@@ -533,8 +533,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="Offset"
-                                        Width="16"
-                                        Height="16"
+                                        Width="40"
+                                        Height="40"
                                         BorderThickness="0"
                                         VerticalAlignment="Center"
                                         Cursor="Hand"
@@ -543,7 +543,7 @@
                                     <Button.Resources>
                                         <Style TargetType="Border">
                                             <Setter Property="CornerRadius"
-                                                    Value="8" />
+                                                    Value="1000" />
                                         </Style>
                                     </Button.Resources>
                                 </Button>
@@ -554,22 +554,22 @@
             </ListView.View>
         </ListView>
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Vertical" Margin="30">
-            <RadioButton Checked="RadioButton_Checked" Content="전체" Height="35" IsChecked="True" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Name="All" Content="전체" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton Checked="RadioButton_Checked" Content="1단계" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Name="Grade1" Content="1단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton Checked="RadioButton_Checked" Content="2단계" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Name="Grade2" Content="2단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>
             </RadioButton>
-            <RadioButton Checked="RadioButton_Checked" Content="3단계" Height="35" GroupName="Target">
+            <RadioButton Checked="RadioButton_Checked" Name="Grade3"  Content="3단계" Height="35" GroupName="Target">
                 <RadioButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
                 </RadioButton.LayoutTransform>

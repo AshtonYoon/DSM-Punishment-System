@@ -435,7 +435,7 @@ namespace DormitoryGUI
                     {
                         if (log.Score > 0)
                         {
-                            goodLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, -log.Score);
+                            goodLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, log.Score);
                         }
                         else
                         {

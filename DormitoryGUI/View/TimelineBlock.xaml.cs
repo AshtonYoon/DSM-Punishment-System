@@ -28,8 +28,7 @@ namespace DormitoryGUI.View
 
         public TimelineBlock(bool isGood, string createTime, string pointValue, string pointCause)
         {
-            InitializeComponent();
-
+            InitializeComponent();           
             if (isGood)
             {
                 TintCircle.Stroke = new SolidColorBrush(GoodTintColor);
@@ -44,7 +43,8 @@ namespace DormitoryGUI.View
             CreateTime.Content = createTime;
 
             PointValue.Content = string.Format("{0}점", pointValue);
-            PointCause.Content = pointCause;
+            PointCause.FontSize = 30 * 9 / pointCause.Length;
+            PointCause.Content = pointCause;            
         }
     }
 }

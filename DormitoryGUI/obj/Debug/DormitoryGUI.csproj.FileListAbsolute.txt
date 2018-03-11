@@ -167,6 +167,8 @@ E:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csp
 E:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 E:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\DormitoryGUI.exe.config
+F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\DormitoryGUI.exe.manifest
+F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\DormitoryGUI.application
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\DormitoryGUI.exe
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\DormitoryGUI.pdb
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\ICSharpCode.SharpZipLib.dll
@@ -179,7 +181,6 @@ F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\SciChart.Wpf.UI.
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\Newtonsoft.Json.xml
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\NPOI.xml
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\bin\Debug\SciChart.Wpf.UI.Transitionz.xml
-F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\View\LoginPage.baml
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\View\CheckPunishmentTargetPage.g.cs
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\View\CustomComboBox.g.cs
@@ -220,5 +221,8 @@ F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\View\TimelineBlo
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.g.resources
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.Properties.Resources.resources
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.GenerateResource.Cache
+F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.exe.manifest
+F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.application
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+F:\Develop\Project\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache

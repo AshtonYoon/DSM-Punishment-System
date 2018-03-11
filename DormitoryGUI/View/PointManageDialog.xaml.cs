@@ -73,7 +73,7 @@ namespace DormitoryGUI.View
                     maxPoint: Math.Abs(maxPoint)));
             }
 
-            PointList.ItemsSource = listviewCollection;
+            PointList.ItemsSource = listviewCollection;           
             PointList.Items.Refresh();
         }
 
@@ -110,12 +110,14 @@ namespace DormitoryGUI.View
 
             double[] columnRatio =
             {
-                0.5,
-                0.5
+                0.75,
+                0.25
             };
 
             foreach (var element in gridView.Columns)
+            {
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

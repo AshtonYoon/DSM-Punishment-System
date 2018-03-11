@@ -23,7 +23,7 @@ namespace DormitoryGUI.View
     public partial class PunishmentTargetDialog : Window
     {
         private StudentList listviewCollection;
-
+        private StudentList filteredCollection;
         private JArray studentList;
 
         private string filter = "전체";
@@ -32,12 +32,14 @@ namespace DormitoryGUI.View
         {
             InitializeComponent();
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
+            filteredCollection = Resources["StudentListKey"] as ViewModel.StudentList;
 
             Update();
         }
 
         public void Update()
         {
+            listviewCollection.Clear();
             var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_STUDENT, Info.mainPage.AccessToken, "");
 
             if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
@@ -46,7 +48,8 @@ namespace DormitoryGUI.View
             }
 
             studentList = JArray.Parse(responseDict["body"].ToString());
-
+            
+            
             foreach (JObject student in studentList)
             {
                 int currentStep = student["bad_point_status"].Type == JTokenType.Null
@@ -103,8 +106,47 @@ namespace DormitoryGUI.View
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
+            if (All.IsChecked == true)
+            {
+                Update();
+            }
+            else if (Grade1.IsChecked == true)
+            {
+                FilteringStudent(1);
+            }
+            else if (Grade2.IsChecked == true)
+            {
+                FilteringStudent(2);
+            }
+            else if (Grade3.IsChecked == true)
+            {
+                FilteringStudent(3);
+            }
         }
 
+        private void FilteringStudent(int step)
+        {
+            listviewCollection.Clear();
+            foreach (JObject student in studentList)
+            {
+                int currentStep = student["bad_point_status"].Type == JTokenType.Null
+                    ? 0
+                    : (int)student["bad_point_status"];
+
+                if (currentStep == step)
+                {
+                    listviewCollection.Add(new ViewModel.StudentListViewModel(
+                        id: student["id"].ToString(),
+                        classNumber: student["number"].ToString(),
+                        name: student["name"].ToString(),
+                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int)student["good_point"],
+                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int)student["bad_point"],
+                        currentStep: Info.ParseStatus(currentStep),
+                        isSelected: false
+                    ));
+                }
+            }
+        }
         private void Offset_Click(object sender, RoutedEventArgs e)
         {
             var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;

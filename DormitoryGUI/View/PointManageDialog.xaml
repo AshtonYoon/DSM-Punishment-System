@@ -830,6 +830,7 @@
                         <ListView.View>
                             <GridView AllowsColumnReorder="True">
                                 <GridViewColumn Header="항목"
+                                                x:Name="Reason"
                                                 DisplayMemberBinding="{Binding Path=Name}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
