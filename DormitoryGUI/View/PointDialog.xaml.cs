@@ -29,6 +29,7 @@ namespace DormitoryGUI.View
 
         public PointDialog(int type)
         {
+
             InitializeComponent();
 
             PunishmentComboBox.PunishmentType = type;

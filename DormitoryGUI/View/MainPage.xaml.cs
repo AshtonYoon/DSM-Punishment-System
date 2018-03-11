@@ -35,7 +35,8 @@ namespace DormitoryGUI
         private StudentList listviewCollection;
         private StudentList resultListCollection;
 
-        private JArray studentList;
+        private JArray studentList;  
+
         private readonly MainWindow mainWindow;
 
         private string filter = "전체";

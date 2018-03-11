@@ -39,6 +39,7 @@ namespace DormitoryGUI.View
 
             DataContext = this;
 
+
             punishmentGoodList = Resources["PunishmentGoodListKey"] as PunishmentList;
             punishmentBadList = Resources["PunishmentBadListKey"] as PunishmentList;
 

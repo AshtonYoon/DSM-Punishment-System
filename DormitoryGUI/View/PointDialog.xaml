@@ -20,6 +20,7 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         
+        
         <Label Grid.Row="0" Content="상점" x:Name="PointType" FontFamily="/Font/#NanumSquareRound Bold"
                FontSize="35" Foreground="#675094" />
 

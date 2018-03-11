@@ -11,6 +11,7 @@
       Title="상벌점 내역 관리"
       Background="White">
     <Page.Resources>
+        
         <viewmodel:StudentList x:Key="StudentListKey" />
         <!--Control colors.-->
         <Color x:Key="WindowColor">#FFE8EDF9</Color>

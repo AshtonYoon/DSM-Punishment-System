@@ -42,6 +42,7 @@ namespace DormitoryGUI.View
             Update();
         }
 
+
         private void Update()
         {
             listviewCollection.Clear();
