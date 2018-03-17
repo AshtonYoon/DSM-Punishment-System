@@ -87,10 +87,10 @@ namespace DormitoryGUI
             //
             foreach (JObject student in studentList)
             {
-                if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
+              /*  if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
                 {
                     continue;
-                }
+                }*/
 
                 StudentListViewModel item = new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
@@ -99,8 +99,11 @@ namespace DormitoryGUI
                     goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
                     badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
                     //penaltyTrainingStaus: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
-                    penaltyTrainingStaus: false,
-                    penaltyLevel:Info.ParseStatus((int)student["penalty_level"]),
+                    penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
+                    penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true ? Info.ParseStatus((int)student["penalty_level"]) : "0",
+//                    penaltyLevel: Info.ParseStatus((int)student["penalty_level"]),
+//                    penaltyTrainingStaus: false,
+//                    penaltyLevel: Info.ParseStatus(student["penalty_level"].Type == JTokenType.Null ? 0 : (int)student["penalty_level"]),
                     isSelected: false
                 );
 
@@ -140,6 +143,7 @@ namespace DormitoryGUI
                     { "id", student.ID },
                     { "rule_id", pointDialog.PunishmentID },
                     { "point", pointDialog.PunishmentScore },
+                    { "point_type", GoodPunishCheck.IsChecked == true ? true : false },
                 };
 
                 var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, requestDict);
@@ -278,7 +282,7 @@ namespace DormitoryGUI
                         goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int)student["good_point"],
                         badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int)student["bad_point"],
                         penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
-                        penaltyLevel: Info.ParseStatus((int)student["penalty_level"]),
+                        penaltyLevel: Info.ParseStatus(student["bad_point_status"].Type == JTokenType.Null ? 0 : (int)student["bad_point_status"]),
                         isSelected: false));
                 }
             }

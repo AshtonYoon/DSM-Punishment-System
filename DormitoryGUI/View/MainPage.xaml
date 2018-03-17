@@ -1233,7 +1233,7 @@
                                     <GridViewColumn Header="이름" DisplayMemberBinding="{Binding Path=Name}"/>
                                     <GridViewColumn Header="상점" DisplayMemberBinding="{Binding Path=GoodPoint}" />
                                     <GridViewColumn Header="벌점" DisplayMemberBinding="{Binding Path=BadPoint}"/>
-                                    <GridViewColumn Header="단계" DisplayMemberBinding="{Binding Path=PenaltyLevel}"/>
+                                    <GridViewColumn Header="단계" DisplayMemberBinding="{Binding Path=CurrentStep}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
