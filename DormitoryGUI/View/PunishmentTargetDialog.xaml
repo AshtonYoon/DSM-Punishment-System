@@ -528,7 +528,7 @@
                     <GridViewColumn Header="이름"
                                     DisplayMemberBinding="{Binding Path=Name}" />
                     <GridViewColumn Header="단계"
-                                    DisplayMemberBinding="{Binding Path=CurrentStep}" />
+                                    DisplayMemberBinding="{Binding Path=PenaltyLevel}" />
                     <GridViewColumn Header="상쇄">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
