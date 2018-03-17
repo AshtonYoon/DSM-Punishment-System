@@ -137,7 +137,7 @@ namespace DormitoryGUI.View
             {
                 JObject log = (JObject) logs[i];
 
-                bool isGood = int.Parse(log["point"].ToString()) > 0;
+                bool isGood = bool.Parse(log["point_type"].ToString());
                 int point = (int) log["point"];
                 Timeline.Children.Add(new TimelineBlock(
                     isGood: isGood,

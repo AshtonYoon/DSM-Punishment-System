@@ -61,7 +61,7 @@ namespace DormitoryGUI.View
                 TimelineBlock timelineBlock =
                     new TimelineBlock
                     (
-                        isGood: (int) log["point"] > 0,
+                        isGood: bool.Parse(log["point_type"].ToString()),
                         createTime: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
                         pointValue: Math.Abs((int) log["point"]).ToString(),
                         pointCause: log["reason"].ToString()
