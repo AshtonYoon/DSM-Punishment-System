@@ -61,7 +61,7 @@ namespace DormitoryGUI.View
                     continue;
                 }
 
-                if (currentStep >= 1)
+                if (currentStep >= 1 && (bool)student["penalty_training_status"] == true)
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
@@ -70,7 +70,7 @@ namespace DormitoryGUI.View
                         goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
                         badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
                         penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
-                        penaltyLevel: Info.ParseStatus(currentStep),
+                        penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true ? Info.ParseStatus((int)student["penalty_level"]) : " ",
                         isSelected: false
                     ));
                 }
@@ -134,7 +134,7 @@ namespace DormitoryGUI.View
                     ? 0
                     : (int)student["penalty_level"];
 
-                if (currentStep == step)
+                if (currentStep == step && (bool)student["penalty_training_status"] == true)
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
