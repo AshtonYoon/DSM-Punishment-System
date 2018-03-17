@@ -52,9 +52,9 @@ namespace DormitoryGUI.View
             
             foreach (JObject student in studentList)
             {
-                int currentStep = student["bad_point_status"].Type == JTokenType.Null
+                int currentStep = student["penalty_level"].Type == JTokenType.Null
                     ? 0
-                    : (int) student["bad_point_status"];
+                    : (int) student["penalty_level"];
 
                 if (filter != "전체" && Info.ParseStatus(currentStep).Equals(filter))
                 {
@@ -130,9 +130,9 @@ namespace DormitoryGUI.View
             listviewCollection.Clear();
             foreach (JObject student in studentList)
             {
-                int currentStep = student["bad_point_status"].Type == JTokenType.Null
+                int currentStep = student["penalty_level"].Type == JTokenType.Null
                     ? 0
-                    : (int)student["bad_point_status"];
+                    : (int)student["penalty_level"];
 
                 if (currentStep == step)
                 {

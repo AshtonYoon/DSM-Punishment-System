@@ -57,7 +57,7 @@ namespace DormitoryGUI.View
             }
 
             punishmentID = target.ID;
-            punishmentScore = int.Parse(ScoreText.Text) * (PointType.Content.ToString() == "상점" ? 1 : -1);
+            punishmentScore = int.Parse(ScoreText.Text);
 
             DialogResult = true;
             Close();

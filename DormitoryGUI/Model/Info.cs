@@ -115,7 +115,7 @@ namespace DormitoryGUI
             switch(status)
             {
                 case 0:
-                    return "";
+                    return " ";
                 case 1:
                     return "1단계";
                 case 2:
@@ -123,7 +123,7 @@ namespace DormitoryGUI
                 case 3:
                     return "3단계";
                 default:
-                    return " ";
+                    return "";
             }
         }
     }

@@ -129,7 +129,8 @@ namespace DormitoryGUI.View
             {
                 { "name", PointName.Text },
                 { "min_point", point },
-                { "max_point", point }
+                { "max_point", point },
+                {"point_type", GoodPunishCheck.IsChecked == true ? true : false}
             };
 
             var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
@@ -154,7 +155,8 @@ namespace DormitoryGUI.View
                 { "rule_id", selectedItem.ID },
                 { "name", PointName.Text },
                 { "min_point", point },
-                { "max_point", point }
+                { "max_point", point },
+                { "point_type", GoodPunishCheck.IsChecked == true ? true : false }
             };
 
             var responseDict = Info.GenerateRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);

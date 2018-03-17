@@ -36,7 +36,7 @@ namespace DormitoryGUI.ViewModel
         public PunishLogList PunishLogs { get => punishLogs; set => punishLogs = value; }
         public string PenaltyLevel { get => penaltyLevel; set => penaltyLevel = value; }
 
-        public StudentListViewModel(string id, string classNumber, string name, int goodPoint, int badPoint, bool penaltyTrainingStaus, bool isSelected,string penaltyLevel)
+        public StudentListViewModel(string id, string classNumber, string name, int goodPoint, int badPoint, bool penaltyTrainingStaus, bool isSelected, string penaltyLevel)
         {
             this.id = id;
             this.name = name;
