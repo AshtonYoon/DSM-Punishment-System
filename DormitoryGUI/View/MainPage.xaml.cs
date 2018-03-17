@@ -34,8 +34,8 @@ namespace DormitoryGUI
     {
         private StudentList listviewCollection;
         private StudentList resultListCollection;
-            
-        private JArray studentList;  
+
+        private JArray studentList;
 
         private readonly MainWindow mainWindow;
 
@@ -48,12 +48,14 @@ namespace DormitoryGUI
             listviewCollection = Resources["StudentListKey"] as ViewModel.StudentList;
             resultListCollection = Resources["ResultListKey"] as ViewModel.StudentList;
 
-            PunishmentList.Click += (s, e) => {
+            PunishmentList.Click += (s, e) =>
+            {
                 PointManageDialog pointManageDialog = new PointManageDialog();
-                ShowModal(pointManageDialog);               
+                ShowModal(pointManageDialog);
             };
 
-            CheckTarget.Click += (s, e) => {
+            CheckTarget.Click += (s, e) =>
+            {
                 PunishmentTargetDialog punishmentTargetDialog = new PunishmentTargetDialog();
                 ShowModal(punishmentTargetDialog);
 
@@ -87,20 +89,26 @@ namespace DormitoryGUI
             //
             foreach (JObject student in studentList)
             {
-              /*  if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
-                {
-                    continue;
-                }*/
+                /*  if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
+                  {
+                      continue;
+                  }*/
 
                 StudentListViewModel item = new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
                     name: student["name"].ToString(),
-                    goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
-                    badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
+                    goodPoint: student["good_point"].Type == JTokenType.Null
+                        ? 0
+                        : int.Parse(student["good_point"].ToString()),
+                    badPoint: student["bad_point"].Type == JTokenType.Null
+                        ? 0
+                        : int.Parse(student["bad_point"].ToString()),
                     //penaltyTrainingStaus: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
                     penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
-                    penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true ? Info.ParseStatus((int)student["penalty_level"]) : " ",
+                    penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true
+                        ? Info.ParseStatus((int) student["penalty_level"])
+                        : " ",
 //                    penaltyLevel: Info.ParseStatus((int)student["penalty_level"]),
 //                    penaltyTrainingStaus: false,
 //                    penaltyLevel: Info.ParseStatus(student["penalty_level"].Type == JTokenType.Null ? 0 : (int)student["penalty_level"]),
@@ -109,27 +117,29 @@ namespace DormitoryGUI
 
                 JArray logs = student["point_histories"] as JArray;
 
-                foreach(JObject log in logs)
+                foreach (JObject log in logs)
                 {
                     item.PunishLogs.Add(new PunishLogListViewModel(
                         score: (int) log["point"],
                         reason: log["reason"].ToString(),
                         time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
-                        pointType: log["point_type"].ToString() == null ? true : false                 
+                        pointType: log["point_type"].ToString() == null ? true : false
                     ));
                 }
 
                 listviewCollection.Add(item);
             }
 
-            SearchList.Items.Refresh(); 
+            SearchList.Items.Refresh();
         }
 
         private void ApplyPointButton_Click(object sender, RoutedEventArgs e)
         {
-            PointDialog pointDialog = new PointDialog((bool) GoodPunishCheck.IsChecked ? (int) Info.POINT_TYPE.GOOD : (int)Info.POINT_TYPE.BAD);
+            PointDialog pointDialog = new PointDialog((bool) GoodPunishCheck.IsChecked
+                ? (int) Info.POINT_TYPE.GOOD
+                : (int) Info.POINT_TYPE.BAD);
 
-            if (!(bool)ShowModal(pointDialog))
+            if (!(bool) ShowModal(pointDialog))
             {
                 return;
             }
@@ -140,14 +150,15 @@ namespace DormitoryGUI
             {
                 var requestDict = new Dictionary<string, object>
                 {
-                    { "id", student.ID },
-                    { "rule_id", pointDialog.PunishmentID },
-                    { "point", pointDialog.PunishmentScore },                    
+                    {"id", student.ID},
+                    {"rule_id", pointDialog.PunishmentID},
+                    {"point", pointDialog.PunishmentScore},
                 };
 
-                var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken, requestDict);
+                var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken,
+                    requestDict);
 
-                if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.Created)
+                if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.Created)
                 {
                     operationComplete = false;
                     break;
@@ -167,7 +178,7 @@ namespace DormitoryGUI
 
             ResultList.ItemsSource = resultListCollection;
             ResultList.Items.Refresh();
-            
+
             Update();
         }
 
@@ -278,10 +289,12 @@ namespace DormitoryGUI
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int)student["good_point"],
-                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int)student["bad_point"],
+                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
+                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
                         penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
-                        penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true ? Info.ParseStatus((int)student["penalty_level"]) : " ",
+                        penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true
+                            ? Info.ParseStatus((int) student["penalty_level"])
+                            : " ",
                         isSelected: false));
                 }
             }
@@ -408,7 +421,7 @@ namespace DormitoryGUI
                 SearchList.SelectedItems.Remove(item);
             }
         }
-        
+
         private void DownloadExcel_Click(object sender, RoutedEventArgs e)
         {
             var saveFileDialog = new SaveFileDialog()
@@ -454,10 +467,14 @@ namespace DormitoryGUI
                     }
 
                     int goodLogsCount = goodLogsBuilder.ToString().Length;
-                    string goodLogsString = (goodLogsCount > 0) ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1) : string.Empty;
+                    string goodLogsString = (goodLogsCount > 0)
+                        ? goodLogsBuilder.ToString().Substring(0, goodLogsCount - 1)
+                        : string.Empty;
 
                     int badLogsCount = badLogsBuilder.ToString().Length;
-                    string badLogsString = (badLogsCount > 0) ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1) : string.Empty;
+                    string badLogsString = (badLogsCount > 0)
+                        ? badLogsBuilder.ToString().Substring(0, badLogsCount - 1)
+                        : string.Empty;
 
                     dataTable.Rows.Add(
                         new object[]
@@ -468,7 +485,9 @@ namespace DormitoryGUI
                             item.BadPoint,
                             goodLogsString,
                             badLogsString,
-                            item.PenaltyTrainingStatus
+                            item.PenaltyTrainingStatus == false && item.PenaltyLevel != " "
+                                ? item.PenaltyLevel + "(상쇄완료)"
+                                : item.PenaltyLevel
                         }
                     );
                 }
@@ -498,7 +517,7 @@ namespace DormitoryGUI
             var target = (StudentListViewModel) SearchList.SelectedItems[0];
 
             var punishmentLogDialog =
-                new PunishmentLogDialog (
+                new PunishmentLogDialog(
                     id: target.ID,
                     name: target.Name,
                     classNumber: target.ClassNumber,
