@@ -69,7 +69,8 @@ namespace DormitoryGUI.View
                         name: student["name"].ToString(),
                         goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
                         badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
-                        currentStep: Info.ParseStatus(currentStep),
+                        penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
+                        penaltyLevel: Info.ParseStatus(currentStep),
                         isSelected: false
                     ));
                 }
@@ -141,7 +142,8 @@ namespace DormitoryGUI.View
                         name: student["name"].ToString(),
                         goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int)student["good_point"],
                         badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int)student["bad_point"],
-                        currentStep: Info.ParseStatus(currentStep),
+                        penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
+                        penaltyLevel: Info.ParseStatus(currentStep),
                         isSelected: false
                     ));
                 }

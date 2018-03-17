@@ -84,6 +84,7 @@ namespace DormitoryGUI
 
             studentList = JArray.Parse(responseDict["body"].ToString());
 
+            //
             foreach (JObject student in studentList)
             {
                 if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
@@ -97,7 +98,9 @@ namespace DormitoryGUI
                     name: student["name"].ToString(),
                     goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : int.Parse(student["good_point"].ToString()),
                     badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point"].ToString()),
-                    currentStep: Info.ParseStatus(student["bad_point_status"].Type == JTokenType.Null ? 0 : int.Parse(student["bad_point_status"].ToString())),
+                    //penaltyTrainingStaus: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
+                    penaltyTrainingStaus: false,
+                    penaltyLevel: Info.ParseStatus(student["penalty_level"].Type == JTokenType.Null ? 0 : (int)student["penalty_level"]),
                     isSelected: false
                 );
 
@@ -108,7 +111,8 @@ namespace DormitoryGUI
                     item.PunishLogs.Add(new PunishLogListViewModel(
                         score: (int) log["point"],
                         reason: log["reason"].ToString(),
-                        time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd")
+                        time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
+                        pointType: log["point_type"].ToString() == null ? true : false                 
                     ));
                 }
 
@@ -271,9 +275,10 @@ namespace DormitoryGUI
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
-                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
-                        currentStep: Info.ParseStatus(student["bad_point_status"].Type == JTokenType.Null ? 0 : (int) student["bad_point_status"]),
+                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int)student["good_point"],
+                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int)student["bad_point"],
+                        penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
+                        penaltyLevel: Info.ParseStatus(student["bad_point_status"].Type == JTokenType.Null ? 0 : (int)student["bad_point_status"]),
                         isSelected: false));
                 }
             }
@@ -314,7 +319,8 @@ namespace DormitoryGUI
                         classNumber: element.ClassNumber,
                         goodPoint: element.GoodPoint,
                         badPoint: element.BadPoint,
-                        currentStep: element.CurrentStep,
+                        penaltyTrainingStaus: element.PenaltyTrainingStatus,
+                        penaltyLevel: element.PenaltyLevel,
                         isSelected: false
                     )
                 );
@@ -434,13 +440,13 @@ namespace DormitoryGUI
 
                     foreach (PunishLogListViewModel log in item.PunishLogs)
                     {
-                        if (log.Score > 0)
+                        if (log.Point > 0)
                         {
-                            goodLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, log.Score);
+                            goodLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, log.Point);
                         }
                         else
                         {
-                            badLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, -log.Score);
+                            badLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, -log.Point);
                         }
                     }
 
@@ -459,7 +465,7 @@ namespace DormitoryGUI
                             item.BadPoint,
                             goodLogsString,
                             badLogsString,
-                            item.CurrentStep
+                            item.PenaltyTrainingStatus
                         }
                     );
                 }
@@ -495,7 +501,7 @@ namespace DormitoryGUI
                     classNumber: target.ClassNumber,
                     goodPoint: target.GoodPoint,
                     badPoint: target.BadPoint,
-                    currentStep: target.CurrentStep
+                    currentStep: target.PenaltyLevel
                 );
 
             ShowModal(punishmentLogDialog);
