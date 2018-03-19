@@ -29,10 +29,10 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="logo.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="DMS"/>
-    <ROW Property="ProductCode" Value="1033:{6F7B1C41-61FC-4CAA-A43F-902596DA09DA} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{6E413C19-7EED-4F1B-9BED-1315FA6CCF6B} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="DormitoryGUI"/>
-    <ROW Property="ProductVersion" Value="1.0.2" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.0.3" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{C1C3227B-62FE-4438-8CC6-C0D284250AF3}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>

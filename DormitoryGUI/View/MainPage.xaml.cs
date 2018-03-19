@@ -123,7 +123,7 @@ namespace DormitoryGUI
                         score: (int) log["point"],
                         reason: log["reason"].ToString(),
                         time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
-                        pointType: log["point_type"].ToString() == null ? true : false
+                        pointType: bool.Parse(log["point_type"].ToString())
                     ));
                 }
 
