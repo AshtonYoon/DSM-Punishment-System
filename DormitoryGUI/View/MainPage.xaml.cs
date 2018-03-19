@@ -89,10 +89,10 @@ namespace DormitoryGUI
             //
             foreach (JObject student in studentList)
             {
-                /*  if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
+                  if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
                   {
                       continue;
-                  }*/
+                  }
 
                 StudentListViewModel item = new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
@@ -456,13 +456,13 @@ namespace DormitoryGUI
 
                     foreach (PunishLogListViewModel log in item.PunishLogs)
                     {
-                        if (log.Point > 0)
+                        if (log.PointType == true)
                         {
                             goodLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, log.Point);
                         }
                         else
                         {
-                            badLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, -log.Point);
+                            badLogsBuilder.AppendFormat("[{0}] {1} ({2}점) \n", log.Time, log.Reason, log.Point);
                         }
                     }
 
