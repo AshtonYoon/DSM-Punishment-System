@@ -86,13 +86,12 @@ namespace DormitoryGUI
 
             studentList = JArray.Parse(responseDict["body"].ToString());
 
-            //
             foreach (JObject student in studentList)
             {
-                  if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
-                  {
-                      continue;
-                  }
+                if ((filter != "전체") && (student["number"].ToString()[0] != filter[0]))
+                {
+                    continue;
+                }
 
                 StudentListViewModel item = new ViewModel.StudentListViewModel(
                     id: student["id"].ToString(),
@@ -104,14 +103,10 @@ namespace DormitoryGUI
                     badPoint: student["bad_point"].Type == JTokenType.Null
                         ? 0
                         : int.Parse(student["bad_point"].ToString()),
-                    //penaltyTrainingStaus: Info.ParseStatus(student["penalty_training_status"].Type == JTokenType.Null ? 0 : int.Parse(student["penalty_training_status"].ToString())),
                     penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
                     penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true
                         ? Info.ParseStatus((int) student["penalty_level"])
                         : " ",
-//                    penaltyLevel: Info.ParseStatus((int)student["penalty_level"]),
-//                    penaltyTrainingStaus: false,
-//                    penaltyLevel: Info.ParseStatus(student["penalty_level"].Type == JTokenType.Null ? 0 : (int)student["penalty_level"]),
                     isSelected: false
                 );
 
@@ -122,9 +117,11 @@ namespace DormitoryGUI
                     item.PunishLogs.Add(new PunishLogListViewModel(
                         score: (int) log["point"],
                         reason: log["reason"].ToString(),
-                        time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
-                        pointType: bool.Parse(log["point_type"].ToString())
-                    ));
+                        time: log["time"].ToString(),
+//                        time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
+                    pointType:
+                    bool.Parse(log["point_type"].ToString())
+                        ));
                 }
 
                 listviewCollection.Add(item);
@@ -210,68 +207,6 @@ namespace DormitoryGUI
             foreach (var element in gridView.Columns)
                 element.Width = workingWidth * columnRatio[gridView.Columns.IndexOf(element)];
         }
-
-        /* private void HideAnimation(Panel target)
-        {
-            var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
-
-            Storyboard HideStoryBoard = new Storyboard();
-
-            DoubleAnimation FadeOutAnimation = new DoubleAnimation(0, Duration)
-            {
-                EasingFunction = new QuadraticEase()
-            };
-
-            Storyboard.SetTargetProperty(FadeOutAnimation, new PropertyPath(OpacityProperty));
-
-            Storyboard.SetTarget(FadeOutAnimation, target);
-
-            ThicknessAnimation ShiftLeftAnimation =
-            new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration)
-            {
-                EasingFunction = new QuadraticEase()
-            };
-
-            Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
-
-            Storyboard.SetTarget(ShiftLeftAnimation, target);
-
-            HideStoryBoard.Children.Add(FadeOutAnimation);
-            HideStoryBoard.Children.Add(ShiftLeftAnimation);
-
-            target.Visibility = Visibility.Hidden;
-            HideStoryBoard.Begin();
-        }
-
-        private void ShowAnimation(Panel target)
-        {
-            var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
-
-            Storyboard HideStoryBoard = new Storyboard();
-
-            DoubleAnimation FadeInAnimation = new DoubleAnimation(1, Duration)
-            {
-                EasingFunction = new QuadraticEase()
-            };
-
-            Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
-            Storyboard.SetTarget(FadeInAnimation, target);
-
-            ThicknessAnimation ShiftLeftAnimation =
-                new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
-                {
-                    EasingFunction = new QuadraticEase()
-                };
-
-            Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
-            Storyboard.SetTarget(ShiftLeftAnimation, target);
-
-            HideStoryBoard.Children.Add(FadeInAnimation);
-            HideStoryBoard.Children.Add(ShiftLeftAnimation);
-
-            target.Visibility = Visibility.Visible;
-            HideStoryBoard.Begin();
-        } */
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -551,9 +486,68 @@ namespace DormitoryGUI
                 Update();
             }
         }
-
-        private void SearchList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
     }
 }
+
+
+/* private void HideAnimation(Panel target)
+        {
+            var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
+
+            Storyboard HideStoryBoard = new Storyboard();
+
+            DoubleAnimation FadeOutAnimation = new DoubleAnimation(0, Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
+
+            Storyboard.SetTargetProperty(FadeOutAnimation, new PropertyPath(OpacityProperty));
+
+            Storyboard.SetTarget(FadeOutAnimation, target);
+
+            ThicknessAnimation ShiftLeftAnimation =
+            new ThicknessAnimation(new Thickness(0, 0, 200, target.Margin.Bottom), Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
+
+            Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
+
+            Storyboard.SetTarget(ShiftLeftAnimation, target);
+
+            HideStoryBoard.Children.Add(FadeOutAnimation);
+            HideStoryBoard.Children.Add(ShiftLeftAnimation);
+
+            target.Visibility = Visibility.Hidden;
+            HideStoryBoard.Begin();
+        }
+
+        private void ShowAnimation(Panel target)
+        {
+            var Duration = new Duration(new TimeSpan(0, 0, 0, 0, 600));
+
+            Storyboard HideStoryBoard = new Storyboard();
+
+            DoubleAnimation FadeInAnimation = new DoubleAnimation(1, Duration)
+            {
+                EasingFunction = new QuadraticEase()
+            };
+
+            Storyboard.SetTargetProperty(FadeInAnimation, new PropertyPath(OpacityProperty));
+            Storyboard.SetTarget(FadeInAnimation, target);
+
+            ThicknessAnimation ShiftLeftAnimation =
+                new ThicknessAnimation(new Thickness(0, 0, 0, target.Margin.Bottom), Duration)
+                {
+                    EasingFunction = new QuadraticEase()
+                };
+
+            Storyboard.SetTargetProperty(ShiftLeftAnimation, new PropertyPath(MarginProperty));
+            Storyboard.SetTarget(ShiftLeftAnimation, target);
+
+            HideStoryBoard.Children.Add(FadeInAnimation);
+            HideStoryBoard.Children.Add(ShiftLeftAnimation);
+
+            target.Visibility = Visibility.Visible;
+            HideStoryBoard.Begin();
+        } */
