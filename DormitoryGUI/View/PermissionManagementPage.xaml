@@ -1,0 +1,87 @@
+﻿<Page x:Class="DormitoryGUI.View.PermissionManagementPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:DormitoryGUI.View"
+      mc:Ignorable="d"
+      d:DesignWidth="1920"
+      d:DesignHeight="1080"
+      Title="PermissionManagementPage">
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Image Source="/Image/line-illustration.png"
+               Grid.RowSpan="2"
+               Grid.ColumnSpan="2"
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Right"
+               Opacity=".3"
+               Width="500"
+               Grid.Column="1"
+               Margin="0,0,-77,-85"
+               Grid.Row="1" />
+        <Grid Grid.Column="0"
+              Grid.Row="1">
+            <local:SideMenuButton x:Name="BackButton"
+                                  ButtonBackground="#90dfaa"
+                                  ImageSource="/Image/left-arrow.png">
+                <local:SideMenuButton.ToolTip>
+                    <ToolTip BorderThickness="0">
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">뒤로가기</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </local:SideMenuButton.ToolTip>
+            </local:SideMenuButton>
+        </Grid>
+        <StackPanel Grid.Column="1"
+                    Grid.Row="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center">
+                <Label Content="관리자" />
+                <StackPanel Orientation="Horizontal"
+                            Margin="0, 5, 0, 0">
+                    <CheckBox x:Name="ManagerPoint"
+                              Content="상벌점 관리" />
+                    <CheckBox x:Name="ManagerStudent"
+                              Content="학생 관리"
+                              Margin="20, 0, 0, 0" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center"
+                        Margin="0, 30, 0, 0">
+                <Label Content="사감" />
+                <StackPanel Orientation="Horizontal"
+                            Margin="0, 5, 0, 0">
+                    <CheckBox x:Name="CoachPoint"
+                              Content="상벌점 관리" />
+                    <CheckBox x:Name="CoachStudent"
+                              Content="학생 관리"
+                              Margin="20, 0, 0, 0" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center"
+                        Margin="0, 30, 0, 0">
+                <Label Content="교사" />
+                <StackPanel Orientation="Horizontal"
+                            Margin="0, 5, 0, 0">
+                    <CheckBox x:Name="TeacherPoint"
+                              Content="상벌점 관리" />
+                    <CheckBox x:Name="TeacherStudent"
+                              Content="학생 관리"
+                              Margin="20, 0, 0, 0" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
