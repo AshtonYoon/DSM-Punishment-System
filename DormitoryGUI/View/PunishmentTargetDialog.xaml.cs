@@ -148,7 +148,7 @@ namespace DormitoryGUI.View
                     ));
                 }
             }
-        }
+        }   
         private void Offset_Click(object sender, RoutedEventArgs e)
         {
             var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;

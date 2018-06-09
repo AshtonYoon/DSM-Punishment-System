@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\Develop\DSM-Punishment-System\DormitoryGUI\App.xaml
-16444974953
+12-2090172525
 
-271844573113
+23-1009678181
 201781938490
-View\CheckPunishmentTargetPage.xaml;View\CustomComboBox.xaml;View\PointDialog.xaml;View\CustomSlider.xaml;View\CustomSwitch.xaml;View\LoginPage.xaml;View\MainPage.xaml;MainWindow.xaml;View\PermissionManagementPage.xaml;View\PointManageDialog.xaml;View\PunishmentListPage.xaml;View\PunishmentLogDialog.xaml;View\PunishmentLogPage.xaml;View\PunishmentTargetDialog.xaml;View\SideMenuButton.xaml;View\TimelineBlock.xaml;
+View\CustomComboBox.xaml;View\PointDialog.xaml;View\CustomSlider.xaml;View\CustomSwitch.xaml;View\LoginPage.xaml;View\MainPage.xaml;MainWindow.xaml;View\PointManageDialog.xaml;View\PunishmentLogDialog.xaml;View\PunishmentTargetDialog.xaml;View\SideMenuButton.xaml;View\TimelineBlock.xaml;
 
 False
 
