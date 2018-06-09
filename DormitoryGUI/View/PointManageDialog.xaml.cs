@@ -59,8 +59,8 @@ namespace DormitoryGUI.View
             
             foreach (JObject rule in rules)
             {
-                int minPoint = rule["min_point"].Type == JTokenType.Null ? 0 : (int) rule["min_point"];
-                int maxPoint = rule["max_point"].Type == JTokenType.Null ? 0 : (int) rule["max_point"];
+                int minPoint = rule["minPoint"].Type == JTokenType.Null ? 0 : (int) rule["minPoint"];
+                int maxPoint = rule["maxPoint"].Type == JTokenType.Null ? 0 : (int) rule["maxPoint"];
 
                 if ((pointType == 0 && minPoint < 0) || (pointType == 1 && minPoint > 0))
                 {
@@ -128,9 +128,9 @@ namespace DormitoryGUI.View
             var requestDict = new Dictionary<string, object>
             {
                 { "name", PointName.Text },
-                { "min_point", point },
-                { "max_point", point },
-                { "point_type", GoodPunishCheck.IsChecked == true ? true : false }
+                { "minPoint", point },
+                { "maxPoint", point },
+                { "pointType", GoodPunishCheck.IsChecked == true ? true : false }
             };
 
             var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
@@ -176,7 +176,7 @@ namespace DormitoryGUI.View
 
             var requestDict = new Dictionary<string, object>
             {
-                { "rule_id", selectedItem.ID }
+                { "ruleId", selectedItem.ID }
             };
 
             var responseDict = Info.GenerateRequest("DELETE", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);

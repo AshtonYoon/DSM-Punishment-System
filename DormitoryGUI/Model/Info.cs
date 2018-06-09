@@ -20,17 +20,21 @@ namespace DormitoryGUI
         // 새로운 상벌점 서버를 위한 PATH 수정 
         public class Server
         {
-            private const string SERVER_URL = "http://dsm2015.cafe24.com/";
+            private const string SERVER_URL = "http://dsm2015.cafe24.com/v2/";
             public const string AUTH = SERVER_URL + "admin/auth";
             public const string REFRESH = SERVER_URL + "admin/refresh";
-            public const string MANAGING_POINT = SERVER_URL + "admin/managing/point";
-            public const string MANAGING_STUDENT = SERVER_URL + "admin/managing/student";
-            public const string MANAGING_RULE = SERVER_URL + "admin/managing/rule";
-            public const string MANAGING_PENALTY = SERVER_URL + "admin/managing/student/penalty";
+            public const string MANAGING_POINT = SERVER_URL + "admin/point/point";
+            public const string MANAGING_STUDENT = SERVER_URL + "admin/point/student";
+            public const string MANAGING_RULE = SERVER_URL + "admin/point/rule";
+            public const string MANAGING_PENALTY = SERVER_URL + "admin/point/student/penalty";
         }
-            
+
         // 상벌점 유형 { 0: 상점, 1: 벌점 }
-        public enum POINT_TYPE { GOOD = 0, BAD };
+        public enum POINT_TYPE
+        {
+            GOOD = 0,
+            BAD
+        };
 
         // 새로운 상벌점 서버 전용 request
         public static Dictionary<string, object> GenerateRequest(string method, string url, string token, object body)
@@ -39,7 +43,7 @@ namespace DormitoryGUI
 
             try
             {
-                HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(url);
                 webRequest.Method = method;
 
                 if (!string.IsNullOrWhiteSpace(token))
@@ -56,7 +60,7 @@ namespace DormitoryGUI
                 }
                 else if (body is Dictionary<string, object>)
                 {
-                    webRequest.ContentType = "application/x-www-form-urlencoded";
+                    webRequest.ContentType = "application/json";
                     bodyString = GenerateUrlEncodedBody(body as Dictionary<string, object>);
                 }
                 else
@@ -75,7 +79,7 @@ namespace DormitoryGUI
                 }
 
                 HttpWebResponse webResponse = (HttpWebResponse) webRequest.GetResponse();
-                 
+
                 responseDict["status"] = webResponse.StatusCode;
 
                 using (StreamReader streamReader = new StreamReader(webResponse.GetResponseStream()))
@@ -101,18 +105,31 @@ namespace DormitoryGUI
         public static string GenerateUrlEncodedBody(Dictionary<string, object> data)
         {
             StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append("{");
 
-            foreach(var entry in data)
+            foreach (var entry in data)
             {
-                queryBuilder.AppendFormat("{0}={1}&", entry.Key, entry.Value);
+                if (entry.Value is int || entry.Value is bool || entry.Value is Int16)
+                {
+                    Console.WriteLine(entry.Value);
+                    queryBuilder.AppendFormat("\"{0}\":{1},", entry.Key, entry.Value.ToString().ToLower());
+                }
+                else
+                {
+                    queryBuilder.AppendFormat("\"{0}\": \"{1}\",", entry.Key, entry.Value);
+                    Console.WriteLine(entry.Value);
+                }
             }
 
-            return queryBuilder.ToString().Substring(0, queryBuilder.ToString().Length - 1);
+            queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
+            queryBuilder.Append("}");
+            Console.WriteLine(queryBuilder.ToString());
+            return queryBuilder.ToString();
         }
 
         public static string ParseStatus(int status)
         {
-            switch(status)
+            switch (status)
             {
                 case 0:
                     return "";

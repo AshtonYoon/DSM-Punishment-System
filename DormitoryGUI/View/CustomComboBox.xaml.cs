@@ -69,8 +69,8 @@ namespace DormitoryGUI.View
 
             foreach (JObject rule in rules)
             {
-                int minPoint = rule["min_point"].Type == JTokenType.Null ? 0 : (int) rule["min_point"];
-                int maxPoint = rule["max_point"].Type == JTokenType.Null ? 0 : (int) rule["max_point"];
+                int minPoint = rule["minPoint"].Type == JTokenType.Null ? 0 : (int) rule["minPoint"];
+                int maxPoint = rule["maxPoint"].Type == JTokenType.Null ? 0 : (int) rule["maxPoint"];
 
                 if ((punishmentType == 0 && minPoint < 0) || (punishmentType == 1 && minPoint > 0))
                 {

@@ -36,12 +36,12 @@ namespace DormitoryGUI
             var requestDict = new Dictionary<string, object>
             {
                  { "id", ID.Text },
-                 { "pw", Password.Password }
+                 { "password", Password.Password }
             };
 
             var responseDict = Info.GenerateRequest("POST", Info.Server.AUTH, "", requestDict);
 
-            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
+            if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.Created)
             {
                 MessageBox.Show("로그인 실패");
                 return;
@@ -49,8 +49,8 @@ namespace DormitoryGUI
 
             JObject responseJSON = JObject.Parse(responseDict["body"].ToString());
 
-            Info.mainPage.AccessToken = responseJSON["access_token"].ToString();
-            Info.mainPage.RefreshToken = responseJSON["refresh_token"].ToString();
+            Info.mainPage.AccessToken = responseJSON["accessToken"].ToString();
+            Info.mainPage.RefreshToken = responseJSON["refreshToken"].ToString();
 
             mainWindow.NavigatePage(new MainPage(mainWindow));
         }

@@ -97,20 +97,20 @@ namespace DormitoryGUI
                     id: student["id"].ToString(),
                     classNumber: student["number"].ToString(),
                     name: student["name"].ToString(),
-                    goodPoint: student["good_point"].Type == JTokenType.Null
+                    goodPoint: student["goodPoint"].Type == JTokenType.Null
                         ? 0
-                        : int.Parse(student["good_point"].ToString()),
-                    badPoint: student["bad_point"].Type == JTokenType.Null
+                        : int.Parse(student["goodPoint"].ToString()),
+                    badPoint: student["badPoint"].Type == JTokenType.Null
                         ? 0
-                        : int.Parse(student["bad_point"].ToString()),
-                    penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
-                    penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true
-                        ? Info.ParseStatus((int) student["penalty_level"])
+                        : int.Parse(student["badPoint"].ToString()),
+                    penaltyTrainingStaus: bool.Parse(student["penaltyTrainingStatus"].ToString()),
+                    penaltyLevel: bool.Parse(student["penaltyTrainingStatus"].ToString()) == true
+                        ? Info.ParseStatus((int) student["penaltyLevel"])
                         : " ",
                     isSelected: false
                 );
 
-                JArray logs = student["point_histories"] as JArray;
+                JArray logs = student["pointHistories"] as JArray;
 
                 foreach (JObject log in logs)
                 {
@@ -119,9 +119,9 @@ namespace DormitoryGUI
                         reason: log["reason"].ToString(),
                         time: log["time"].ToString(),
 //                        time: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
-                    pointType:
-                    bool.Parse(log["point_type"].ToString())
-                        ));
+                        pointType:
+                        bool.Parse(log["pointType"].ToString())
+                    ));
                 }
 
                 listviewCollection.Add(item);
@@ -145,14 +145,20 @@ namespace DormitoryGUI
 
             foreach (StudentListViewModel student in resultListCollection)
             {
+                Console.WriteLine(pointDialog.PunishmentID);
                 var requestDict = new Dictionary<string, object>
                 {
-                    {"id", student.ID},
-                    {"rule_id", pointDialog.PunishmentID},
-                    {"point", pointDialog.PunishmentScore},
+//                    {"id", student.ID},
+                    {"ruleId", pointDialog.PunishmentID},
+                    {
+                        "point",
+                        pointDialog.PunishmentScore > 0 ? pointDialog.PunishmentScore : pointDialog.PunishmentScore * -1
+                    },
+                    {"applyGoodPoint", GoodPunishCheck.IsChecked == true ? true : false}
                 };
 
-                var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_POINT, Info.mainPage.AccessToken,
+                var responseDict = Info.GenerateRequest("POST", $"{Info.Server.MANAGING_POINT}/{student.ID}",
+                    Info.mainPage.AccessToken,
                     requestDict);
 
                 if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.Created)
@@ -217,18 +223,18 @@ namespace DormitoryGUI
             {
                 if (student["number"].ToString().Contains(command) ||
                     student["name"].ToString().Contains(command) ||
-                    student["good_point"].ToString().Contains(command) ||
-                    student["bad_point"].ToString().Contains(command))
+                    student["goodPoint"].ToString().Contains(command) ||
+                    student["badPoint"].ToString().Contains(command))
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
-                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
-                        penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
-                        penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true
-                            ? Info.ParseStatus((int) student["penalty_level"])
+                        goodPoint: student["goodPoint"].Type == JTokenType.Null ? 0 : (int) student["goodPoint"],
+                        badPoint: student["badPoint"].Type == JTokenType.Null ? 0 : (int) student["badPoint"],
+                        penaltyTrainingStaus: bool.Parse(student["penaltyTrainingStatus"].ToString()),
+                        penaltyLevel: bool.Parse(student["penaltyTrainingStatus"].ToString()) == true
+                            ? Info.ParseStatus((int) student["penaltyLevel"])
                             : " ",
                         isSelected: false));
                 }

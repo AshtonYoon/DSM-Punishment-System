@@ -41,12 +41,13 @@ namespace DormitoryGUI.View
 
         private void SetLogData(string id)
         {
-            var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}?id={id}",
+            var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{id}",
                 Info.mainPage.AccessToken, "");
 
             if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
             {
                 MessageBox.Show("상벌점 내역 조회 실패");
+                Console.WriteLine((HttpStatusCode)responseDict["status"]);
                 return;
             }
 
@@ -61,8 +62,8 @@ namespace DormitoryGUI.View
                 TimelineBlock timelineBlock =
                     new TimelineBlock
                     (
-                        isGood: bool.Parse(log["point_type"].ToString()),
-                        createTime: DateTime.Parse(log["time"].ToString()).ToString("yyyy-MM-dd"),
+                        isGood: bool.Parse(log["pointType"].ToString()),
+                        createTime: DateTime.Parse(log["date"].ToString()).ToString("yyyy-MM-dd"),
                         pointValue: Math.Abs((int) log["point"]).ToString(),
                         pointCause: log["reason"].ToString()
                     );
@@ -72,8 +73,8 @@ namespace DormitoryGUI.View
                     {
                         var requestDict = new Dictionary<string, object>
                         {
-                            {"student_id", studentID},
-                            {"point_id", log["id"].ToString()}
+                            {"studentId", studentID},
+                            {"pointId", log["id"].ToString()}
                         };
 
                         responseDict = Info.GenerateRequest("DELETE", Info.Server.MANAGING_POINT,

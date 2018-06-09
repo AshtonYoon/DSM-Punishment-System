@@ -22,13 +22,13 @@ namespace DormitoryGUI.View
     {
         private readonly Color GoodTintColor = Color.FromRgb(131, 169, 255);
         private readonly Color GoodBackgroundColor = Color.FromRgb(131, 169, 255);
-        
+
         private readonly Color BadTintColor = Color.FromRgb(255, 127, 127);
         private readonly Color BadBackgroundColor = Color.FromRgb(255, 127, 127);
 
         public TimelineBlock(bool isGood, string createTime, string pointValue, string pointCause)
         {
-            InitializeComponent();           
+            InitializeComponent();
             if (isGood)
             {
                 TintCircle.Stroke = new SolidColorBrush(GoodTintColor);
@@ -43,8 +43,10 @@ namespace DormitoryGUI.View
             CreateTime.Content = createTime;
 
             PointValue.Content = string.Format("{0}점", pointValue);
-            PointCause.FontSize = 30 * 9 / pointCause.Length;
-            PointCause.Content = pointCause;            
+//            PointCause.FontSize = 30 * 9 / pointCause.Length * 1.3;
+
+            PointCause.FontSize = pointCause.Length <= 6 ? 40 : 30 * 9 / pointCause.Length;
+            PointCause.Content = pointCause;
         }
     }
 }

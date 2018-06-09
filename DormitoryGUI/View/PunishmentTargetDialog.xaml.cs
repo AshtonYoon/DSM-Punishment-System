@@ -52,25 +52,25 @@ namespace DormitoryGUI.View
             
             foreach (JObject student in studentList)
             {
-                int currentStep = student["penalty_level"].Type == JTokenType.Null
+                int currentStep = student["penaltyLevel"].Type == JTokenType.Null
                     ? 0
-                    : (int) student["penalty_level"];
+                    : (int) student["penaltyLevel"];
 
                 if (filter != "전체" && Info.ParseStatus(currentStep).Equals(filter))
                 {
                     continue;
                 }
 
-                if (currentStep >= 1 && (bool)student["penalty_training_status"] == true)
+                if (currentStep >= 1 && (bool)student["penaltyTrainingStatus"] == true)
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int) student["good_point"],
-                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int) student["bad_point"],
-                        penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
-                        penaltyLevel: bool.Parse(student["penalty_training_status"].ToString()) == true ? Info.ParseStatus((int)student["penalty_level"]) : " ",
+                        goodPoint: student["goodPoint"].Type == JTokenType.Null ? 0 : (int) student["goodPoint"],
+                        badPoint: student["badPoint"].Type == JTokenType.Null ? 0 : (int) student["badPoint"],
+                        penaltyTrainingStaus: bool.Parse(student["penaltyTrainingStatus"].ToString()),
+                        penaltyLevel: bool.Parse(student["penaltyTrainingStatus"].ToString()) == true ? Info.ParseStatus((int)student["penaltyLevel"]) : " ",
                         isSelected: false
                     ));
                 }
@@ -130,19 +130,19 @@ namespace DormitoryGUI.View
             listviewCollection.Clear();
             foreach (JObject student in studentList)
             {
-                int currentStep = student["penalty_level"].Type == JTokenType.Null
+                int currentStep = student["penaltyLevel"].Type == JTokenType.Null
                     ? 0
-                    : (int)student["penalty_level"];
+                    : (int)student["penaltyLevel"];
 
-                if (currentStep == step && (bool)student["penalty_training_status"] == true)
+                if (currentStep == step && (bool)student["penaltyTrainingStatus"] == true)
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
                         name: student["name"].ToString(),
-                        goodPoint: student["good_point"].Type == JTokenType.Null ? 0 : (int)student["good_point"],
-                        badPoint: student["bad_point"].Type == JTokenType.Null ? 0 : (int)student["bad_point"],
-                        penaltyTrainingStaus: bool.Parse(student["penalty_training_status"].ToString()),
+                        goodPoint: student["goodPoint"].Type == JTokenType.Null ? 0 : (int)student["goodPoint"],
+                        badPoint: student["badPoint"].Type == JTokenType.Null ? 0 : (int)student["badPoint"],
+                        penaltyTrainingStaus: bool.Parse(student["penaltySrainingStatus"].ToString()),
                         penaltyLevel: Info.ParseStatus(currentStep),
                         isSelected: false
                     ));

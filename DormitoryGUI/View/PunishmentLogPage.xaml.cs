@@ -121,7 +121,7 @@ namespace DormitoryGUI.View
 
         private void SetLogData(string id)
         {
-            var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}?id={id}", Info.mainPage.AccessToken, "");
+            var responseDict = Info.GenerateRequest("GET", $"{Info.Server.MANAGING_POINT}/{id}", Info.mainPage.AccessToken, "");
 
             if ((HttpStatusCode)responseDict["status"] != HttpStatusCode.OK)
             {
