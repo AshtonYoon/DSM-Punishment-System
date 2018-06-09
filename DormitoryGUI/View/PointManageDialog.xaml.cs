@@ -25,13 +25,12 @@ namespace DormitoryGUI.View
         private PunishmentList listviewCollection;
         private PunishmentListViewModel selectedItem;
 
-        private int pointType = (int)Info.POINT_TYPE.GOOD;
+        private int pointType = (int) Info.POINT_TYPE.GOOD;
+
         public int PointType
         {
             get => pointType;
-            set {
-                pointType = value;
-            }
+            set { pointType = value; }
         }
 
         public PointManageDialog()
@@ -48,7 +47,7 @@ namespace DormitoryGUI.View
             listviewCollection.Clear();
 
             var responseDict = Info.GenerateRequest("GET", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, "");
-            
+
             if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
             {
                 MessageBox.Show("상벌점 항목 조회 실패");
@@ -56,7 +55,7 @@ namespace DormitoryGUI.View
             }
 
             var rules = JArray.Parse(responseDict["body"].ToString());
-            
+
             foreach (JObject rule in rules)
             {
                 int minPoint = rule["minPoint"].Type == JTokenType.Null ? 0 : (int) rule["minPoint"];
@@ -74,14 +73,14 @@ namespace DormitoryGUI.View
                     maxPoint: Math.Abs(maxPoint)));
             }
 
-            PointList.ItemsSource = listviewCollection;           
+            PointList.ItemsSource = listviewCollection;
             PointList.Items.Refresh();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem target = (sender as ComboBox).SelectedItem as ComboBoxItem;
-            pointType = target.Content.ToString() == "상점" ? (int)Info.POINT_TYPE.GOOD : (int)Info.POINT_TYPE.BAD;
+            pointType = target.Content.ToString() == "상점" ? (int) Info.POINT_TYPE.GOOD : (int) Info.POINT_TYPE.BAD;
 
             if (listviewCollection != null)
             {
@@ -127,15 +126,18 @@ namespace DormitoryGUI.View
 
             var requestDict = new Dictionary<string, object>
             {
-                { "name", PointName.Text },
-                { "minPoint", point },
-                { "maxPoint", point },
-                { "pointType", GoodPunishCheck.IsChecked == true ? true : false }
+                {"name", PointName.Text},
+                {"minPoint", point},
+                {"maxPoint", point},
+                {"pointType", GoodPunishCheck.IsChecked == true ? true : false}
             };
 
-            var responseDict = Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+            var responseDict =
+                Info.GenerateRequest("POST", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
 
-            MessageBox.Show((HttpStatusCode)responseDict["status"] == HttpStatusCode.Created ? "항목 추가 성공" : "항목 추가 실패");
+            MessageBox.Show((HttpStatusCode) responseDict["status"] == HttpStatusCode.Created
+                ? "항목 추가 성공"
+                : "항목 추가 실패");
 
             Update();
         }
@@ -152,16 +154,17 @@ namespace DormitoryGUI.View
 
             var requestDict = new Dictionary<string, object>
             {
-                { "rule_id", selectedItem.ID },
-                { "name", PointName.Text },
-                { "min_point", point },
-                { "max_point", point },
-                { "point_type", GoodPunishCheck.IsChecked == true ? true : false }
+//                {"ruleId", selectedItem.ID},
+                {"name", PointName.Text},
+                {"minPoint", point},
+                {"maxPoint", point},
+                {"pointType", GoodPunishCheck.IsChecked == true ? true : false}
             };
 
-            var responseDict = Info.GenerateRequest("PATCH", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+            var responseDict = Info.GenerateRequest("PATCH", $"{Info.Server.MANAGING_RULE}/{selectedItem.ID}",
+                Info.mainPage.AccessToken, requestDict);
 
-            MessageBox.Show((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK ? "항목 수정 성공" : "항목 수정 실패");
+            MessageBox.Show((HttpStatusCode) responseDict["status"] == HttpStatusCode.OK ? "항목 수정 성공" : "항목 수정 실패");
 
             Update();
         }
@@ -174,14 +177,11 @@ namespace DormitoryGUI.View
                 return;
             }
 
-            var requestDict = new Dictionary<string, object>
-            {
-                { "ruleId", selectedItem.ID }
-            };
 
-            var responseDict = Info.GenerateRequest("DELETE", Info.Server.MANAGING_RULE, Info.mainPage.AccessToken, requestDict);
+            var responseDict = Info.GenerateRequest("DELETE", $"{Info.Server.MANAGING_RULE}/{selectedItem.ID}",
+                Info.mainPage.AccessToken, "");
 
-            MessageBox.Show((HttpStatusCode)responseDict["status"] == HttpStatusCode.OK ? "항목 삭제 성공" : "항목 삭제 실패");
+            MessageBox.Show((HttpStatusCode) responseDict["status"] == HttpStatusCode.OK ? "항목 삭제 성공" : "항목 삭제 실패");
 
             Update();
         }

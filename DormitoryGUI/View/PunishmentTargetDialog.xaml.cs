@@ -153,11 +153,10 @@ namespace DormitoryGUI.View
         {
             var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
             var requestDict = new Dictionary<string, object>
-            {
-                {"id", target.ID},
+            {                
                 {"status", false}
             };
-            var responseDict = Info.GenerateRequest("PATCH", Info.Server.MANAGING_PENALTY, Info.mainPage.AccessToken,
+            var responseDict = Info.GenerateRequest("PATCH", $"{Info.Server.MANAGING_PENALTY}/{target.ID}", Info.mainPage.AccessToken,
                 requestDict);
 
             MessageBox.Show((HttpStatusCode) responseDict["status"] == HttpStatusCode.OK

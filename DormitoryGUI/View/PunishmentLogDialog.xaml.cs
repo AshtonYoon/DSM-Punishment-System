@@ -73,7 +73,7 @@ namespace DormitoryGUI.View
                     {
                         var requestDict = new Dictionary<string, object>
                         {                            
-                            {"pointId", log["id"].ToString()}
+                            {"historyId", log["id"].ToString()}
                         };
 
                         responseDict = Info.GenerateRequest("DELETE", $"{Info.Server.MANAGING_POINT}/{studentID}",
