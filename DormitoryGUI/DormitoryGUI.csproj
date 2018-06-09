@@ -111,9 +111,6 @@
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\PunishLogListViewModel.cs" />
     <Compile Include="ViewModel\PunishmentListViewModel.cs" />
-    <Compile Include="View\CheckPunishmentTargetPage.xaml.cs">
-      <DependentUpon>CheckPunishmentTargetPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\CustomComboBox.xaml.cs">
       <DependentUpon>CustomComboBox.xaml</DependentUpon>
     </Compile>
@@ -126,20 +123,11 @@
     <Compile Include="View\CustomSwitch.xaml.cs">
       <DependentUpon>CustomSwitch.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PermissionManagementPage.xaml.cs">
-      <DependentUpon>PermissionManagementPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\PointManageDialog.xaml.cs">
       <DependentUpon>PointManageDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PunishmentListPage.xaml.cs">
-      <DependentUpon>PunishmentListPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\PunishmentLogDialog.xaml.cs">
       <DependentUpon>PunishmentLogDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PunishmentLogPage.xaml.cs">
-      <DependentUpon>PunishmentLogPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PunishmentTargetDialog.xaml.cs">
       <DependentUpon>PunishmentTargetDialog.xaml</DependentUpon>
@@ -150,10 +138,6 @@
     <Compile Include="View\TimelineBlock.xaml.cs">
       <DependentUpon>TimelineBlock.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\CheckPunishmentTargetPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\CustomComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -198,23 +182,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\PermissionManagementPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\PointManageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PunishmentListPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\PunishmentLogDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PunishmentLogPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

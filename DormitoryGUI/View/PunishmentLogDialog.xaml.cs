@@ -72,12 +72,11 @@ namespace DormitoryGUI.View
                     (sender, e) =>
                     {
                         var requestDict = new Dictionary<string, object>
-                        {
-                            {"studentId", studentID},
+                        {                            
                             {"pointId", log["id"].ToString()}
                         };
 
-                        responseDict = Info.GenerateRequest("DELETE", Info.Server.MANAGING_POINT,
+                        responseDict = Info.GenerateRequest("DELETE", $"{Info.Server.MANAGING_POINT}/{studentID}",
                             Info.mainPage.AccessToken, requestDict);
 
                         if ((HttpStatusCode) responseDict["status"] != HttpStatusCode.OK)
