@@ -72,7 +72,7 @@ namespace DormitoryGUI.View
                 int minPoint = rule["minPoint"].Type == JTokenType.Null ? 0 : (int) rule["minPoint"];
                 int maxPoint = rule["maxPoint"].Type == JTokenType.Null ? 0 : (int) rule["maxPoint"];
 
-                if ((punishmentType == 0 && minPoint < 0) || (punishmentType == 1 && minPoint > 0))
+                if ((int)rule["pointType"] == punishmentType)
                 {
                     // 상점은 0, 벌점은 1 (Info.POINT_TYPE 참고)
                     continue;
@@ -84,8 +84,8 @@ namespace DormitoryGUI.View
                     (
                         id: rule["id"].ToString(),
                         name: rule["name"].ToString(),
-                        minPoint: Math.Abs(minPoint),
-                        maxPoint: Math.Abs(minPoint)
+                        minPoint: minPoint,
+                        maxPoint: minPoint
                     )
                 );
             }

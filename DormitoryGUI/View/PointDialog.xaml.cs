@@ -41,7 +41,7 @@ namespace DormitoryGUI.View
         private void PunishmentComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var target = (PunishmentListViewModel) PunishmentComboBox.SelectedItem;
-            ScoreText.Text = Math.Abs(target.MinPoint).ToString();
+            ScoreText.Text = target.MinPoint.ToString();
         }
 
         private void Click_OK(object sender, RoutedEventArgs e)

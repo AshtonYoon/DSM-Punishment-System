@@ -150,10 +150,7 @@ namespace DormitoryGUI
                 {
 //                    {"id", student.ID},
                     {"ruleId", pointDialog.PunishmentID},
-                    {
-                        "point",
-                        pointDialog.PunishmentScore > 0 ? pointDialog.PunishmentScore : pointDialog.PunishmentScore * -1
-                    },
+                    {"point", pointDialog.PunishmentScore},
                     {"applyGoodPoint", GoodPunishCheck.IsChecked == true ? true : false}
                 };
 

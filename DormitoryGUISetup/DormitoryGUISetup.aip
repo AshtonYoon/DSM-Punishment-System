@@ -32,7 +32,7 @@
     <ROW Property="ProductCode" Value="1033:{4747462A-4F61-41D1-A31C-A00FE2E60BA2} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="DormitoryGUI"/>
-    <ROW Property="ProductVersion" Value="1.0.7" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.0.8" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{C1C3227B-62FE-4438-8CC6-C0D284250AF3}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>

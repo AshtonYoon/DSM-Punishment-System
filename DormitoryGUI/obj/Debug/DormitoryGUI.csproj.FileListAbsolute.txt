@@ -283,3 +283,4 @@ E:\Develop\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.application
 E:\Develop\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csproj.CopyComplete
 E:\Develop\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.exe
 E:\Develop\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.pdb
+E:\Develop\DSM-Punishment-System\DormitoryGUI\obj\Debug\DormitoryGUI.csprojResolveAssemblyReference.cache

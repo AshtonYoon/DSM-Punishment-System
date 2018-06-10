@@ -48,8 +48,8 @@ namespace DormitoryGUI.View
             }
 
             studentList = JArray.Parse(responseDict["body"].ToString());
-            
-            
+
+
             foreach (JObject student in studentList)
             {
                 int currentStep = student["penaltyLevel"].Type == JTokenType.Null
@@ -61,7 +61,7 @@ namespace DormitoryGUI.View
                     continue;
                 }
 
-                if (currentStep >= 1 && (bool)student["penaltyTrainingStatus"] == true)
+                if (currentStep >= 1 && (bool) student["penaltyTrainingStatus"] == true)
                 {
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
@@ -70,7 +70,9 @@ namespace DormitoryGUI.View
                         goodPoint: student["goodPoint"].Type == JTokenType.Null ? 0 : (int) student["goodPoint"],
                         badPoint: student["badPoint"].Type == JTokenType.Null ? 0 : (int) student["badPoint"],
                         penaltyTrainingStaus: bool.Parse(student["penaltyTrainingStatus"].ToString()),
-                        penaltyLevel: bool.Parse(student["penaltyTrainingStatus"].ToString()) == true ? Info.ParseStatus((int)student["penaltyLevel"]) : " ",
+                        penaltyLevel: bool.Parse(student["penaltyTrainingStatus"].ToString()) == true
+                            ? Info.ParseStatus((int) student["penaltyLevel"])
+                            : " ",
                         isSelected: false
                     ));
                 }
@@ -132,10 +134,25 @@ namespace DormitoryGUI.View
             {
                 int currentStep = student["penaltyLevel"].Type == JTokenType.Null
                     ? 0
-                    : (int)student["penaltyLevel"];
+                    : (int) student["penaltyLevel"];
 
-                if (currentStep == step && (bool)student["penaltyTrainingStatus"] == true)
+                if (currentStep == step && (bool) student["penaltyTrainingStatus"] == true)
                 {
+                    listviewCollection.Add(new ViewModel.StudentListViewModel(
+                        id: student["id"].ToString(),
+                        classNumber: student["number"].ToString(),
+                        name: student["name"].ToString(),
+                        goodPoint: student["goodPoint"].Type == JTokenType.Null ? 0 : (int) student["goodPoint"],
+                        badPoint: student["badPoint"].Type == JTokenType.Null ? 0 : (int) student["badPoint"],
+                        penaltyTrainingStaus: bool.Parse(student["penaltyTrainingStatus"].ToString()),
+                        penaltyLevel: bool.Parse(student["penaltyTrainingStatus"].ToString()) == true
+                            ? Info.ParseStatus((int) student["penaltyLevel"])
+                            : " ",
+                        isSelected: false
+                    ));
+                }
+
+                /*{
                     listviewCollection.Add(new ViewModel.StudentListViewModel(
                         id: student["id"].ToString(),
                         classNumber: student["number"].ToString(),
@@ -146,17 +163,19 @@ namespace DormitoryGUI.View
                         penaltyLevel: Info.ParseStatus(currentStep),
                         isSelected: false
                     ));
-                }
+                }*/
             }
-        }   
+        }
+
         private void Offset_Click(object sender, RoutedEventArgs e)
         {
             var target = (StudentListViewModel) GetAncestorOfType<ListViewItem>(sender as Button).DataContext;
             var requestDict = new Dictionary<string, object>
-            {                
+            {
                 {"status", false}
             };
-            var responseDict = Info.GenerateRequest("PATCH", $"{Info.Server.MANAGING_PENALTY}/{target.ID}", Info.mainPage.AccessToken,
+            var responseDict = Info.GenerateRequest("PATCH", $"{Info.Server.MANAGING_PENALTY}/{target.ID}",
+                Info.mainPage.AccessToken,
                 requestDict);
 
             MessageBox.Show((HttpStatusCode) responseDict["status"] == HttpStatusCode.OK

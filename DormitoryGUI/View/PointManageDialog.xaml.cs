@@ -61,7 +61,8 @@ namespace DormitoryGUI.View
                 int minPoint = rule["minPoint"].Type == JTokenType.Null ? 0 : (int) rule["minPoint"];
                 int maxPoint = rule["maxPoint"].Type == JTokenType.Null ? 0 : (int) rule["maxPoint"];
 
-                if ((pointType == 0 && minPoint < 0) || (pointType == 1 && minPoint > 0))
+//                if ((pointType == 0 && minPoint < 0) || (pointType == 1 && minPoint > 0))
+                if ((int) rule["pointType"] == pointType)
                 {
                     continue;
                 }
@@ -69,8 +70,8 @@ namespace DormitoryGUI.View
                 listviewCollection.Add(new PunishmentListViewModel(
                     id: (string) rule["id"],
                     name: (string) rule["name"],
-                    minPoint: Math.Abs(minPoint),
-                    maxPoint: Math.Abs(maxPoint)));
+                    minPoint: minPoint,
+                    maxPoint: maxPoint));
             }
 
             PointList.ItemsSource = listviewCollection;
@@ -122,7 +123,7 @@ namespace DormitoryGUI.View
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            int point = int.Parse(PointScore.Text) * (GoodPunishCheck.IsChecked == true ? 1 : -1);
+            int point = int.Parse(PointScore.Text);
 
             var requestDict = new Dictionary<string, object>
             {
@@ -150,7 +151,7 @@ namespace DormitoryGUI.View
                 return;
             }
 
-            int point = int.Parse(PointScore.Text) * (GoodPunishCheck.IsChecked == true ? 1 : -1);
+            int point = int.Parse(PointScore.Text);
 
             var requestDict = new Dictionary<string, object>
             {

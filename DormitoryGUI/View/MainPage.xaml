@@ -976,7 +976,7 @@
                         Grid.Column="1"
                         Background="White"
                         BorderThickness="1"
-                        Margin="20, 10"
+                        Margin="20, 10"                        
                         BorderBrush="White"
                         Click="ApplyPointButton_Click">
                     <Button.Resources>
